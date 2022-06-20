@@ -1,0 +1,21 @@
+@font-face {
+	font-family: 'MontserratAlternates'; 
+	src: url('../assets/fonts/MontserratAlternates-Medium.ttf'); 
+}
+
+* {
+    font-family: 'MontserratAlternates', sans-serif;
+    font-size: 16px;
+    letter-spacing: .5px;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.flex {
+    &_between { 
+        display: flex;
+        justify-content: space-between;
+    }
+}

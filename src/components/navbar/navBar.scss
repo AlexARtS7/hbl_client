@@ -1,0 +1,12 @@
+.navbar {
+    &_container {
+        width: 100vw;
+        height: 80px;
+        padding: 20px;
+        background-color:rgb(103, 104, 67);
+    }
+    &_title {
+        font-size: 30px;
+        color: white;
+    }
+}
