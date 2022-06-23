@@ -14,13 +14,14 @@
     }
     &_login {
         color: white;
-        margin-right: 5px;
     }
-    &_image_box {
+    &_box_contur {
         outline: .5px solid white;
         border-radius: 3px;
         height: 40px;
         width: 40px;
+        margin-left: 10px;
+        cursor: pointer;
     }
     &_logo {
         &_user {
@@ -30,6 +31,11 @@
         }
         &_admin {
             background: url('../../assets/images/admin.svg') no-repeat;
+            background-size: 80%;
+            background-position: center;
+        }
+        &_basket {
+            background: url('../../assets/images/basket.svg') no-repeat;
             background-size: 80%;
             background-position: center;
         }

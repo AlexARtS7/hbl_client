@@ -24,6 +24,14 @@ const AuthModal = ({setActive}) => {
         authRequest(isLoginIn, user, setEmailErr, setPasswordErr, setErrorsVisible, {email, password, login})
     }    
 
+    const handleKeyDown = event => {
+        console.log(event.key);
+    
+        if (event.key === 'Enter') {
+          console.log('✅ Enter key pressed');
+        }
+      };
+
     useEffect(() => setLoginErr(loginErrorsHandler(login)),[login])
     useEffect(() => setEmailErr(emailErrorsHandler(email)),[email])
     useEffect(() => setPasswordErr(passwordErrorsHandler(password)),[password])
