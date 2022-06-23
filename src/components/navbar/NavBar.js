@@ -4,7 +4,6 @@ import { observer } from "mobx-react-lite"
 import React, { useContext, useState } from "react"
 import LoginModal from "../auth/AuthModal"
 import './navBar.scss'
-import userImg from '../../assets/images/user.svg'
 
 const NavBar = observer(() => {
     const {user} = useContext(Context)
@@ -17,7 +16,11 @@ const NavBar = observer(() => {
                 {user._isAuth ? 
                     <div className='flex_between'>
                         <div className='navbar_login'>{user._user.login}</div>
-                        <div className='navbar_user_logo'></div>
+                        <div className=
+                            {user._user.role === 'USER'? 
+                            'navbar_image_box navbar_logo_user' :
+                            'navbar_image_box navbar_logo_admin'}>
+                        </div>
                     </div> : 
                     <button className='navbar_button' onClick={() => setLoginModalActive(true)}>Войти</button>
                 }

@@ -1,7 +1,7 @@
 .navbar {
     &_container {
         width: 100vw;
-        height: 80px;
+        height: 70px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -16,17 +16,24 @@
         color: white;
         margin-right: 5px;
     }
-    &_user {
-        &_logo {
-            outline: .5px solid white;
-            border-radius: 3px;
-            height: 40px;
-            width: 40px;
+    &_image_box {
+        outline: .5px solid white;
+        border-radius: 3px;
+        height: 40px;
+        width: 40px;
+    }
+    &_logo {
+        &_user {
             background: url('../../assets/images/user.svg') no-repeat;
             background-size: 80%;
             background-position: center;
         }
-    }
+        &_admin {
+            background: url('../../assets/images/admin.svg') no-repeat;
+            background-size: 80%;
+            background-position: center;
+        }
+    }    
     &_button {
         background-color: white;
         border-radius: 3px;
