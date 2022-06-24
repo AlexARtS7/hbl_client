@@ -17,20 +17,12 @@ const AuthModal = ({setActive}) => {
     const [errorsVisible, setErrorsVisible] = useState(false)
     
     const enter = () => {
-        if(!isLoginIn && loginErr || emailErr || passwordErr) {
+        if(!isLoginIn && loginErr || emailErr !=='' || passwordErr !=='') {
             setErrorsVisible(true)
             return
         }        
         authRequest(isLoginIn, user, setEmailErr, setPasswordErr, setErrorsVisible, {email, password, login})
-    }    
-
-    const handleKeyDown = event => {
-        console.log(event.key);
-    
-        if (event.key === 'Enter') {
-          console.log('✅ Enter key pressed');
-        }
-      };
+    }  
 
     useEffect(() => setLoginErr(loginErrorsHandler(login)),[login])
     useEffect(() => setEmailErr(emailErrorsHandler(email)),[email])
@@ -42,6 +34,16 @@ const AuthModal = ({setActive}) => {
             setActive(false)
         }
     }, [user._isAuth])
+
+    useEffect(() => {
+        const onKeypress = e => {if(e.key === 'Enter') enter()}
+        
+        document.addEventListener('keypress', onKeypress);
+      
+        return () => {
+          document.removeEventListener('keypress', onKeypress);
+        }
+    }, [])
     
     return (
         <Modal setActive={setActive} title={isLoginIn ? 'Авторизация' : 'Регистрация'} width={800}>
