@@ -20,7 +20,10 @@ const UserMenu = ({role, setUserMenuActive, setAdminModalActive}) => {
     return (
         <div className='usermenu_back' onClick={() => setUserMenuActive(false)}>
             <ul className='usermenu' onClick={(e) => e.stopPropagation()}>
-                {role === 'ADMIN' && <><li onClick={() => adminModalHandler()} >Администрирование</li><hr/></>}
+                {role === 'ADMIN' && 
+                    <>
+                        <li onClick={() => adminModalHandler()} >Добавить продукт</li><hr/>
+                    </>}
                 <li>мой профиль</li>
                 <li>разнок</li>
                 <hr/>

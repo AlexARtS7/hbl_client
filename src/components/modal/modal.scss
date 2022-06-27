@@ -14,10 +14,19 @@
         font-size: 22px;
         margin-bottom: 10px;
     }
+    &_label {
+        margin: 10px 0;
+        font-size: 18px;
+        font-weight: 600;
+    }
     &_input {
         width: 100%;
         padding: 14px 20px;
         margin: 15px 0;
+        &_file {
+            width: 100%;
+            margin: 10px 0;
+        }
     }
     &_button {
         padding: 10px;
@@ -26,8 +35,8 @@
         cursor: pointer;
         &_full {
             padding: 10px;
-            margin: 10px 20px 0 20px;
-            width: calc(100% - 40px);
+            margin: 10px 0;
+            width: 100%;
             cursor: pointer;
         }
     }
@@ -43,9 +52,11 @@
         color: rgb(47, 175, 47);
     }
     &_content {
+        max-height: 100vh;
         padding: 20px;
         border-radius: 4px;
         background-color: white;
+        overflow-y: auto;
     }
 }
 
