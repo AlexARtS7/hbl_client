@@ -1,8 +1,7 @@
 import React from 'react';
 import './modal.scss';
 
-const Modal = ({setActive, children, ...props}) => {
-    const {title, width = 400} = props
+const Modal = ({setActive, children, width = 400, title = ''}) => {
 
     return (
         <div className='modal' onClick={() => setActive(false)}>

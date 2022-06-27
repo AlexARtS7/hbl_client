@@ -17,7 +17,7 @@ const AuthModal = ({setActive}) => {
     const [errorsVisible, setErrorsVisible] = useState(false)
     
     const enter = () => {
-        if(!isLoginIn && loginErr || emailErr !=='' || passwordErr !=='') {
+        if(!isLoginIn && loginErr || emailErr || passwordErr) {
             setErrorsVisible(true)
             return
         }        
@@ -39,14 +39,11 @@ const AuthModal = ({setActive}) => {
         const onKeypress = e => {if(e.key === 'Enter') enter()}
         
         document.addEventListener('keypress', onKeypress);
-      
-        return () => {
-          document.removeEventListener('keypress', onKeypress);
-        }
-    }, [])
-    
+        return () => document.removeEventListener('keypress', onKeypress);
+    }, [loginErr, emailErr, passwordErr])
+
     return (
-        <Modal setActive={setActive} title={isLoginIn ? 'Авторизация' : 'Регистрация'} width={800}>
+        <Modal setActive={setActive} width={800} title={isLoginIn ? 'Авторизация':'Регистрация'}>
             {!isLoginIn && 
                 <>
                     <div className='flex_between'>
@@ -91,8 +88,7 @@ const AuthModal = ({setActive}) => {
                         <button className="modal_button" onClick={enter}>Вход</button> :
                         <button className="modal_button" onClick={enter}>Регистрация</button>}
                 </div>
-            </div>
-            
+            </div>            
         </Modal>
     )
 }

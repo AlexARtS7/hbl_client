@@ -23,6 +23,13 @@
         padding: 10px;
         margin-top: 10px;
         margin-left: 20px;
+        cursor: pointer;
+        &_full {
+            padding: 10px;
+            margin: 10px 20px 0 20px;
+            width: calc(100% - 40px);
+            cursor: pointer;
+        }
     }
     &_link {
         color: blue;
