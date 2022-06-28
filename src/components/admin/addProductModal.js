@@ -1,35 +1,58 @@
 import React, { useState } from "react"
+import useInput from 'components/hooks/useInput'
 import Modal from "components/modal/Modal"
 
 const AddProductModal = ({setActive}) => {
-    const [name, setName] = useState('')
-    const [price, setPrice] = useState(0)
-    const [files, setFiles] = useState([''])
-    const [info, setInfo] = useState([])
+    const {value:name, onChange:setName} = useInput('')
+    const {value:price, onChange:setPrice} = useInput(0)
+    const [files, setFiles] = useState(null)
+
+    const selectFile = e => {
+        const fileList = e.target.files
+        let result = []
+        for (let fileItem of fileList) {
+            result.push(fileItem.name)
+        }
+        setFiles(result)
+    }
     
     return (
         <Modal setActive={setActive} width={1024} title='Добавить продукт'>
-            
+            <p>Название</p>
             <input 
                 className="modal_input"
-                placeholder='название продукта'
-                // onChange={e => setLogin(e)}
+                value={name}
+                onChange={e => setName(e)}
             />
+            <p>Цена</p>
             <input 
                 className="modal_input"
-                placeholder='цена'
+                value={price}
+                onChange={e => setPrice(e)}
+            />
+            <p>Характеристики</p>
+            <input 
+                className="modal_input"
                 // onChange={e => setLogin(e)}
             />
-            <hr/>
-            <p className='modal_label'>Фотографии:</p>
-            {files.map(e => 
-                <input 
-                    className="modal_input_file"
-                    type='file'
-                    // onChange={e => setLogin(e)}
-                />
+            <p>Описание</p>
+            <textarea
+                style={{resize: 'vertical'}}
+                className='modal_input'
+                placeholder='описание'
+            >
+            </textarea>
+            <hr/><br/>
+            <p>Фотографии:</p>            
+            <input 
+                className="modal_input_file"
+                type='file'
+                multiple
+                onChange={e => selectFile(e)}
+            /> 
+            {files && files.map((e,i) => 
+               <p key={i}>{e}</p>
             )}
-            <button className='modal_button_full' onClick={() => setFiles([...files, ''])}>Добавить Фотографии</button>   
         </Modal>
     )
 }
