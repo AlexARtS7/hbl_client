@@ -1,13 +1,17 @@
-import { useState } from "react"
+import inputValidation from "components/errorsHandler/inputValidation"
+import { useEffect, useState } from "react"
 
-const useInput = (initialValue) => {
-const [value, setValue] = useState(initialValue)
-
-    const onChange = e => setValue(e.target.value)  
+const useInput = (initialValue, validations) => {
+    const [value, setValue] = useState(initialValue)
+    const [validErr, setValidErr] = useState('')
+    
+    useEffect(() => setValidErr(inputValidation(value, validations)),[value])
 
     return {
         value,
-        onChange,
+        setValue,
+        setValidErr,
+        validErr
     }
 }
 

@@ -3,17 +3,17 @@ import Modal from "components/modal/Modal"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { authRequest } from "./authRequest"
-import inputValidation from "components/errorsHandler/inputValidation"
 
 const AuthModal = ({setActive}) => {
     const {user} = useContext(Context)
     const [isLoginIn, setIsLoginIn] = useState(true)
-    const {value:login, onChange:setLogin} = useInput('')
-    const {value:email, onChange:setEmail} = useInput('')
-    const {value:password, onChange:setPassword} = useInput('')
-    const [loginErr, setLoginErr] = useState('')
-    const [emailErr, setEmailErr] = useState('')
-    const [passwordErr, setPasswordErr] = useState('')
+    
+    const {value:login, setValue:setLogin, validErr:loginErr} = 
+        useInput('', {isEmpty:true, minLength:3, maxLength:50})
+    const {value:email, setValue:setEmail, validErr:emailErr, setValidErr:setEmailErr} = 
+        useInput('', {isEmpty:true, email:true})
+    const {value:password, setValue:setPassword, validErr:passwordErr, setValidErr:setPasswordErr} = 
+        useInput('', {isEmpty:true, minLength:6, maxLength:50})
     const [errorsVisible, setErrorsVisible] = useState(false)
     
     const enter = () => {
@@ -24,10 +24,12 @@ const AuthModal = ({setActive}) => {
         authRequest(isLoginIn, user, setEmailErr, setPasswordErr, setErrorsVisible, {email, password, login})
     }  
 
-    useEffect(() => setLoginErr(inputValidation(login, {isEmpty:true, minLength:3, maxLength:50})),[login])
-    useEffect(() => setEmailErr(inputValidation(email, {isEmpty:true, email:true})),[email])
-    useEffect(() => setPasswordErr(inputValidation(password, {isEmpty:true, minLength:6, maxLength:50})),[password])
-    useEffect(() => setErrorsVisible(false), [isLoginIn])
+    useEffect(() => {
+        setLogin('')
+        setEmail('')
+        setPassword('')
+        setErrorsVisible(false)
+    }, [isLoginIn])
 
     useEffect(() => {
         if(user._isAuth) {
@@ -54,7 +56,7 @@ const AuthModal = ({setActive}) => {
                         className='modal_input'
                         name='name'
                         value={login}
-                        onChange={e => setLogin(e)}/>
+                        onChange={e => setLogin(e.target.value)}/>
                 </>
               }
             <div className='flex_between'>
@@ -65,7 +67,7 @@ const AuthModal = ({setActive}) => {
                 className="modal_input"
                 value={email}
                 name='email'
-                onChange={e => setEmail(e)}/>
+                onChange={e => setEmail(e.target.value)}/>
 
             <div className='flex_between'>
                 <p>Пароль:</p>
@@ -75,7 +77,7 @@ const AuthModal = ({setActive}) => {
                 className="modal_input"
                 value={password}
                 type='password'
-                onChange={e => setPassword(e)}/>
+                onChange={e => setPassword(e.target.value)}/>
             {isLoginIn ?
                 <div>Нет акаунта? <span className='modal_link' onClick={() => setIsLoginIn(!isLoginIn)}>Зарегистрируйтесь</span></div> :
                 <div>Есть акаунт? <span className='modal_link' onClick={() => setIsLoginIn(!isLoginIn)}>Войдите</span></div>
