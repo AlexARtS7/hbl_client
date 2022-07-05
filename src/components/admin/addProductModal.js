@@ -14,12 +14,6 @@ const AddProductModal = ({setActive}) => {
         setFiles(e.target.files)
     }
 
-    // const addProduct = () => {
-    //     const postData = {name, price, specifications, description, img: files} 
-    //     const        
-    //     createProduct(postData).then(data => setActive(true))
-    // }
-    
     const addProduct = () => {
         const formData = new FormData()
         formData.append('name', name)
@@ -29,9 +23,9 @@ const AddProductModal = ({setActive}) => {
         files && Object.keys(files).forEach(function (_,i) {
             formData.append(`files`, files[i])
         }, files)
-        createProduct(formData).then(data => setActive(true))
+        createProduct(formData).then(data => setActive(false))
     }
-    console.log(files)
+    
     return (
         <Modal setActive={setActive} width={1024} title='Добавить продукт'>
             <p>Название</p>
