@@ -11,19 +11,27 @@ const AddProductModal = ({setActive}) => {
     const [files, setFiles] = useState(null)
 
     const selectFile = e => {
-        const fileList = e.target.files
-        let result = []
-        for (let fileItem of fileList) {
-            result.push(fileItem.name)
-        }
-        setFiles(result)
+        setFiles(e.target.files)
     }
 
-    const addProduct = () => {
-        const postData = {name, price, specifications, description, img: JSON.stringify(files)}        
-        createProduct(postData).then(data => setActive(false))
-    }
+    // const addProduct = () => {
+    //     const postData = {name, price, specifications, description, img: files} 
+    //     const        
+    //     createProduct(postData).then(data => setActive(true))
+    // }
     
+    const addProduct = () => {
+        const formData = new FormData()
+        formData.append('name', name)
+        formData.append('price', `${price}`)
+        formData.append('specifications', specifications)
+        formData.append('description', description)
+        files && Object.keys(files).forEach(function (_,i) {
+            formData.append(`files`, files[i])
+        }, files)
+        createProduct(formData).then(data => setActive(true))
+    }
+    console.log(files)
     return (
         <Modal setActive={setActive} width={1024} title='Добавить продукт'>
             <p>Название</p>
@@ -63,9 +71,10 @@ const AddProductModal = ({setActive}) => {
                 multiple
                 onChange={e => selectFile(e)}
             /> 
-            {files && files.length > 1 && files.map((e,i) => 
-               <p key={i}>{e}</p>
-            )}
+            {files && files[1] && Object.keys(files).map(function (key,i) {
+               return <p key={i}>{this[key].name}</p>
+            }, files)
+            }
             <br/><hr/>
             <div className="flex_between">
                 <div/>
