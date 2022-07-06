@@ -6,10 +6,11 @@ import ShopListItem from "./ShopListItem"
 
 const ShopList = observer(() => {
     const {products} = useContext(Context)
+    
     return (
         <div className='shoplist'>
             {products._products.map(product => 
-                <ShopListItem/>
+                <ShopListItem product={product} key={product.id}/>
             )}
         </div>
     )
