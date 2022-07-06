@@ -5,14 +5,12 @@ import './shopList.scss'
 import ShopListItem from "./ShopListItem"
 
 const ShopList = observer(() => {
-    const {user} = useContext(Context)
+    const {products} = useContext(Context)
     return (
         <div className='shoplist'>
-            <ShopListItem/>
-            <ShopListItem/>
-            <ShopListItem/>
-            <ShopListItem/>
-            <ShopListItem/>
+            {products._products.map(product => 
+                <ShopListItem/>
+            )}
         </div>
     )
 })

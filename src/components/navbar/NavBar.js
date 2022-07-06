@@ -33,8 +33,7 @@ const NavBar = observer(() => {
                                         setAdminModalActive={setAddProductModalVis}/>}
                     </div> : 
                     <button className='navbar_button' onClick={() => setAuthModalActive(true)}>Войти</button>
-                }
-            
+                }            
            </div>
            {authModalActive && <AuthModal setActive={setAuthModalActive}/>}
            {addProductModalVis && <AddProductModal setActive={setAddProductModalVis}/>}
