@@ -6,6 +6,7 @@ import ShopListItem from "./ShopListItem"
 
 const ShopList = observer(() => {
     const {products} = useContext(Context)
+    const {user} = useContext(Context)
     
     return (
         <div className='shoplist'>
