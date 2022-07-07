@@ -1,8 +1,26 @@
 .shoplistitem {
     height: 300px;
-    background-color: rgb(228, 230, 200);
+    box-shadow: 1px 1px 3px gray;
     border-radius: 3px;
+    padding: 2px;
+    overflow: hidden;
     &_img {
         width: 100%;
+    }
+    &_name {
+        margin: 0 5px;
+        font-size: 18px;
+    }
+    &_price {
+        margin: 10px 5px;
+        font-size: 14px;
+        &_rub {
+            font-family: arial;
+            vertical-align: middle;
+            border-bottom: 1px solid;
+            line-height: 5px;
+            display: inline-block;
+            width: 0.4em;
+        }
     }
 }

@@ -9,4 +9,8 @@ export default class ProductStore {
     setProducts(products) {
         this._products = products
     }
+
+    get products() {
+        return this._products
+    }
 }
