@@ -1,9 +1,11 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import useInput from 'components/hooks/useInput'
 import Modal from "components/modal/Modal"
 import { createProduct } from "http/productApi"
+import { Context } from "index"
 
 const AddProductModal = ({setActive}) => {
+    const {products} = useContext(Context)
     const {value:name, setValue:setName} = useInput('')
     const {value:price, setValue:setPrice} = useInput(0)
     const {value:specifications, setValue:setSpecifications} = useInput('')
@@ -23,7 +25,10 @@ const AddProductModal = ({setActive}) => {
         files && Object.keys(files).forEach(function (_,i) {
             formData.append(`files`, files[i])
         }, files)
-        createProduct(formData).then(data => setActive(false))
+        createProduct(formData).then(data => {
+            products.addOneProduct(data)
+            setActive(false)
+        })           
     }
     
     return (

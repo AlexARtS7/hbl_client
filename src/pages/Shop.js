@@ -15,7 +15,10 @@ const ShopPage = observer(() => {
     },[])
 
     return (
-        <ShopList/>
+        <>
+            <ShopList/>
+        </>
+        
     )
 })
 

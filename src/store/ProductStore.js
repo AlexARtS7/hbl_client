@@ -10,7 +10,7 @@ export default class ProductStore {
         this._products = products
     }
 
-    get products() {
-        return this._products
+    addOneProduct(product) {
+        this._products = [...this._products, product]
     }
 }
