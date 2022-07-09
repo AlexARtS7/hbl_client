@@ -16,7 +16,7 @@ const ProductPage = () => {
     
     return (
         <>
-        gfgf
+        rtr
         </>
     )
 }
