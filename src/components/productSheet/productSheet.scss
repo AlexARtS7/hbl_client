@@ -1,0 +1,34 @@
+
+@import '../../styles/variables.scss';
+
+.productsheet {
+    height: calc(100vh - $navBarHeigth);
+    overflow-y: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    z-index: 2;
+    &_description {
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+        width: 40%;
+        text-align: right;
+        &_name {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        &_price {
+            font-size: 18px;
+            font-weight: 700;
+            align-self: flex-end;
+        }
+    }
+    
+    &_carousel {
+        width: 50%;
+        &_img {
+            width: 100%;
+        }
+    }
+}

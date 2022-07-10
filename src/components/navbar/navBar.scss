@@ -1,7 +1,9 @@
+@import '../../styles/variables.scss';
+
 .navbar {
     &_container {
         width: 100vw;
-        height: 70px;
+        height: $navBarHeigth;
         display: flex;
         align-items: center;
         justify-content: space-between;
