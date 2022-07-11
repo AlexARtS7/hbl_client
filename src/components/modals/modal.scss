@@ -53,6 +53,9 @@
     &_ok {
         color: rgb(47, 175, 47);
     }
+    &_mark {
+        background-color:rgb(236, 236, 106);
+    }
     &_content {
         max-height: 90vh;
         padding: 20px;

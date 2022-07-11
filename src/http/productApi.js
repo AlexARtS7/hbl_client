@@ -17,10 +17,11 @@ export const createProduct = async(formData) => {
 
 export const fetchProducts = async() => {
     const {data} = await $host.get('api/products')
-    return data
+    return data.rows.map(e => ({ ...e, img: JSON.parse(e.img) }))
 }
 
 export const fetchOneProduct = async(id) => {
     const {data} = await $host.get('api/products/' + id)
+    data.img = JSON.parse(data.img)
     return data
 }

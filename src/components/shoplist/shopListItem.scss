@@ -29,4 +29,24 @@
             width: 0.4em;
         }
     }
+    &_admin {
+        &_buttonblock {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+        &_button {
+            outline: .5px solid white;
+            color: white;
+            border-radius: 3px;
+            text-align: center;
+            padding: 3px;
+            width: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            &:hover {
+                background-color: red;
+            }
+        }
+    }
 }

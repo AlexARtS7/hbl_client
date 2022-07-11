@@ -10,9 +10,7 @@ const ShopPage = observer(() => {
 
     useEffect(() => {
         fetchProducts()
-        .then(data => {
-            products.setProducts(data.rows)
-        })
+        .then(data => products.setProducts(data))
     },[])
 
     return (

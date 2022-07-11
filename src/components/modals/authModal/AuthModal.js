@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import Modal from "components/modal/Modal"
+import Modal from "components/modals/Modal"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { authRequest } from "./authRequest"

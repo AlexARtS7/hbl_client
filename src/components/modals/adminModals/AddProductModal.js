@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 import useInput from 'components/hooks/useInput'
-import Modal from "components/modal/Modal"
+import Modal from "components/modals/Modal"
 import { createProduct } from "http/productApi"
 import { Context } from "index"
 

@@ -5,19 +5,12 @@ import './productSheet.scss'
 
 const ProductSheet = () => {
     const [product, setProduct] = useState({})
-    const [images, setImages] = useState([])
     const [slide, setSlide] = useState(0)
     const {id} = useParams()
     
     useEffect(() => {
         fetchOneProduct(id).then(data => setProduct(data))
     }, [])
-
-    useEffect(() => {
-        if(product.id) {
-            setImages([...JSON.parse(product.img)])
-        }
-    }, [product])
     
     return (
         <>
@@ -26,10 +19,10 @@ const ProductSheet = () => {
                     <div className='productsheet_carousel'>
                         <div className='productsheet_carousel_imgblock'>
                             <img className='productsheet_carousel_img' 
-                                src={process.env.REACT_APP_API_URL + `${product.id}/` + images[slide]}/>
+                                src={process.env.REACT_APP_API_URL + `${product.id}/` + product.img[slide]}/>
                         </div>                        
                         <div className='productsheet_carousel_controlblock'>
-                            {images.map((element,i) => 
+                            {product.img.map((element,i) => 
                             <img 
                                 key={i}  
                                 className={i === slide ? 'productsheet_carousel_thumbnail_active':

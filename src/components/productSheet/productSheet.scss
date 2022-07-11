@@ -10,6 +10,7 @@
     padding: 30px;
     z-index: 2;
     &_container {
+        height: 100%;
         display: flex;
         justify-content: space-between;
     }
@@ -42,11 +43,11 @@
     
     &_carousel {
         width: 50%;
-        height: calc(100vh - $navBarHeigth);
+        // height: calc(100vh - $navBarHeigth);
         overflow: hidden;
         &_imgblock {
             position: relative;
-            height: 80%;
+            height: 88%;
             overflow: hidden;
             margin-bottom: 5px;
         }

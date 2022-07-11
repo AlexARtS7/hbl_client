@@ -1,10 +1,10 @@
 
-import AddProductModal from "components/admin/addProductModal"
+import AddProductModal from "components/modals/adminModals/AddProductModal"
 import UserMenu from "components/userMenu/UserMenu"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useState } from "react"
-import AuthModal from "../../components/auth/AuthModal"
+import AuthModal from "../modals/authModal/AuthModal"
 import './navBar.scss'
 
 const NavBar = observer(() => {
