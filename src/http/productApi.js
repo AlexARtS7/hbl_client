@@ -25,3 +25,8 @@ export const fetchOneProduct = async(id) => {
     data.img = JSON.parse(data.img)
     return data
 }
+
+export const deleteProduct = async(id) => {
+    const {data} = await $authHost.delete('api/products/' + id)
+    return data
+}

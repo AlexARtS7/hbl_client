@@ -5,12 +5,24 @@ import './shopListItem.scss'
 
 const ShopListItem = ({product, role, setProduct}) => {
     const navigate = useNavigate()
-
+  
     const deleteProduct = (e) => {
         e.stopPropagation()
         setProduct(product)
     }
     
+
+    function imageExists(image_url){
+
+        var http = new XMLHttpRequest();
+    
+        http.open('HEAD', image_url, false);
+        http.send();
+    
+        return http.status != 404;
+    
+    }
+    console.log(imageExists(process.env.REACT_APP_API_URL + `${product.id}/` + product.img[0]))
     return (
         <div className='shoplistitem' onClick={() => navigate(PRODUCTS_ROUTE + '/' +  product.id)}>
             <img className='shoplistitem_img' src={process.env.REACT_APP_API_URL + `${product.id}/` + product.img[0]}/>

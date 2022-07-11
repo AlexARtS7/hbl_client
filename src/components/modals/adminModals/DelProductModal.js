@@ -1,8 +1,20 @@
-import React from "react"
+import React, { useContext } from "react"
 import Modal from "components/modals/Modal"
+import { deleteProduct, fetchProducts } from "http/productApi"
+import { Context } from "index"
 
 const DelProductModal = ({setActive, product}) => {
+    const {products} = useContext(Context)
     
+    const deleteHandler = () => {
+        deleteProduct(product.id)
+        .then(response => fetchProducts())
+        .then(data => {
+            products.setProducts(data)
+            setActive(false)
+        })
+    }
+
     return (
         <Modal setActive={setActive} width={1024} title='Удалить продукт'>
             <p className='modal_mark'>Id: {product.id}</p>
@@ -19,7 +31,7 @@ const DelProductModal = ({setActive, product}) => {
                 <div/>
                 <div>
                     <button className="modal_button" onClick={() => setActive(false)}>Отмена</button>
-                    <button className="modal_button" >Удалить</button>
+                    <button className="modal_button" onClick={deleteHandler}>Удалить</button>
                 </div>
             </div>
         </Modal>
@@ -27,3 +39,4 @@ const DelProductModal = ({setActive, product}) => {
 }
 
 export default DelProductModal
+
