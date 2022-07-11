@@ -1,7 +1,8 @@
 @import '../../styles/variables.scss';
 
 .shoplist {
-    height: calc(100vh - $navBarHeigth);
+    position: relative;
+    height: calc(100vh - ($controlBarHeigth + $navBarHeigth));
     overflow-y: auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, 250px);

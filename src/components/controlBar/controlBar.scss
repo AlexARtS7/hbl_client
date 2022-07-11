@@ -1,0 +1,11 @@
+@import '../../styles/variables.scss';
+
+.controlbar {
+    width: 100vw;
+    height: $controlBarHeigth;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background-color:rgb(227, 227, 213);
+}

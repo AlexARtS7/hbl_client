@@ -11,7 +11,7 @@ const ShopList = observer(() => {
         <div className='shoplist'>
             {products._products.map(product => 
                 <ShopListItem product={product} key={product.id}/>
-            )}
+            )}         
         </div>
     )
 })

@@ -5,30 +5,74 @@
     height: calc(100vh - $navBarHeigth);
     overflow-y: auto;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     padding: 30px;
     z-index: 2;
+    &_container {
+        display: flex;
+        justify-content: space-between;
+    }
     &_description {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         margin-left: 20px;
         width: 40%;
         text-align: right;
+        &_block {
+            background-color:rgb(228, 227, 212);
+            padding: 10px;
+            text-align: justify;
+        }
+        &_label {
+            font-size: 14px;
+            color: $gColor;
+        }
         &_name {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
         }
         &_price {
+            display: block;
             font-size: 18px;
             font-weight: 700;
-            align-self: flex-end;
         }
     }
     
     &_carousel {
         width: 50%;
+        height: calc(100vh - $navBarHeigth);
+        overflow: hidden;
+        &_imgblock {
+            position: relative;
+            height: 80%;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        &_controlblock {
+            height: 12%;
+            white-space: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
         &_img {
+            // position: absolute;
+            // top: 50%;
+            // transform: translateY(-50%);
             width: 100%;
+        }
+        &_thumbnail {
+            width: 75px;
+            height: 60px;
+            opacity: .5;
+            margin-right: 5px;
+            cursor: pointer;
+            &_active {
+                width: 75px;
+                height: 60px;
+                margin-right: 5px;
+            }
         }
     }
 }
