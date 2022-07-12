@@ -10,6 +10,7 @@ const AddProductModal = ({setActive}) => {
     const {value:price, setValue:setPrice} = useInput(0)
     const {value:specifications, setValue:setSpecifications} = useInput('')
     const {value:description, setValue:setDescription} = useInput('')
+    const {value:typeName, setValue:setTypeName} = useInput(products._types[0].name)
     const [files, setFiles] = useState(null)
 
     const selectFile = e => {
@@ -25,6 +26,7 @@ const AddProductModal = ({setActive}) => {
         files && Object.keys(files).forEach(function (_,i) {
             formData.append(`files`, files[i])
         }, files)
+        formData.append('typeId', products._types.filter(e => e.name === typeName)[0].id)
         createProduct(formData).then(data => {
             products.addOneProduct(data)
             setActive(false)
@@ -40,6 +42,18 @@ const AddProductModal = ({setActive}) => {
                 name='name'
                 onChange={e => setName(e.target.value)}
             />
+            <select 
+                className='modal_select' 
+                value={typeName || 'Выберите тип'}
+                onChange={(e) => setTypeName(e.target.value)}
+            >
+                {products._types.map(e => 
+                    <option 
+                        key={e.id} 
+                        value={e.name}  
+                    >{e.name}</option>
+                )}                
+            </select>
             <p>Цена</p>
             <input 
                 className="modal_input"

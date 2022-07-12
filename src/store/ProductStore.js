@@ -2,8 +2,23 @@ import {makeAutoObservable} from 'mobx'
 
 export default class ProductStore {
     constructor() {
+        this._types = []
+        this._selectedType = {}
         this._products = []
         makeAutoObservable(this)
+    }
+
+    setTypes(types) {
+        this._types = types
+    }
+
+    setSelectedType(type) {
+        // this.setPage(1)
+        this._selectedType = type
+    }
+
+    addOneType(type) {
+        this._types = [...this._types, type]
     }
 
     setProducts(products) {

@@ -3,7 +3,7 @@
     height: 250px;
     box-shadow: 1px 1px 3px gray;
     border-radius: 3px;
-    padding: 2px;
+    padding: 3px;
     overflow: hidden;
     transition: .1s;
     &:hover {
@@ -11,7 +11,17 @@
         transform: scale(1.02);
     }
     &_img {
-        width: 100%;
+        position: absolute;
+        top:0;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 100%;
+        &_block {
+            position: relative;
+            overflow: hidden;
+            background-color: wheat;
+            height: 80%;
+        }
     }
     &_name {
         margin: 0 5px;
@@ -32,8 +42,8 @@
     &_admin {
         &_buttonblock {
             position: absolute;
-            top: 5px;
-            right: 5px;
+            top: 10px;
+            right: 10px;
         }
         &_button {
             outline: .5px solid white;

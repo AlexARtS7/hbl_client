@@ -1,5 +1,6 @@
 
 import AddProductModal from "components/modals/adminModals/AddProductModal"
+import TypeHandlerModal from "components/modals/adminModals/TypeHandlerModal"
 import UserMenu from "components/userMenu/UserMenu"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
@@ -10,7 +11,8 @@ import './navBar.scss'
 const NavBar = observer(() => {
     const {user} = useContext(Context)
     const [authModalActive, setAuthModalActive] = useState(false)
-    const [addProductModalVis, setAddProductModalVis] = useState(false)
+    const [addProductModalActive, setAddProductModalActive] = useState(false)
+    const [typeHandleModalActive, setTypeHandleModalActive] = useState(false)
     const [userMenuActive, setUserMenuActive] = useState(false)
 
     return (
@@ -30,13 +32,15 @@ const NavBar = observer(() => {
                         {userMenuActive && 
                             <UserMenu   role={user._user.role} 
                                         setUserMenuActive={setUserMenuActive}
-                                        setAdminModalActive={setAddProductModalVis}/>}
+                                        setAdminModalActive={setAddProductModalActive}
+                                        setTypeHandleModalActive={setTypeHandleModalActive}/>}
                     </div> : 
                     <button className='navbar_button' onClick={() => setAuthModalActive(true)}>Войти</button>
                 }            
            </div>
            {authModalActive && <AuthModal setActive={setAuthModalActive}/>}
-           {addProductModalVis && <AddProductModal setActive={setAddProductModalVis}/>}
+           {addProductModalActive && <AddProductModal setActive={setAddProductModalActive}/>}
+           {typeHandleModalActive && <TypeHandlerModal setActive={setTypeHandleModalActive}/>}
         </div>
     )
 })

@@ -2,11 +2,22 @@ import { Context } from "index"
 import React, { useContext } from "react"
 import './userMenu.scss'
 
-const UserMenu = ({role, setUserMenuActive, setAdminModalActive}) => {
+const UserMenu = (props) => {
     const {user} = useContext(Context)
+    const {
+        role,      
+        setUserMenuActive, 
+        setAdminModalActive,
+        setTypeHandleModalActive} = props
+    
 
-    const adminModalHandler = () => {
+    const addProductModalHandler = () => {
         setAdminModalActive(true)
+        setUserMenuActive(false)
+    }
+
+    const typeModalHandler = () => {
+        setTypeHandleModalActive(true)
         setUserMenuActive(false)
     }
 
@@ -22,7 +33,9 @@ const UserMenu = ({role, setUserMenuActive, setAdminModalActive}) => {
             <ul className='usermenu' onClick={(e) => e.stopPropagation()}>
                 {role === 'ADMIN' && 
                     <>
-                        <li onClick={() => adminModalHandler()} >Добавить продукт</li><hr/>
+                        <li onClick={() => addProductModalHandler()} >Добавить продукт</li>
+                        <li onClick={() => typeModalHandler()} >Добавить/Удалить тип</li>
+                        <hr/>
                     </>}
                 <li>мой профиль</li>
                 <li>разнок</li>

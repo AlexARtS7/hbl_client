@@ -15,8 +15,8 @@ export const createProduct = async(formData) => {
     return data
 }
 
-export const fetchProducts = async() => {
-    const {data} = await $host.get('api/products')
+export const fetchProducts = async(typeId) => {
+    const {data} = await $host.get('api/products', {params: {typeId}})
     return data.rows.map(e => ({ ...e, img: JSON.parse(e.img) }))
 }
 
