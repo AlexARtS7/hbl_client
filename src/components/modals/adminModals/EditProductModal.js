@@ -3,7 +3,7 @@ import Modal from "components/modals/Modal"
 import { createProduct, deleteProduct, fetchProducts } from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
-import { Input, Select, Textarea } from "../modalComponents"
+import { Images, Input, Select, Textarea } from "../modalComponents"
 
 const EditProductModal = (props) => {
     const {setActive, product = ''} = props
@@ -19,7 +19,7 @@ const EditProductModal = (props) => {
     const selectFile = e => {
         setFiles(e.target.files)
     }
-
+    
     const addProduct = () => {
         const formData = new FormData()
         formData.append('name', name)
@@ -57,28 +57,7 @@ const EditProductModal = (props) => {
             <Input type='number' value={price} setValue={setPrice} label='Цена:'/>
             <Input value={specifications} setValue={setSpecifications} label='Характеристики:'/>
             <Textarea value={description} setActive={setDescription} label='Описание:'/>
-            <p className='modal_label_min'>Фотографии:</p>
-            <hr/><br/>
-            {product ?
-                product.img.map((element,i) => 
-                    <img 
-                        key={i}  
-                        style={{width:'120px', marginRight:'5px'}}
-                        src={process.env.REACT_APP_API_URL + `${product.id}/` + element}/>
-                )
-            :
-                <>
-                    <input 
-                    className="modal_input_file"
-                    type='file'
-                    multiple
-                    onChange={e => selectFile(e)}
-                    /> 
-                    {files && files[1] && Object.keys(files).map(function (key,i) {
-                    return <p key={i}>{this[key].name}</p>
-                    }, files)}
-                </>                
-            }     
+            <Images product={product} files={files} selectFile={selectFile}/>
             <br/><br/><hr/><br/>
             {product && 
                 <>
