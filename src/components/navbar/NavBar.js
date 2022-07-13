@@ -1,5 +1,5 @@
 
-import AddProductModal from "components/modals/adminModals/AddProductModal"
+import EditProductModal from "components/modals/adminModals/EditProductModal"
 import TypeHandlerModal from "components/modals/adminModals/TypeHandlerModal"
 import UserMenu from "components/userMenu/UserMenu"
 import { Context } from "index"
@@ -11,7 +11,7 @@ import './navBar.scss'
 const NavBar = observer(() => {
     const {user} = useContext(Context)
     const [authModalActive, setAuthModalActive] = useState(false)
-    const [addProductModalActive, setAddProductModalActive] = useState(false)
+    const [editProductModalActive, setEditProductModalActive] = useState(false)
     const [typeHandleModalActive, setTypeHandleModalActive] = useState(false)
     const [userMenuActive, setUserMenuActive] = useState(false)
 
@@ -32,14 +32,14 @@ const NavBar = observer(() => {
                         {userMenuActive && 
                             <UserMenu   role={user._user.role} 
                                         setUserMenuActive={setUserMenuActive}
-                                        setAdminModalActive={setAddProductModalActive}
+                                        setEditProductModalActive={setEditProductModalActive}
                                         setTypeHandleModalActive={setTypeHandleModalActive}/>}
                     </div> : 
                     <button className='navbar_button' onClick={() => setAuthModalActive(true)}>Войти</button>
                 }            
            </div>
            {authModalActive && <AuthModal setActive={setAuthModalActive}/>}
-           {addProductModalActive && <AddProductModal setActive={setAddProductModalActive}/>}
+           {editProductModalActive && <EditProductModal setActive={setEditProductModalActive}/>}
            {typeHandleModalActive && <TypeHandlerModal setActive={setTypeHandleModalActive}/>}
         </div>
     )

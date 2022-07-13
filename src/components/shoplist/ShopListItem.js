@@ -9,7 +9,7 @@ const ShopListItem = ({product, role, setProduct}) => {
     const [loaded, setLoaded] = useState(false)
     const src = process.env.REACT_APP_API_URL + `${product.id}/` + product.img[0]
   
-    const deleteProduct = (e) => {
+    const editProduct = (e) => {
         e.stopPropagation()
         setProduct(product)
     }
@@ -30,7 +30,7 @@ const ShopListItem = ({product, role, setProduct}) => {
             <p className='shoplistitem_price'>{product.price} <span className='shoplistitem_price_rub'>Р</span></p>
             {role === 'ADMIN' && 
                 <div className='shoplistitem_admin_buttonblock'>
-                    <div className='shoplistitem_admin_button' onClick={(e) => deleteProduct(e)}>del</div>
+                    <div className='shoplistitem_admin_button' onClick={(e) => editProduct(e)}>edit</div>
                 </div>}
         </div>
     )

@@ -7,12 +7,12 @@ const UserMenu = (props) => {
     const {
         role,      
         setUserMenuActive, 
-        setAdminModalActive,
+        setEditProductModalActive,
         setTypeHandleModalActive} = props
     
 
-    const addProductModalHandler = () => {
-        setAdminModalActive(true)
+    const editProductModalHandler = () => {
+        setEditProductModalActive(true)
         setUserMenuActive(false)
     }
 
@@ -33,7 +33,7 @@ const UserMenu = (props) => {
             <ul className='usermenu' onClick={(e) => e.stopPropagation()}>
                 {role === 'ADMIN' && 
                     <>
-                        <li onClick={() => addProductModalHandler()} >Добавить продукт</li>
+                        <li onClick={() => editProductModalHandler()} >Добавить продукт</li>
                         <li onClick={() => typeModalHandler()} >Добавить/Удалить тип</li>
                         <hr/>
                     </>}

@@ -1,4 +1,4 @@
-import DelProductModal from "components/modals/adminModals/DelProductModal"
+import EditProductModal from "components/modals/adminModals/EditProductModal"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect, useState } from "react"
@@ -9,16 +9,16 @@ const ShopList = observer(() => {
     const {products} = useContext(Context)
     const [product, setProduct] = useState({})
     const {user} = useContext(Context)
-    const [delModalActive, setDelModalActive] = useState(false)   
+    const [editProductModalActive, setEditProductModalActive] = useState(false)   
     const role = user._user.role  
 
     useEffect(() => {
-        if(product.id) setDelModalActive(true)
+        if(product.id) setEditProductModalActive(true)
     }, [product])
 
     useEffect(() => {
-        if(product.id && !delModalActive) setProduct({})
-    }, [delModalActive])
+        if(product.id && !editProductModalActive) setProduct({})
+    }, [editProductModalActive])
     
     return (
         <div className='shoplist'>
@@ -29,7 +29,7 @@ const ShopList = observer(() => {
                     role={role} 
                     setProduct={setProduct}/>
             )}     
-            {delModalActive && <DelProductModal setActive={setDelModalActive} product={product}/>}  
+            {editProductModalActive && <EditProductModal setActive={setEditProductModalActive} product={product}/>}  
         </div>
     )
 })
