@@ -3,7 +3,7 @@ import Modal from "components/modals/Modal"
 import { createProduct, deleteProduct, fetchProducts } from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
-import { Images, Input, Select, Textarea } from "../modalComponents"
+import { FullButton, Images, Input, Select, Textarea } from "../modalComponents"
 import { useNavigate } from "react-router-dom"
 import { PRODUCTS_ROUTE } from "utils/const"
 
@@ -17,7 +17,8 @@ const EditProductModal = (props) => {
     const {value:description, setValue:setDescription} = useInput(product.description || '')
     const type = product ? products._types.filter(type => type.id === +product.typeId)[0].name: ''
     const {value:typeName, setValue:setTypeName} = useInput(type)
-    const [files, setFiles] = useState(null)
+    const [loadedFiles, setLoadedFiles] = useState(product.img)
+    const [files, setFiles] = useState({})
     
     const selectFile = e => {
         setFiles(e.target.files)
@@ -44,14 +45,11 @@ const EditProductModal = (props) => {
         const confirmed = confirm(`Продукт с ID: ${product.id} будет удален! Продолжить?`)
         if(confirmed){
             deleteProduct(product.id)
-            .then(response => fetchProducts())
-            .then(data => {
-                products.setProducts(data)
-                setActive(false)
-            })
+            .then(response => products.deleteOneProduct(product.id))
+            setActive(false)
         }        
     }
-
+   
     return (
         <Modal setActive={setActive} width={1024} title={product ? 'Редактор продукта':'Добавить продукт'}>
             {product && <p className='modal_mark'>Id: {product.id}</p>}
@@ -61,16 +59,14 @@ const EditProductModal = (props) => {
             <Input type='number' value={price} setValue={setPrice} label='Цена:'/>
             <Input value={specifications} setValue={setSpecifications} label='Характеристики:'/>
             <Textarea value={description} setValue={setDescription} label='Описание:'/>
-            <Images product={product} files={files} selectFile={selectFile}/>
+            <Images product={product} files={files} loadedFiles={loadedFiles} selectFile={selectFile}/>
+            {files[0] && <FullButton text='Загрузить на сервер'/>}
             <br/><br/><hr/><br/>
-            {product && 
-                <>
-                <button 
-                    className="modal_button_full" 
-                    style={{background:'rgb(255, 52, 52)', color:'white'}} 
-                    onClick={deleteHandler}>Удалить продукт из базы данных</button><br/><br/><hr/>
-                </>
-            }
+            {product && <><FullButton 
+                onClick={deleteHandler} 
+                text='Удалить продукт из базы данных' 
+                bg='rgb(255, 52, 52)' 
+                color='#ffffff'/><br/><br/><hr/></>}          
             <div className="flex_between">
                 <div/>
                 <div>

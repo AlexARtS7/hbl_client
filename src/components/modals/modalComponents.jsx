@@ -55,15 +55,27 @@ export const Textarea = (props) => {
     )
 }
 
+export const FullButton = (props) => {
+    const {bg, color, onClick, text} = props
+    return (
+        <>
+            <button 
+                className="modal_button_full" 
+                style={{background:bg, color:color}} 
+                onClick={onClick}>{text}</button>
+        </>
+    )
+}
+
 export const Images = (props) => {
-    const {product, files, selectFile} = props
+    const {product, files, selectFile, loadedFiles} = props
     return (
         <>
             {product && 
                 <>
                     <p className='modal_label_min'>Фотографии загруженные на сервер:</p>
                     <hr/><br/>
-                    {product.img.map((element,i) => 
+                    {loadedFiles.map((element,i) => 
                         <div key={i}  style={{marginRight:'5px', position:'relative', display:'inline-block'}}>
                             <img 
                             style={{width:'120px'}}

@@ -28,4 +28,8 @@ export default class ProductStore {
     addOneProduct(product) {
         this._products = [...this._products, product]
     }
+
+    deleteOneProduct(id) {
+        this._products = this._products.filter(product => product.id !== id)
+    }
 }

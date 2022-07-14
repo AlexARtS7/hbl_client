@@ -9,8 +9,7 @@ const ShopPage = observer(() => {
     const {products} = useContext(Context)
 
     useEffect(() => {
-        fetchProducts(null).then(data => products.setProducts(data))
-        fetchTypes().then(data => products.setTypes(data))        
+        fetchTypes().then(data => products.setTypes(data)) 
     },[])
 
     useEffect(() => {
