@@ -38,7 +38,10 @@ const EditProductModal = (props) => {
 
     const addFiles = () => {
         const formData = generateFormData({id:product.id, files})
-        uploadFiles(formData)
+        uploadFiles(formData).then(response => {
+            setLoadedFiles(JSON.parse(response))
+            // products.setProducts(data)
+        })
     }
 
     const deleteHandler = () => {
