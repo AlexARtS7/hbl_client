@@ -11,7 +11,12 @@ export const fetchTypes = async() => {
 }
 
 export const createProduct = async(formData) => {
-    const {data} = await $authHost.post('api/products', formData)
+    const {data} = await $authHost.post('api/products/create', formData)
+    return data
+}
+
+export const uploadFiles = async(formData) => {
+    const {data} = await $authHost.post('api/products/addfiles', formData)
     return data
 }
 

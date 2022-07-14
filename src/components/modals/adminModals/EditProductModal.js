@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react"
 import Modal from "components/modals/Modal"
-import { createProduct, deleteProduct, fetchProducts } from "http/productApi"
+import { createProduct, deleteProduct, fetchProducts, uploadFiles } from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { FullButton, Images, Input, Select, Textarea } from "../modalComponents"
 import { useNavigate } from "react-router-dom"
 import { PRODUCTS_ROUTE } from "utils/const"
+import { generateFormData } from "./generateFormData"
 
 const EditProductModal = (props) => {
     const navigate = useNavigate()
@@ -25,20 +26,19 @@ const EditProductModal = (props) => {
     }
     
     const addProduct = () => {
-        const formData = new FormData()
-        formData.append('name', name)
-        formData.append('price', `${price}`)
-        formData.append('specifications', specifications)
-        formData.append('description', description)
-        files && Object.keys(files).forEach(function (_,i) {
-            formData.append(`files`, files[i])
-        }, files)
-        formData.append('typeId', products._types.filter(e => e.name === typeName)[0].id)
+        const formData = generateFormData({
+            name, price, specifications, description, files, types:products._types, typeName
+        })
         createProduct(formData).then(data => {
             products.addOneProduct(data)
             navigate(PRODUCTS_ROUTE + '/' +  data.id)
             setActive(false)
         })          
+    }
+
+    const addFiles = () => {
+        const formData = generateFormData({id:product.id, files})
+        uploadFiles(formData)
     }
 
     const deleteHandler = () => {
@@ -60,7 +60,7 @@ const EditProductModal = (props) => {
             <Input value={specifications} setValue={setSpecifications} label='Характеристики:'/>
             <Textarea value={description} setValue={setDescription} label='Описание:'/>
             <Images product={product} files={files} loadedFiles={loadedFiles} selectFile={selectFile}/>
-            {files[0] && <FullButton text='Загрузить на сервер'/>}
+            {product && files[0] && <FullButton text='Загрузить на сервер' onClick={addFiles}/>}
             <br/><br/><hr/><br/>
             {product && <><FullButton 
                 onClick={deleteHandler} 
