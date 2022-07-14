@@ -64,9 +64,8 @@ export const Images = (props) => {
                     <p className='modal_label_min'>Фотографии загруженные на сервер:</p>
                     <hr/><br/>
                     {product.img.map((element,i) => 
-                        <div style={{marginRight:'5px', position:'relative', display:'inline-block'}}>
+                        <div key={i}  style={{marginRight:'5px', position:'relative', display:'inline-block'}}>
                             <img 
-                            key={i}  
                             style={{width:'120px'}}
                             src={process.env.REACT_APP_API_URL + `${product.id}/` + element}/>
                             <input type='checkbox'  
@@ -78,10 +77,13 @@ export const Images = (props) => {
                                         cursor:'pointer',
                                         outline:'1px solid #ffffff'}}/>
                             {i === 0 && 
-                            <p style={{ position:'absolute', 
-                                        left:'5px', 
-                                        color:'#ffffff',
-                                        bottom:'5px', }}>ПРЕВЬЮ</p>}
+                            <div style={{ position:'absolute', 
+                                        left:'0',
+                                        width:'100%', 
+                                        background:'rgba(255, 255, 255, .7)',
+                                        fontSize:'12px',
+                                        textAlign:'center',
+                                        bottom:'10px', }}>ПРЕВЬЮ</div>}
                         </div>                        
                     )}
                     <br/><br/><hr/><br/>

@@ -4,8 +4,11 @@ import { createProduct, deleteProduct, fetchProducts } from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { Images, Input, Select, Textarea } from "../modalComponents"
+import { useNavigate } from "react-router-dom"
+import { PRODUCTS_ROUTE } from "utils/const"
 
 const EditProductModal = (props) => {
+    const navigate = useNavigate()
     const {setActive, product = ''} = props
     const {products} = useContext(Context)
     const {value:name, setValue:setName} = useInput(product.name || '')
@@ -32,8 +35,9 @@ const EditProductModal = (props) => {
         formData.append('typeId', products._types.filter(e => e.name === typeName)[0].id)
         createProduct(formData).then(data => {
             products.addOneProduct(data)
+            navigate(PRODUCTS_ROUTE + '/' +  data.id)
             setActive(false)
-        })           
+        })          
     }
 
     const deleteHandler = () => {
@@ -56,7 +60,7 @@ const EditProductModal = (props) => {
             <Select value={typeName} array={products._types} setValue={setTypeName} label='Категория:'/>
             <Input type='number' value={price} setValue={setPrice} label='Цена:'/>
             <Input value={specifications} setValue={setSpecifications} label='Характеристики:'/>
-            <Textarea value={description} setActive={setDescription} label='Описание:'/>
+            <Textarea value={description} setValue={setDescription} label='Описание:'/>
             <Images product={product} files={files} selectFile={selectFile}/>
             <br/><br/><hr/><br/>
             {product && 
