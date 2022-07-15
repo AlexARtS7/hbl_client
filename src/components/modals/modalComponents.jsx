@@ -68,7 +68,7 @@ export const FullButton = (props) => {
 }
 
 export const Images = (props) => {
-    const {product, files, selectFile, loadedFiles, onClick} = props
+    const {product, files, selectFile, loadedFiles, onClick, onDelete} = props
     return (
         <>
             {product && 
@@ -81,14 +81,7 @@ export const Images = (props) => {
                             style={{width:'120px',cursor:'pointer'}}
                             onClick={() => onClick(i)}
                             src={process.env.REACT_APP_API_URL + `${product.id}/` + element}/>
-                            <input type='checkbox'  
-                                style={{position:'absolute', 
-                                        right:'5px', 
-                                        top:'5px', 
-                                        width:'18px', 
-                                        height:'18px',
-                                        cursor:'pointer',
-                                        outline:'1px solid #ffffff'}}/>
+                            <div onClick={() => onDelete(i)} className='modal_button_del'>del</div>
                             {i === 0 && 
                             <div style={{ position:'absolute', 
                                         left:'0',

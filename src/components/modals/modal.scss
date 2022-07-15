@@ -21,7 +21,6 @@
         font-weight: 600;
         &_min {
             font-size: 14px;
-            // margin: 0 5px;
             padding: 4px;
             background-color:rgb(225, 225, 222);
         }
@@ -51,6 +50,23 @@
             margin: 10px 0;
             width: 100%;
             cursor: pointer;
+        }
+        &_del {
+            position: absolute; 
+            text-align: center;
+            opacity: .5;
+            background-color:red;
+            color:#ffffff;
+            right:5px; 
+            top:5px; 
+            padding:2px;
+            font-size:12px;
+            border-radius:2px;
+            cursor:pointer;
+            outline:1px solid #ffffff;
+                &:hover {
+                    opacity: 1;
+                }            
         }
     }
     &_link {

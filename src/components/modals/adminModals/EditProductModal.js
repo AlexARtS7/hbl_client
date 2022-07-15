@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Modal from "components/modals/Modal"
 import { createProduct, deleteProduct, fetchProducts, uploadFiles } from "http/productApi"
 import { Context } from "index"
@@ -20,6 +20,7 @@ const EditProductModal = (props) => {
     const {value:typeName, setValue:setTypeName} = useInput(type)
     const [loadedFiles, setLoadedFiles] = useState(product.img)
     const [files, setFiles] = useState({})
+    const [delArray, setDelArray] = useState([])
     
     const selectFile = e => {
         setFiles(e.target.files)
@@ -48,8 +49,11 @@ const EditProductModal = (props) => {
         })
     }
 
+    const deleteFile = (index) => {
+
+    }
+
     const setPreview = (index) => {
-        // console.log(loadedFiles.filter((_,i) => i === index), ...loadedFiles.filter((_,i) => i !== index))
         setLoadedFiles([...loadedFiles.filter((_,i) => i === index), ...loadedFiles.filter((_,i) => i !== index)])
     }
 
@@ -66,6 +70,10 @@ const EditProductModal = (props) => {
             setActive(false)
         }        
     }
+
+    useEffect(() => {
+        loadedFiles && setDelArray([...loadedFiles.map(element => ({name: element, status:true}))])
+    }, [loadedFiles])
    
     return (
         <Modal setActive={setActive} width={1024} title={product ? 'Редактор продукта':'Добавить продукт'}>
@@ -76,7 +84,9 @@ const EditProductModal = (props) => {
             <Input type='number' value={price} setValue={setPrice} label='Цена:'/>
             <Input value={specifications} setValue={setSpecifications} label='Характеристики:'/>
             <Textarea value={description} setValue={setDescription} label='Описание:'/>
-            <Images product={product} files={files} loadedFiles={loadedFiles} selectFile={selectFile} onClick={setPreview}/>
+            <Images 
+                product={product} files={files} loadedFiles={loadedFiles} 
+                selectFile={selectFile} onClick={setPreview} onDelete={deleteFile}/>
             {product && files[0] && <FullButton text='Загрузить на сервер' onClick={addFiles}/>}
             <br/><br/><hr/><br/>
             {product && <><FullButton 
