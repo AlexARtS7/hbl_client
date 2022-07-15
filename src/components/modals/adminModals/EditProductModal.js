@@ -39,9 +39,23 @@ const EditProductModal = (props) => {
     const addFiles = () => {
         const formData = generateFormData({id:product.id, files})
         uploadFiles(formData).then(response => {
-            setLoadedFiles(JSON.parse(response))
-            // products.setProducts(data)
+            const data = JSON.parse(response)
+            setLoadedFiles(data)
+            products.setProducts(products._products.map(element => 
+                element.id === product.id ? {...element, img: data}:element))
+            setFiles({})
+            document.getElementById('fileInput').value = ''
         })
+    }
+
+    const setPreview = (index) => {
+        // console.log(loadedFiles.filter((_,i) => i === index), ...loadedFiles.filter((_,i) => i !== index))
+        setLoadedFiles([...loadedFiles.filter((_,i) => i === index), ...loadedFiles.filter((_,i) => i !== index)])
+    }
+
+    const updateProduct = () => {
+        if(product && files[0]) addFiles()
+
     }
 
     const deleteHandler = () => {
@@ -62,7 +76,7 @@ const EditProductModal = (props) => {
             <Input type='number' value={price} setValue={setPrice} label='Цена:'/>
             <Input value={specifications} setValue={setSpecifications} label='Характеристики:'/>
             <Textarea value={description} setValue={setDescription} label='Описание:'/>
-            <Images product={product} files={files} loadedFiles={loadedFiles} selectFile={selectFile}/>
+            <Images product={product} files={files} loadedFiles={loadedFiles} selectFile={selectFile} onClick={setPreview}/>
             {product && files[0] && <FullButton text='Загрузить на сервер' onClick={addFiles}/>}
             <br/><br/><hr/><br/>
             {product && <><FullButton 
@@ -75,7 +89,7 @@ const EditProductModal = (props) => {
                 <div>
                     <button className="modal_button" onClick={() => setActive(false)}>Отмена</button>
                     {product ? 
-                        <button className="modal_button" >Обновить данные</button>
+                        <button className="modal_button" onClick={updateProduct}>Обновить данные</button>
                         :
                         <button className="modal_button" onClick={addProduct}>Добавить продукт в базу данных</button>
                     }

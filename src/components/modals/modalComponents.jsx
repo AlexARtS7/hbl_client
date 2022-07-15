@@ -68,7 +68,7 @@ export const FullButton = (props) => {
 }
 
 export const Images = (props) => {
-    const {product, files, selectFile, loadedFiles} = props
+    const {product, files, selectFile, loadedFiles, onClick} = props
     return (
         <>
             {product && 
@@ -78,7 +78,8 @@ export const Images = (props) => {
                     {loadedFiles.map((element,i) => 
                         <div key={i}  style={{marginRight:'5px', position:'relative', display:'inline-block'}}>
                             <img 
-                            style={{width:'120px'}}
+                            style={{width:'120px',cursor:'pointer'}}
+                            onClick={() => onClick(i)}
                             src={process.env.REACT_APP_API_URL + `${product.id}/` + element}/>
                             <input type='checkbox'  
                                 style={{position:'absolute', 
@@ -106,6 +107,7 @@ export const Images = (props) => {
             <input 
             className="modal_input_file"
             type='file'
+            id='fileInput'
             multiple
             onChange={e => selectFile(e)}
             /> 
