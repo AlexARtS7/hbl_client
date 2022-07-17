@@ -3,10 +3,13 @@ import Modal from "components/modals/Modal"
 import { createProduct, deleteProduct, fetchProducts, uploadFiles } from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
-import { FullButton, Images, Input, Select, Textarea } from "../modalComponents"
+import { FullButton, Input, Select, Textarea } from "../modalComponents"
 import { useNavigate } from "react-router-dom"
 import { PRODUCTS_ROUTE } from "utils/const"
 import { generateFormData } from "./generateFormData"
+import ImagesHandler from "./ImagesHandler"
+
+const generateDelArray = (Files) => [...Files.map(element => ({name: element.name, status: element.status || true}))]
 
 const EditProductModal = (props) => {
     const navigate = useNavigate()
@@ -20,7 +23,7 @@ const EditProductModal = (props) => {
     const {value:typeName, setValue:setTypeName} = useInput(type)
     const [loadedFiles, setLoadedFiles] = useState(product.img)
     const [files, setFiles] = useState({})
-    const [delArray, setDelArray] = useState([])
+    const [delArray, setDelArray] = useState({})
     
     const selectFile = e => {
         setFiles(e.target.files)
@@ -41,7 +44,8 @@ const EditProductModal = (props) => {
         const formData = generateFormData({id:product.id, files})
         uploadFiles(formData).then(response => {
             const data = JSON.parse(response)
-            setLoadedFiles(data)
+            // setDelArray(generateDelArray(data))
+            setLoadedFiles(data)            
             products.setProducts(products._products.map(element => 
                 element.id === product.id ? {...element, img: data}:element))
             setFiles({})
@@ -49,17 +53,8 @@ const EditProductModal = (props) => {
         })
     }
 
-    const deleteFile = (index) => {
-
-    }
-
-    const setPreview = (index) => {
-        setLoadedFiles([...loadedFiles.filter((_,i) => i === index), ...loadedFiles.filter((_,i) => i !== index)])
-    }
-
     const updateProduct = () => {
         if(product && files[0]) addFiles()
-
     }
 
     const deleteHandler = () => {
@@ -70,10 +65,6 @@ const EditProductModal = (props) => {
             setActive(false)
         }        
     }
-
-    useEffect(() => {
-        loadedFiles && setDelArray([...loadedFiles.map(element => ({name: element, status:true}))])
-    }, [loadedFiles])
    
     return (
         <Modal setActive={setActive} width={1024} title={product ? 'Редактор продукта':'Добавить продукт'}>
@@ -84,9 +75,11 @@ const EditProductModal = (props) => {
             <Input type='number' value={price} setValue={setPrice} label='Цена:'/>
             <Input value={specifications} setValue={setSpecifications} label='Характеристики:'/>
             <Textarea value={description} setValue={setDescription} label='Описание:'/>
-            <Images 
+            <ImagesHandler 
                 product={product} files={files} loadedFiles={loadedFiles} 
-                selectFile={selectFile} onClick={setPreview} onDelete={deleteFile}/>
+                selectFile={selectFile} onClick={setPreview} 
+                onDelSelect={selectDelFiles} delArray={delArray}
+                />
             {product && files[0] && <FullButton text='Загрузить на сервер' onClick={addFiles}/>}
             <br/><br/><hr/><br/>
             {product && <><FullButton 

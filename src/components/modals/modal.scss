@@ -51,22 +51,17 @@
             width: 100%;
             cursor: pointer;
         }
+    }
+    &_checkbox {
         &_del {
-            position: absolute; 
-            text-align: center;
-            opacity: .5;
-            background-color:red;
-            color:#ffffff;
+            position: absolute;
             right:5px; 
             top:5px; 
-            padding:2px;
-            font-size:12px;
+            height: 16px;
+            width: 16px;
             border-radius:2px;
             cursor:pointer;
-            outline:1px solid #ffffff;
-                &:hover {
-                    opacity: 1;
-                }            
+            outline:1px solid #ffffff;       
         }
     }
     &_link {
