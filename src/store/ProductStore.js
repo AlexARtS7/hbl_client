@@ -4,7 +4,6 @@ export default class ProductStore {
     constructor() {
         this._types = []
         this._selectedType = {}
-        this._selectedImgs = []
         this._products = []
         makeAutoObservable(this)
     }

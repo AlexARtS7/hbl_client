@@ -7,9 +7,8 @@ import { FullButton, Input, Select, Textarea } from "../modalComponents"
 import { useNavigate } from "react-router-dom"
 import { PRODUCTS_ROUTE } from "utils/const"
 import { generateFormData } from "./generateFormData"
-import ImagesHandler from "./ImagesHandler"
-
-const generateDelArray = (Files) => [...Files.map(element => ({name: element.name, status: element.status || true}))]
+import PreviewImages from "./PreviewImages"
+import LoadImages from "./LoadImages"
 
 const EditProductModal = (props) => {
     const navigate = useNavigate()
@@ -23,11 +22,6 @@ const EditProductModal = (props) => {
     const {value:typeName, setValue:setTypeName} = useInput(type)
     const [loadedFiles, setLoadedFiles] = useState(product.img)
     const [files, setFiles] = useState({})
-    const [delArray, setDelArray] = useState({})
-    
-    const selectFile = e => {
-        setFiles(e.target.files)
-    }
     
     const addProduct = () => {
         const formData = generateFormData({
@@ -41,10 +35,9 @@ const EditProductModal = (props) => {
     }
 
     const addFiles = () => {
-        const formData = generateFormData({id:product.id, files})
+        const formData = generateFormData({id:product.id, files, loadedFiles})
         uploadFiles(formData).then(response => {
             const data = JSON.parse(response)
-            // setDelArray(generateDelArray(data))
             setLoadedFiles(data)            
             products.setProducts(products._products.map(element => 
                 element.id === product.id ? {...element, img: data}:element))
@@ -75,11 +68,11 @@ const EditProductModal = (props) => {
             <Input type='number' value={price} setValue={setPrice} label='Цена:'/>
             <Input value={specifications} setValue={setSpecifications} label='Характеристики:'/>
             <Textarea value={description} setValue={setDescription} label='Описание:'/>
-            <ImagesHandler 
-                product={product} files={files} loadedFiles={loadedFiles} 
-                selectFile={selectFile} onClick={setPreview} 
-                onDelSelect={selectDelFiles} delArray={delArray}
-                />
+            {product && <PreviewImages
+                product={product} 
+                loadedFiles={loadedFiles} setLoadedFiles={setLoadedFiles}
+                />}
+            <LoadImages files={files} setFiles={setFiles}/>
             {product && files[0] && <FullButton text='Загрузить на сервер' onClick={addFiles}/>}
             <br/><br/><hr/><br/>
             {product && <><FullButton 
