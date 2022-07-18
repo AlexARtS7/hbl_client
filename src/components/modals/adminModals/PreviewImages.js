@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react"
 
-// const generateDelArray = (Files) => [...Files.map(element => ({name: element.name, status: element.status || true}))]
-
 const PreviewImages = (props) => {
     const {product, loadedFiles, setLoadedFiles} = props
-    const [delArray, setDelArray] = useState([...loadedFiles.map(element => ({name: element, status: true}))])
+    const [delArray, setDelArray] = useState([...loadedFiles.map(element => ({name: element, status: false}))])
 
     const setPreview = (index, element) => {
-        setDelArray(delArray.map(item => item.name === element? {...item, status:true}:item))
+        setDelArray(delArray.map(item => item.name === element? {...item, status:false}:item))
         setLoadedFiles([...loadedFiles.filter((_,i) => i === index), ...loadedFiles.filter((_,i) => i !== index)])
     }
 
@@ -15,10 +13,15 @@ const PreviewImages = (props) => {
         setDelArray(delArray.map(item => item.name === index ? {...item, status:!item.status}:item))
     }
   
+    const checked = (element) => {
+        const item = delArray.find(item => item.name == element)
+        return item ? item.status:false
+    }
+
     useEffect(() => {
         if(delArray.length !== loadedFiles.length) {
             const addArray = []
-            loadedFiles.forEach((filename,i)=> i >= delArray.length && addArray.push({name: filename, status: true}))
+            loadedFiles.forEach((filename,i)=> i >= delArray.length && addArray.push({name: filename, status: false}))
             
             setDelArray([
                 ...delArray.map(element => ({name: element.name, status: element.status})),
@@ -26,7 +29,7 @@ const PreviewImages = (props) => {
             ])
         }        
     }, [loadedFiles])
-
+    
     return (
         <>    
             <p className='modal_label_min'>Фотографии загруженные на сервер:</p>
@@ -40,7 +43,7 @@ const PreviewImages = (props) => {
                     {i > 0 && <input 
                         className='modal_checkbox_del' type='checkbox'
                         onChange={() => selectDelFiles(element)}
-                        // checked={delArray.find(item => item.name == element).status || true}
+                        checked={checked(element)}
                         ></input>}
                     {i === 0 && 
                     <div style={{ position:'absolute', 
