@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState } from "react"
 import Modal from "components/modals/Modal"
-import { createProduct, deleteProduct, fetchProducts, uploadFiles } from "http/productApi"
+import { changeOrderFiles, createProduct, deleteProduct, uploadFiles } from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { FullButton, Input, Select, Textarea } from "../modalComponents"
@@ -22,7 +22,7 @@ const EditProductModal = (props) => {
     const {value:typeName, setValue:setTypeName} = useInput(type)
     const [loadedFiles, setLoadedFiles] = useState(product.img)
     const [files, setFiles] = useState({})
-    
+
     const addProduct = () => {
         const formData = generateFormData({
             name, price, specifications, description, files, types:products._types, typeName
@@ -35,7 +35,7 @@ const EditProductModal = (props) => {
     }
 
     const addFiles = () => {
-        const formData = generateFormData({id:product.id, files, loadedFiles})
+        const formData = generateFormData({id:product.id, files, filesArray:loadedFiles})
         uploadFiles(formData).then(response => {
             const data = JSON.parse(response)
             setLoadedFiles(data)            
@@ -48,6 +48,8 @@ const EditProductModal = (props) => {
 
     const updateProduct = () => {
         if(product && files[0]) addFiles()
+        const formData = generateFormData({id:product.id, filesArray:loadedFiles})
+        changeOrderFiles(formData)
     }
 
     const deleteHandler = () => {

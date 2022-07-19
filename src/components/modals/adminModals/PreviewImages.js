@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from "react"
+import { changeOrderFiles, deleteFiles } from "http/productApi"
+import { Context } from "index"
+import React, { useContext, useEffect, useState } from "react"
+import { FullButton } from "../modalComponents"
+import { generateFormData } from "./generateFormData"
 
 const PreviewImages = (props) => {
+    const {products} = useContext(Context)
     const {product, loadedFiles, setLoadedFiles} = props
     const [delArray, setDelArray] = useState([...loadedFiles.map(element => ({name: element, status: false}))])
-
+    const [delFilesBtnActive, setDelFilesBtnActive] = useState(false)
+    
     const setPreview = (index, element) => {
         setDelArray(delArray.map(item => item.name === element? {...item, status:false}:item))
         setLoadedFiles([...loadedFiles.filter((_,i) => i === index), ...loadedFiles.filter((_,i) => i !== index)])
@@ -18,6 +24,18 @@ const PreviewImages = (props) => {
         return item ? item.status:false
     }
 
+    const deleteSelectedFiles = () => {
+        const formData = generateFormData({id:product.id, 
+            filesArray:delArray.filter(item => item.status)})
+            const resultArray = loadedFiles.filter(filename => !delArray.find(item => item.name === filename).status)
+        deleteFiles(formData)
+        .then(response => {
+            setLoadedFiles(resultArray)
+            products.setProducts(products._products.map(element => 
+                element.id === product.id ? {...element, img: resultArray}:element))
+        })
+    }
+
     useEffect(() => {
         if(delArray.length !== loadedFiles.length) {
             const addArray = []
@@ -29,6 +47,10 @@ const PreviewImages = (props) => {
             ])
         }        
     }, [loadedFiles])
+
+    useEffect(() => {
+        delArray.find(item => item.status === true) ? setDelFilesBtnActive(true):setDelFilesBtnActive(false)
+    },[delArray])
     
     return (
         <>    
@@ -39,7 +61,8 @@ const PreviewImages = (props) => {
                     <img 
                     style={{width:'120px',cursor:'pointer'}}
                     onClick={() => setPreview(i, element)}
-                    src={process.env.REACT_APP_API_URL + `${product.id}/` + element}/>
+                    src={process.env.REACT_APP_API_URL + `${product.id}/` + element} title={element}/>
+                    
                     {i > 0 && <input 
                         className='modal_checkbox_del' type='checkbox'
                         onChange={() => selectDelFiles(element)}
@@ -52,9 +75,15 @@ const PreviewImages = (props) => {
                                 background:'rgba(255, 255, 255, .7)',
                                 fontSize:'12px',
                                 textAlign:'center',
-                                bottom:'10px', }}>ПРЕВЬЮ</div>}
+                                bottom:'18px', }}>ПРЕВЬЮ</div>}
                 </div>                        
             )}
+            {delFilesBtnActive && 
+                <><br/><br/><FullButton 
+                    text='Удалить отмеченные изображения' 
+                    onClick={deleteSelectedFiles}
+                    bg='rgb(255, 52, 52)'
+                    color='#ffffff'/></>}
             <br/><br/><hr/><br/>               
         </>
     )

@@ -31,6 +31,16 @@ export const fetchOneProduct = async(id) => {
     return data
 }
 
+export const deleteFiles = async(formData) => {
+    const {data} = await $authHost.post('api/products/deletefiles', formData)
+    return data
+}
+
+export const changeOrderFiles = async(formData) => {
+    const {data} = await $authHost.post('api/products/orderfiles', formData)
+    return data
+}
+
 export const deleteProduct = async(id) => {
     const {data} = await $authHost.delete('api/products/' + id)
     return data
