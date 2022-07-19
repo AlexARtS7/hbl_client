@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 import Modal from "components/modals/Modal"
-import { changeOrderFiles, createProduct, deleteProduct, uploadFiles } from "http/productApi"
+import { changeOrderFiles, createProduct, deleteProduct, updateData, uploadFiles } from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { FullButton, Input, Select, Textarea } from "../modalComponents"
@@ -48,8 +48,16 @@ const EditProductModal = (props) => {
 
     const updateProduct = () => {
         if(product && files[0]) addFiles()
-        const formData = generateFormData({id:product.id, filesArray:loadedFiles})
+        let formData = generateFormData({id:product.id, filesArray:loadedFiles})
         changeOrderFiles(formData)
+        formData = generateFormData({
+            id:product.id, name, price, specifications, description, types:products._types, typeName})
+        updateData(formData)
+        .then(response => {
+            products.setProducts(products._products.map(element => 
+                element.id === product.id ? {...element, name, price, specifications, description}:element))
+        })
+        setActive(false)
     }
 
     const deleteHandler = () => {

@@ -41,6 +41,11 @@ export const changeOrderFiles = async(formData) => {
     return data
 }
 
+export const updateData = async(formData) => {
+    const {data} = await $authHost.post('api/products/updatedata', formData)
+    return data
+}
+
 export const deleteProduct = async(id) => {
     const {data} = await $authHost.delete('api/products/' + id)
     return data

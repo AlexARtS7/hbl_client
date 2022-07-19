@@ -1,4 +1,4 @@
-import { changeOrderFiles, deleteFiles } from "http/productApi"
+import { deleteFiles } from "http/productApi"
 import { Context } from "index"
 import React, { useContext, useEffect, useState } from "react"
 import { FullButton } from "../modalComponents"
