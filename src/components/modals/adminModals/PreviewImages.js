@@ -28,9 +28,10 @@ const PreviewImages = (props) => {
         const formData = generateFormData({id:product.id, 
             filesArray:delArray.filter(item => item.status)})
             const resultArray = loadedFiles.filter(filename => !delArray.find(item => item.name === filename).status)
-        deleteFiles(formData)
+        deleteFiles(formData)        
         .then(response => {
             setLoadedFiles(resultArray)
+            setDelArray(delArray.filter(item => !item.status))
             products.setProducts(products._products.map(element => 
                 element.id === product.id ? {...element, img: resultArray}:element))
         })
