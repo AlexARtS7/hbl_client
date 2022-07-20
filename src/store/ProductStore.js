@@ -7,7 +7,7 @@ export default class ProductStore {
         this._products = []
         this._page = 1
         this._totalCount = 0
-        this._limit = 2
+        this._limit = 10
         this._reload = false
         makeAutoObservable(this)
     }
@@ -39,13 +39,5 @@ export default class ProductStore {
 
     setProducts(products) {
         this._products = products
-    }
-
-    addOneProduct(product) {
-        this._products = [...this._products, product]
-    }
-
-    deleteOneProduct(id) {
-        this._products = this._products.filter(product => product.id !== id)
     }
 }

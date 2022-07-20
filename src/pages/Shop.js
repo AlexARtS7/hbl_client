@@ -14,7 +14,7 @@ const ShopPage = observer(() => {
     },[])
 
     useEffect(() => {
-        fetchProducts(products._selectedType.id, products._page, 2).then(data => {
+        fetchProducts(products._selectedType.id, products._page, products._limit).then(data => {
             products.setProducts(data.rows.map(e => ({ ...e, img: JSON.parse(e.img) })))
             products.setTotalCount(data.count)
         })

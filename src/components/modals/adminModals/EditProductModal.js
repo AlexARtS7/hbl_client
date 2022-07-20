@@ -28,10 +28,9 @@ const EditProductModal = (props) => {
             name, price, specifications, description, files, types:products._types, typeName
         })
         createProduct(formData).then(data => {
-            products.addOneProduct(data)
             navigate(PRODUCTS_ROUTE + '/' +  data.id)
             setActive(false)
-        })          
+        })            
     }
 
     const addFiles = () => {
@@ -63,7 +62,6 @@ const EditProductModal = (props) => {
         if(confirmed){
             deleteProduct(product.id)
             .then(response => {
-                products.deleteOneProduct(product.id)
                 products.initReload()
                 setActive(false)
             })            
