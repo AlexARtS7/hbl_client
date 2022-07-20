@@ -32,8 +32,7 @@ const PreviewImages = (props) => {
         .then(response => {
             setLoadedFiles(resultArray)
             setDelArray(delArray.filter(item => !item.status))
-            products.setProducts(products._products.map(element => 
-                element.id === product.id ? {...element, img: resultArray}:element))
+            products.initReload()
         })
     }
 

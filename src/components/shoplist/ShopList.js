@@ -30,7 +30,7 @@ const ShopList = observer(() => {
                     setProduct={setProduct}/>
             )}     
             {editProductModalActive && <EditProductModal setActive={setEditProductModalActive} product={product}/>}  
-        </div>
+        </div>      
     )
 })
 

@@ -20,9 +20,9 @@ export const uploadFiles = async(formData) => {
     return data
 }
 
-export const fetchProducts = async(typeId) => {
-    const {data} = await $host.get('api/products', {params: {typeId}})
-    return data.rows.map(e => ({ ...e, img: JSON.parse(e.img) }))
+export const fetchProducts = async(typeId, page, limit) => {
+    const {data} = await $host.get('api/products', {params: {typeId, page, limit}})
+    return data
 }
 
 export const fetchOneProduct = async(id) => {

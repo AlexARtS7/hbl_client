@@ -39,10 +39,9 @@ const EditProductModal = (props) => {
         uploadFiles(formData).then(response => {
             const data = JSON.parse(response)
             setLoadedFiles(data)            
-            products.setProducts(products._products.map(element => 
-                element.id === product.id ? {...element, img: data}:element))
             setFiles({})
             document.getElementById('fileInput').value = ''
+            products.initReload()
         })
     }
 
@@ -54,18 +53,20 @@ const EditProductModal = (props) => {
             id:product.id, name, price, specifications, description, types:products._types, typeName})
         updateData(formData)
         .then(response => {
-            products.setProducts(products._products.map(element => 
-                element.id === product.id ? {...element, name, price, specifications, description}:element))
-        })
-        setActive(false)
+            products.initReload()
+            setActive(false)
+        })        
     }
 
     const deleteHandler = () => {
         const confirmed = confirm(`Продукт с ID: ${product.id} будет удален! Продолжить?`)
         if(confirmed){
             deleteProduct(product.id)
-            .then(response => products.deleteOneProduct(product.id))
-            setActive(false)
+            .then(response => {
+                products.deleteOneProduct(product.id)
+                products.initReload()
+                setActive(false)
+            })            
         }        
     }
    

@@ -6,16 +6,16 @@ import './controlBar.scss'
 
 const ControlBar = observer(() => {
     const {products} = useContext(Context)
-    const types = products._types
     
     return (
         <div className='controlbar'>
            <select 
                 className='controlbar_select' 
-                onChange={(e) => products.setSelectedType(types.filter(type => type.id === +e.target.value)[0] || {})}
+                onChange={(e) => 
+                    products.setSelectedType(products._types.filter(type => type.id === +e.target.value)[0] || {})}
                 >             
                     <option value={0}>Весь список</option>     
-                    {types.map(type => 
+                    {products._types.map(type => 
                         <option 
                             value={type.id}
                             key={type.id}              

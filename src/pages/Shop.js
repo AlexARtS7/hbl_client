@@ -4,6 +4,7 @@ import { fetchProducts, fetchTypes } from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import ControlBar from "components/controlBar/ControlBar"
+import Pagination from "components/pagination/Pagination"
 
 const ShopPage = observer(() => {
     const {products} = useContext(Context)
@@ -13,15 +14,17 @@ const ShopPage = observer(() => {
     },[])
 
     useEffect(() => {
-        fetchProducts(products._selectedType.id).then(data => {
-            products.setProducts(data)
+        fetchProducts(products._selectedType.id, products._page, 2).then(data => {
+            products.setProducts(data.rows.map(e => ({ ...e, img: JSON.parse(e.img) })))
+            products.setTotalCount(data.count)
         })
-    }, [products._selectedType])
-   
+    }, [products._selectedType, products._page, products._reload])
+    
     return (
         <>
             <ControlBar/>
             <ShopList/>
+            <Pagination/>
         </>
         
     )

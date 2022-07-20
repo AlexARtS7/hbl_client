@@ -2,7 +2,7 @@
 
 .shoplist {
     position: relative;
-    height: calc(100vh - ($controlBarHeigth + $navBarHeigth));
+    // height: calc(100vh - ($controlBarHeigth + $navBarHeigth));
     overflow-y: auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, 250px);

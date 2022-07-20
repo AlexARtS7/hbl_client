@@ -1,0 +1,19 @@
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    &_block {
+        margin: 2px;
+        padding: 5px;
+        text-align: center;
+        border: .5px solid gray;
+        width: 30px;
+        cursor: pointer;
+        &_active {
+            background-color:aqua;
+        }
+        &:hover {
+            background-color:lightgreen;
+        }
+    }
+}

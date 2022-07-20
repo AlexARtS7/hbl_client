@@ -37,8 +37,6 @@ const UserMenu = (props) => {
                         <li onClick={() => typeModalHandler()} >Добавить/Удалить тип</li>
                         <hr/>
                     </>}
-                <li>мой профиль</li>
-                <li>разнок</li>
                 <hr/>
                 <li onClick={() => removeUserAcount()}>Выйти из акаунта</li>
             </ul>
