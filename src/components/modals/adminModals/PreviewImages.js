@@ -2,8 +2,7 @@ import { deleteFiles } from "http/productApi"
 import { Context } from "index"
 import React, { useContext, useEffect, useState } from "react"
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap"
-import { FullButton } from "../../modalComponents"
-import { generateFormData } from "../generateFormData"
+import { generateFormData } from "./generateFormData"
 
 const PreviewImages = (props) => {
     const {products} = useContext(Context)
@@ -55,13 +54,15 @@ const PreviewImages = (props) => {
     
     return (
         <>   
-        
         <Container className='border rounded mb-3 d-flex flex-row'>
             <Row>
                 {loadedFiles.map((element,i) => 
                     <Col key={i}>
                         <Card style={{ width: '5rem' }} className='m-1 position-relative'>
-                            <Card.Img src={process.env.REACT_APP_API_URL + `${product.id}/` + element} title={element}/>
+                            <Card.Img 
+                                onClick={() => setPreview(i, element)}
+                                src={process.env.REACT_APP_API_URL + `${product.id}/` + element} 
+                                title={element}/>
                             { i === 0 && 
                             <div 
                                 className='w-100 text-center' 
@@ -80,52 +81,15 @@ const PreviewImages = (props) => {
                         </Card>
                     </Col>                      
                 )}
-            </Row>
-            <Row>
+            </Row> 
+        </Container>
             {delFilesBtnActive && 
-                <Button>dsf</Button>
-                // <><br/><br/><FullButton 
-                //     text='Удалить отмеченные изображения' 
-                //     onClick={deleteSelectedFiles}
-                //     bg='rgb(255, 52, 52)'
-                //     color='#ffffff'/></>
-                    }
-            </Row>
-            
-            </Container>
-            
-            
-            {/* <p className='modal_label_min'>Фотографии загруженные на сервер:</p>
-            <hr/><br/>
-            {loadedFiles.map((element,i) => 
-                <div key={i}  style={{marginRight:'5px', position:'relative', display:'inline-block'}}>
-                    <img 
-                    style={{width:'120px',cursor:'pointer'}}
-                    onClick={() => setPreview(i, element)}
-                    src={process.env.REACT_APP_API_URL + `${product.id}/` + element} title={element}/>
-                    
-                    {i > 0 && <input 
-                        className='modal_checkbox_del' type='checkbox'
-                        onChange={() => selectDelFiles(element)}
-                        checked={checked(element)}
-                        ></input>}
-                    {i === 0 && 
-                    <div style={{ position:'absolute', 
-                                left:'0',
-                                width:'100%', 
-                                background:'rgba(255, 255, 255, .7)',
-                                fontSize:'12px',
-                                textAlign:'center',
-                                bottom:'18px', }}>ПРЕВЬЮ</div>}
-                </div>                        
-            )}
-            {delFilesBtnActive && 
-                <><br/><br/><FullButton 
-                    text='Удалить отмеченные изображения' 
+                <Button 
+                    className='mb-3 w-100' 
+                    variant='danger'
                     onClick={deleteSelectedFiles}
-                    bg='rgb(255, 52, 52)'
-                    color='#ffffff'/></>}
-            <br/><br/><hr/><br/>                */}
+                >Удалить отмеченные изображения</Button>
+            }
         </>
     )
 }

@@ -1,5 +1,4 @@
 import EditProductModal from "components/modals/adminModals/EditProductModal"
-import { OpenModal } from "components/modals/Modal"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect, useState } from "react"

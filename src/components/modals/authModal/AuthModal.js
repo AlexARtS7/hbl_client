@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react"
-import Modal from "components/modals/Modal"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { authRequest } from "./authRequest"
+import { Button, Modal } from "react-bootstrap"
+import { LabelInput } from "../modalComponents"
 
-const AuthModal = ({setActive}) => {
+const AuthModal = (props) => {
     const {user} = useContext(Context)
+    const {onHide} = props
     const [isLoginIn, setIsLoginIn] = useState(true)
     
     const {value:login, setValue:setLogin, validErr:loginErr} = 
@@ -33,7 +35,7 @@ const AuthModal = ({setActive}) => {
 
     useEffect(() => {
         if(user._isAuth) {
-            setActive(false)
+            onHide(false)
         }
     }, [user._isAuth])
 
@@ -45,53 +47,36 @@ const AuthModal = ({setActive}) => {
     }, [loginErr, emailErr, passwordErr])
 
     return (
-        <Modal setActive={setActive} width={800} title={isLoginIn ? 'Авторизация':'Регистрация'}>
-            {!isLoginIn && 
-                <>
-                    <div className='flex_between'>
-                        <p>Логин:</p>
-                        {errorsVisible && loginErr && <p className='modal_error'>{loginErr}</p>}                
-                    </div>
-                    <input 
-                        className='modal_input'
-                        name='name'
-                        value={login}
-                        onChange={e => setLogin(e.target.value)}/>
-                </>
-              }
-            <div className='flex_between'>
-                <p>Email:</p>
-                {errorsVisible && emailErr && <p className='modal_error'>{emailErr}</p>}                
-            </div>
-            <input 
-                className="modal_input"
-                value={email}
-                name='email'
-                onChange={e => setEmail(e.target.value)}/>
-
-            <div className='flex_between'>
-                <p>Пароль:</p>
-                {errorsVisible && passwordErr && <p className='modal_error'>{passwordErr}</p>}                
-            </div>
-            <input 
-                className="modal_input"
-                value={password}
-                type='password'
-                onChange={e => setPassword(e.target.value)}/>
-            {isLoginIn ?
-                <div>Нет акаунта? <span className='modal_link' onClick={() => setIsLoginIn(!isLoginIn)}>Зарегистрируйтесь</span></div> :
-                <div>Есть акаунт? <span className='modal_link' onClick={() => setIsLoginIn(!isLoginIn)}>Войдите</span></div>
-            }                
-            <br/><hr/>
-            <div className="flex_between">
-                <div/>
-                <div>
-                    <button className="modal_button" onClick={() => setActive(false)}>Отмена</button>
-                    {isLoginIn ? 
-                        <button className="modal_button" onClick={enter}>Вход</button> :
-                        <button className="modal_button" onClick={enter}>Регистрация</button>}
-                </div>
-            </div>            
+        <Modal 
+            {...props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered>
+            <Modal.Header >
+                <Modal.Title id="contained-modal-title-vcenter">
+                    {isLoginIn ?  'Авторизация':'Регистрация'}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                {!isLoginIn && 
+                    // {errorsVisible && loginErr && <p className='modal_error'>{loginErr}</p>}
+                    <LabelInput label='Логин' value={login} setValue={setLogin} type='name'/>
+                }
+                {/* {errorsVisible && emailErr && <p className='modal_error'>{emailErr}</p>}  */}
+                    <LabelInput label='email' value={email} setValue={setEmail} type='email'/>
+                {/* {errorsVisible && passwordErr && <p className='modal_error'>{passwordErr}</p>} */}
+                    <LabelInput label='password' value={password} setValue={setPassword} type='password'/>
+                    {isLoginIn ?
+                <div style={{marginLeft:10}}>Нет акаунта? <span style={{color:'blue', cursor:'pointer'}} onClick={() => setIsLoginIn(!isLoginIn)}>Зарегистрируйтесь</span></div> :
+                <div style={{marginLeft:10}}>Есть акаунт? <span style={{color:'blue', cursor:'pointer'}} onClick={() => setIsLoginIn(!isLoginIn)}>Войдите</span></div>
+            } 
+            </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={() => onHide(false)}>Закрыть</Button>
+                {isLoginIn ? 
+                    <Button onClick={enter}>Вход</Button> :
+                    <Button onClick={enter}>Регистрация</Button>}          
+            </Modal.Footer>
         </Modal>
     )
 }

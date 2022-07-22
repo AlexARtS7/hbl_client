@@ -1,9 +1,9 @@
 
 import React, { useContext } from "react"
-import Modal from "components/modals/Modal"
 import { createType } from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
+import { Modal } from "react-bootstrap"
 
 const TypeHandlerModal = ({setActive}) => {
     const {products} = useContext(Context)
