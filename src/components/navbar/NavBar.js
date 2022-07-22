@@ -40,7 +40,7 @@ const NavBar = observer(() => {
            </div>
            {authModalActive && <AuthModal show={authModalActive} onHide={setAuthModalActive}/>}
            {editProductModalActive && <EditProductModal show={editProductModalActive} onHide={setEditProductModalActive}/>}
-           {typeHandleModalActive && <TypeHandlerModal setActive={setTypeHandleModalActive}/>}
+           {typeHandleModalActive && <TypeHandlerModal show={typeHandleModalActive} onHide={setTypeHandleModalActive}/>}
         </div>
     )
 })
