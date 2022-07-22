@@ -1,6 +1,6 @@
 
 import EditProductModal from "components/modals/adminModals/EditProductModal"
-import TypeHandlerModal from "components/modals/adminModals/TypeHandlerModal"
+import TypeHandlerModal from "components/modals/adminModals/components/TypeHandlerModal"
 import UserMenu from "components/userMenu/UserMenu"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
@@ -39,7 +39,7 @@ const NavBar = observer(() => {
                 }            
            </div>
            {authModalActive && <AuthModal setActive={setAuthModalActive}/>}
-           {editProductModalActive && <EditProductModal setActive={setEditProductModalActive}/>}
+           {editProductModalActive && <EditProductModal show={editProductModalActive} onHide={setEditProductModalActive}/>}
            {typeHandleModalActive && <TypeHandlerModal setActive={setTypeHandleModalActive}/>}
         </div>
     )

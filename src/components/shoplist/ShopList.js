@@ -1,4 +1,5 @@
 import EditProductModal from "components/modals/adminModals/EditProductModal"
+import { OpenModal } from "components/modals/Modal"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect, useState } from "react"
@@ -11,7 +12,7 @@ const ShopList = observer(() => {
     const {user} = useContext(Context)
     const [editProductModalActive, setEditProductModalActive] = useState(false)   
     const role = user._user.role  
-
+    
     useEffect(() => {
         if(product.id) setEditProductModalActive(true)
     }, [product])
@@ -28,8 +29,11 @@ const ShopList = observer(() => {
                     key={product.id} 
                     role={role} 
                     setProduct={setProduct}/>
-            )}     
-            {editProductModalActive && <EditProductModal setActive={setEditProductModalActive} product={product}/>}  
+            )}  
+            {editProductModalActive && 
+                <EditProductModal show={editProductModalActive} onHide={setEditProductModalActive} product={product}/>
+            }
+            
         </div>      
     )
 })

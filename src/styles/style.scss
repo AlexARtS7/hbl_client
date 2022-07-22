@@ -15,6 +15,20 @@
     user-select: none;
 }
 
+.pagecontainer {
+    &_std {
+        height: calc(100vh - $navBarHeigth);
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    &_control {
+        height: calc(100vh - ($navBarHeigth + $controlBarHeigth));
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
+}
+
 .flex {
     &_between { 
         display: flex;

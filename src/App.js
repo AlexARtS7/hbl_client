@@ -5,6 +5,7 @@ import React, { useContext, useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import Navbar from './components/navbar/NavBar'
 import './styles/style.scss'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
     const {user} = useContext(Context)

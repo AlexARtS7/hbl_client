@@ -1,8 +1,8 @@
 import { deleteFiles } from "http/productApi"
 import { Context } from "index"
 import React, { useContext, useEffect, useState } from "react"
-import { FullButton } from "../modalComponents"
-import { generateFormData } from "./generateFormData"
+import { FullButton } from "../../modalComponents"
+import { generateFormData } from "../generateFormData"
 
 const PreviewImages = (props) => {
     const {products} = useContext(Context)

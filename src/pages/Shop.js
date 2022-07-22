@@ -23,8 +23,10 @@ const ShopPage = observer(() => {
     return (
         <>
             <ControlBar/>
-            <ShopList/>
-            <Pagination/>
+            <div className='pagecontainer_control'>
+                <ShopList/>
+                <Pagination/>
+            </div>            
         </>
         
     )

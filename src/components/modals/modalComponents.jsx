@@ -1,10 +1,11 @@
 import React from "react"
+import { Form, FloatingLabel, ListGroup } from "react-bootstrap";
 
 export const Input = (props) => {
     const {value, setValue, name, label, type} = props
     return (
         <>
-            <p className='modal_label_min'>{label}</p>
+            {label && <p className='modal_label_min'>{label}</p>}
             <input 
                 className="modal_input"
                 value={value}
@@ -64,5 +65,66 @@ export const FullButton = (props) => {
                 style={{background:bg, color:color}} 
                 onClick={onClick}>{text}</button>
         </>
+    )
+}
+
+export const LabelInput = (props) => {
+    const {label, type, value, setValue} = props
+    return (
+        <FloatingLabel
+            controlId="floatingInput"
+            label={label}
+            className="mb-3"
+        >
+            <Form.Control 
+                type={type} 
+                placeholder={type} 
+                value={value} 
+                onChange={e => setValue(e.target.value)}
+            />
+        </FloatingLabel>
+    )
+}
+
+export const SelectInput = (props) => {
+    const {label, value, defaultValue, setValue, types } = props
+    return (
+        <FloatingLabel
+            controlId="floatingInput"
+            label={label}
+            className="mb-3"
+        >
+            <Form.Select 
+            className='mb-3'
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+        >
+            <option value={0}>{defaultValue}</option>
+            {types.map(e => 
+                <option 
+                    key={e.id} 
+                    value={e.name}  
+                >{e.name}</option>
+            )} 
+            </Form.Select>
+        </FloatingLabel>
+    )
+}
+
+export const AddFilesInput = (props) => {
+    const {files, setFiles} = props
+    return (
+        <>
+        <Form.Group controlId="formFileMultiple" className="mb-3">
+            <Form.Control type="file" multiple onChange={e => setFiles(e.target.files)}/>
+        </Form.Group>
+        <ListGroup variant="flush">
+            
+            {files && files[1] && Object.keys(files).map(function (key,i) {
+            return <ListGroup.Item key={i}>{this[key].name}</ListGroup.Item>
+            }, files)}   
+        </ListGroup>
+        </>
+        
     )
 }
