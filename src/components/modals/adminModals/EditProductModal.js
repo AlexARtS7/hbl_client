@@ -33,16 +33,16 @@ const EditProductModal = (props) => {
         })            
     }
 
-    // const addFiles = () => {
-    //     const formData = generateFormData({id:product.id, files, filesArray:loadedFiles})
-    //     uploadFiles(formData).then(response => {
-    //         const data = JSON.parse(response)
-    //         setLoadedFiles(data)            
-    //         setFiles({})
-    //         document.getElementById('fileInput').value = ''
-    //         products.initReload()
-    //     })
-    // }
+    const addFiles = () => {
+        const formData = generateFormData({id:product.id, files, filesArray:loadedFiles})
+        uploadFiles(formData).then(response => {
+            const data = JSON.parse(response)
+            setLoadedFiles(data)            
+            setFiles({})
+            document.getElementById('fileInput').value = ''
+            products.initReload()
+        })
+    }
 
     // const updateProduct = () => {
     //     if(product && files[0]) addFiles()
@@ -87,13 +87,14 @@ const EditProductModal = (props) => {
                 defaultValue='Выберите категорию' value={typeName} setValue={setTypeName}
                 types={products._types} />
             <LabelInput label='Стоимость' value={price} setValue={setPrice} type='number'/>
-            {/* {product.id && 
+            {product.id && 
                 <PreviewImages
                     product={product} 
                     loadedFiles={loadedFiles} setLoadedFiles={setLoadedFiles}
                 />
-            } */}
-            <AddFilesInput files={files} setFiles={setFiles}/>
+            }
+            <AddFilesInput 
+                files={files} setFiles={setFiles} addButton={product.id && files[0]} onButtonClick={addFiles}/>
         </Modal.Body>
         <Modal.Footer>
             <Button onClick={() => onHide(false)}>Закрыть</Button>

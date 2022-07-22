@@ -1,6 +1,7 @@
 import { deleteFiles } from "http/productApi"
 import { Context } from "index"
 import React, { useContext, useEffect, useState } from "react"
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap"
 import { FullButton } from "../../modalComponents"
 import { generateFormData } from "../generateFormData"
 
@@ -53,8 +54,48 @@ const PreviewImages = (props) => {
     },[delArray])
     
     return (
-        <>    
-            <p className='modal_label_min'>Фотографии загруженные на сервер:</p>
+        <>   
+        
+        <Container className='border rounded mb-3 d-flex flex-row'>
+            <Row>
+                {loadedFiles.map((element,i) => 
+                    <Col key={i}>
+                        <Card style={{ width: '5rem' }} className='m-1 position-relative'>
+                            <Card.Img src={process.env.REACT_APP_API_URL + `${product.id}/` + element} title={element}/>
+                            { i === 0 && 
+                            <div 
+                                className='w-100 text-center' 
+                                style={{fontSize: 10}}>ПРЕВЬЮ
+                            </div>}
+                            { i > 0 && 
+                                <div className='d-flex justify-content-around'>
+                                    <span style={{fontSize: 10}}>Удалить</span>
+                                    <Form.Check 
+                                    onChange={() => selectDelFiles(element)}
+                                    checked={checked(element)}
+                                    style={{fontSize: 10}}
+                                    type='checkbox'
+                                    />
+                                </div>}
+                        </Card>
+                    </Col>                      
+                )}
+            </Row>
+            <Row>
+            {delFilesBtnActive && 
+                <Button>dsf</Button>
+                // <><br/><br/><FullButton 
+                //     text='Удалить отмеченные изображения' 
+                //     onClick={deleteSelectedFiles}
+                //     bg='rgb(255, 52, 52)'
+                //     color='#ffffff'/></>
+                    }
+            </Row>
+            
+            </Container>
+            
+            
+            {/* <p className='modal_label_min'>Фотографии загруженные на сервер:</p>
             <hr/><br/>
             {loadedFiles.map((element,i) => 
                 <div key={i}  style={{marginRight:'5px', position:'relative', display:'inline-block'}}>
@@ -84,7 +125,7 @@ const PreviewImages = (props) => {
                     onClick={deleteSelectedFiles}
                     bg='rgb(255, 52, 52)'
                     color='#ffffff'/></>}
-            <br/><br/><hr/><br/>               
+            <br/><br/><hr/><br/>                */}
         </>
     )
 }
