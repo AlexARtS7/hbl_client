@@ -65,17 +65,17 @@ const AuthModal = (props) => {
                 {/* {errorsVisible && emailErr && <p className='modal_error'>{emailErr}</p>}  */}
                     <LabelInput label='email' value={email} setValue={setEmail} type='email'/>
                 {/* {errorsVisible && passwordErr && <p className='modal_error'>{passwordErr}</p>} */}
-                    <LabelInput label='password' value={password} setValue={setPassword} type='password'/>
+                    <LabelInput label='Пароль' value={password} setValue={setPassword} type='password'/>
                     {isLoginIn ?
                 <div style={{marginLeft:10}}>Нет акаунта? <span style={{color:'blue', cursor:'pointer'}} onClick={() => setIsLoginIn(!isLoginIn)}>Зарегистрируйтесь</span></div> :
                 <div style={{marginLeft:10}}>Есть акаунт? <span style={{color:'blue', cursor:'pointer'}} onClick={() => setIsLoginIn(!isLoginIn)}>Войдите</span></div>
             } 
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => onHide(false)}>Закрыть</Button>
+                <Button onClick={() => onHide(false)} variant='outline-secondary'>Закрыть</Button>
                 {isLoginIn ? 
-                    <Button onClick={enter}>Вход</Button> :
-                    <Button onClick={enter}>Регистрация</Button>}          
+                    <Button onClick={enter} variant='success'>Вход</Button> :
+                    <Button onClick={enter} variant='success'>Регистрация</Button>}          
             </Modal.Footer>
         </Modal>
     )

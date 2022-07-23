@@ -35,8 +35,8 @@ const TypeHandlerModal = (props) => {
             <LabelInput label='Введите название нового типа' value={type} setValue={setType} type='name'/>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={() => onHide(false)}>Закрыть</Button>
-            <Button onClick={addType}>Добавить тип</Button>          
+            <Button onClick={() => onHide(false)} variant='outline-secondary'>Закрыть</Button>
+            <Button onClick={addType} variant='success'>Добавить тип</Button>          
         </Modal.Footer>
         </Modal>
     )

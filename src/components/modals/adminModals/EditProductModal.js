@@ -86,29 +86,30 @@ const EditProductModal = (props) => {
                 defaultValue='Выберите категорию' value={typeName} setValue={setTypeName}
                 types={products._types} />
             <LabelInput label='Стоимость' value={price} setValue={setPrice} type='number'/>
+            <AddFilesInput 
+                files={files} setFiles={setFiles} 
+                addButton={product.id && files[0]} onButtonClick={addFiles} buttonRef={buttonRef}/>
             {product.id && 
                 <PreviewImages
                     product={product} 
                     loadedFiles={loadedFiles} setLoadedFiles={setLoadedFiles}
                 />
             }
-            <AddFilesInput 
-                files={files} setFiles={setFiles} 
-                addButton={product.id && files[0]} onButtonClick={addFiles} buttonRef={buttonRef}/>
             {product.id && 
                 <Button 
+                    size="sm"
                     className='mb-3 w-100' 
-                    variant='danger'
+                    variant='outline-danger'
                     onClick={deleteHandler}
                 >Удалить продукт из базы данных</Button>
             }
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={() => onHide(false)}>Закрыть</Button>
+            <Button onClick={() => onHide(false)} variant='outline-secondary'>Закрыть</Button>
             {product.id ?
-            <Button onClick={updateProduct}>Обновить</Button>
+            <Button onClick={updateProduct} variant='success'>Обновить</Button>
             :
-            <Button onClick={addProduct}>Добавить продукт</Button>
+            <Button onClick={addProduct} variant='success'>Добавить продукт</Button>
             }            
         </Modal.Footer>
         </Modal>

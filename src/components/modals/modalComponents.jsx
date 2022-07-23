@@ -23,6 +23,7 @@ export const LabelInput = (props) => {
         >
             <Form.Control 
                 type={type} 
+                name={type}
                 placeholder={type} 
                 value={value} 
                 onChange={e => setValue(e.target.value)}

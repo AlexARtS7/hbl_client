@@ -83,13 +83,13 @@ const PreviewImages = (props) => {
                 )}
             </Row> 
         </Container>
-            {delFilesBtnActive && 
-                <Button 
-                    className='mb-3 w-100' 
-                    variant='danger'
-                    onClick={deleteSelectedFiles}
-                >Удалить отмеченные изображения</Button>
-            }
+            <Button 
+                size="sm"
+                disabled={!delFilesBtnActive}
+                className='mb-3 w-100' 
+                variant='outline-danger'
+                onClick={deleteSelectedFiles}
+            >Удалить отмеченные изображения</Button>
         </>
     )
 }
