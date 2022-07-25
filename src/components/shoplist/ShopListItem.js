@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom"
 import { PRODUCTS_ROUTE } from "utils/const"
 import './shopListItem.scss'
 import noImage from '../../assets/images/no-image.svg'
-import { Card, Col, Image } from "react-bootstrap"
+import { Card, Col, Image, Spinner } from "react-bootstrap"
 
-const ShopListItem = ({product, role, setProduct}) => {
+const ShopListItem = (props) => {
+    const {product, role, setProduct} = props
     const navigate = useNavigate()
-    const [loaded, setLoaded] = useState(false)
+    const [imageLoaded, setImageLoaded] = useState(false)    
+    const [noImageLoaded, setNoImageLoaded] = useState(false)
     const src = process.env.REACT_APP_API_URL + `${product.id}/` + product.img[0]
   
     const editProduct = (e) => {
@@ -18,17 +20,17 @@ const ShopListItem = ({product, role, setProduct}) => {
     return (
         <Col className="d-flex justify-content-center m-2">
             <Card 
-                style={{width: 250, cursor: 'pointer'}} 
-                className="overflow-hidden" 
+                style={{width: 250, minHeight:250, cursor: 'pointer'}} 
+                className="overflow-hidden d-flex flex-column justify-content-between" 
                 onClick={() => navigate(PRODUCTS_ROUTE + '/' +  product.id)}>
-                <Image 
-                    src={src} 
-                    style={loaded ? null : { display: 'none' }}
-                    onLoad={() => setLoaded(true)}
-                    />
-                {!loaded && <Image src={noImage} alt='noImage'/>}
-                <p className="m-1">{product.name}</p>
-                <p className="m-1">{product.price} ₽</p>
+                <Image src={src} style={imageLoaded ? {display:'block'} : { display: 'none' }} onLoad={() => setImageLoaded(true)}/>
+                {!imageLoaded && <Image src={noImage} onLoad={() => setNoImageLoaded(true)}/>}
+                {!imageLoaded && !noImageLoaded &&
+                    <div className="d-flex justify-content-center align-items-center" style={{height:180}}><Spinner animation="border"/></div>}
+                <div>
+                    <p className="m-1">{product.name}</p>
+                    <p className="m-1">{product.price} ₽</p>
+                </div>                
                 {role === 'ADMIN' && 
                 <div className='shoplistitem_admin_buttonblock'>
                     <div className='shoplistitem_admin_button' onClick={(e) => editProduct(e)}>edit</div>

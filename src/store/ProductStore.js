@@ -9,7 +9,12 @@ export default class ProductStore {
         this._totalCount = 0
         this._limit = 10
         this._reload = false
+        this._loading = true
         makeAutoObservable(this)
+    }
+    
+    setLoading(value) {
+        this._loading = value
     }
 
     initReload() {

@@ -5,7 +5,7 @@ import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import ControlBar from "components/controlBar/ControlBar"
 import Pagination from "components/pagination/Pagination"
-import { Col, Container, Row } from "react-bootstrap"
+import { Col, Container, Row, Spinner } from "react-bootstrap"
 
 const ShopPage = observer(() => {
     const {products} = useContext(Context)
@@ -15,9 +15,11 @@ const ShopPage = observer(() => {
     },[])
 
     useEffect(() => {
+        products.setLoading(true)
         fetchProducts(products._selectedType.id, products._page, products._limit).then(data => {
             products.setProducts(data.rows.map(e => ({ ...e, img: JSON.parse(e.img) })))
             products.setTotalCount(data.count)
+            products.setLoading(false)
         })
     }, [products._selectedType, products._page, products._reload])
     
@@ -26,9 +28,17 @@ const ShopPage = observer(() => {
             <ControlBar/> 
             <Row>
                 <Col>  
-              
-                    <ShopList/>
-                    <Pagination/> 
+                    {products._loading && 
+                        <div className="d-flex justify-content-center m-3">
+                            <Spinner animation="border"/> 
+                        </div>
+                    }  
+                    {!products._loading && 
+                        <>
+                            <ShopList/>
+                            <Pagination/>
+                        </>
+                    }             
                 </Col>
             </Row>        
         </Container>

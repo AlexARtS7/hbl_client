@@ -2,7 +2,7 @@ import EditProductModal from "components/modals/adminModals/EditProductModal"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect, useState } from "react"
-import { Row } from "react-bootstrap"
+import { Row, Spinner } from "react-bootstrap"
 import ShopListItem from "./ShopListItem"
 
 const ShopList = observer(() => {
@@ -23,7 +23,7 @@ const ShopList = observer(() => {
     return (
         <>  
             <Row className="d-flex justify-content-center">
-                {products._products.map(product => 
+                {products._products && products._products.map(product => 
                 <ShopListItem 
                     product={product} 
                     key={product.id} 
@@ -31,7 +31,6 @@ const ShopList = observer(() => {
                     setProduct={setProduct}/>
                 )}  
             </Row>
-            
             {editProductModalActive && 
                 <EditProductModal show={editProductModalActive} onHide={setEditProductModalActive} product={product}/>
             }   
