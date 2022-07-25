@@ -3,7 +3,7 @@ import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { authRequest } from "./authRequest"
 import { Button, Modal } from "react-bootstrap"
-import { LabelInput } from "../modalComponents"
+import { LabelInput } from "../modalsComponents"
 
 const AuthModal = (props) => {
     const {user} = useContext(Context)

@@ -1,10 +1,11 @@
+import ControlBar from "components/controlBar/ControlBar"
 import EditProductModal from "components/modals/adminModals/EditProductModal"
 import TypeHandlerModal from "components/modals/adminModals/TypeHandlerModal"
 import UserMenu from "components/navbar/UserMenu"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useState } from "react"
-import { Button, Container, Dropdown, Navbar } from "react-bootstrap"
+import { Button, Container, Navbar, Row } from "react-bootstrap"
 import AuthModal from "../modals/authModal/AuthModal"
 import './navBar.scss'
 
@@ -28,7 +29,7 @@ const NavBar = observer(() => {
                     :
                     <Button size='sm' variant='outline-light' onClick={() => setAuthModalActive(true)}>Авторизация</Button>
                     }   
-                </Container>
+                </Container>                
             </Navbar>
            {authModalActive && <AuthModal show={authModalActive} onHide={setAuthModalActive}/>}
            {editProductModalActive && <EditProductModal show={editProductModalActive} onHide={setEditProductModalActive}/>}

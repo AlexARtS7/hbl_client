@@ -4,7 +4,7 @@ import { createType } from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { Button, Modal } from "react-bootstrap"
-import { LabelInput } from "../modalComponents"
+import { LabelInput } from "../modalsComponents"
 
 const TypeHandlerModal = (props) => {
     const {products} = useContext(Context)

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { PRODUCTS_ROUTE } from "utils/const"
 import './shopListItem.scss'
 import noImage from '../../assets/images/no-image.svg'
+import { Card, Col, Image } from "react-bootstrap"
 
 const ShopListItem = ({product, role, setProduct}) => {
     const navigate = useNavigate()
@@ -15,24 +16,25 @@ const ShopListItem = ({product, role, setProduct}) => {
     }
     
     return (
-        <div className='shoplistitem' onClick={() => navigate(PRODUCTS_ROUTE + '/' +  product.id)}>
-            <div className='shoplistitem_img_block'>
-                <img 
-                    className='shoplistitem_img' 
-                    style={loaded ? null : { display: 'none' }}
+        <Col className="d-flex justify-content-center m-2">
+            <Card 
+                style={{width: 250, cursor: 'pointer'}} 
+                className="overflow-hidden" 
+                onClick={() => navigate(PRODUCTS_ROUTE + '/' +  product.id)}>
+                <Image 
                     src={src} 
-                    alt='image'
-                    onLoad={() => setLoaded(true)}/>  
-                {!loaded && <img className='shoplistitem_img' src={noImage} alt='noImage'/>}
-            </div>
-            
-            <p className='shoplistitem_name'>{product.name}</p>
-            <p className='shoplistitem_price'>{product.price} <span className='shoplistitem_price_rub'>Р</span></p>
-            {role === 'ADMIN' && 
+                    style={loaded ? null : { display: 'none' }}
+                    onLoad={() => setLoaded(true)}
+                    />
+                {!loaded && <Image src={noImage} alt='noImage'/>}
+                <p className="m-1">{product.name}</p>
+                <p className="m-1">{product.price} ₽</p>
+                {role === 'ADMIN' && 
                 <div className='shoplistitem_admin_buttonblock'>
                     <div className='shoplistitem_admin_button' onClick={(e) => editProduct(e)}>edit</div>
                 </div>}
-        </div>
+            </Card>
+        </Col>
     )
 }
 

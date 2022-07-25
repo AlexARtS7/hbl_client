@@ -5,6 +5,7 @@ import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import ControlBar from "components/controlBar/ControlBar"
 import Pagination from "components/pagination/Pagination"
+import { Col, Container, Row } from "react-bootstrap"
 
 const ShopPage = observer(() => {
     const {products} = useContext(Context)
@@ -21,13 +22,16 @@ const ShopPage = observer(() => {
     }, [products._selectedType, products._page, products._reload])
     
     return (
-        <>
-            <ControlBar/>
-            <div className='pagecontainer_control'>
-                <ShopList/>
-                <Pagination/>
-            </div>            
-        </>
+        <Container fluid>
+            <ControlBar/> 
+            <Row>
+                <Col>  
+                                     
+                    <ShopList/>
+                    <Pagination/> 
+                </Col>
+            </Row>        
+        </Container>
         
     )
 })
