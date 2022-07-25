@@ -2,7 +2,7 @@ import EditProductModal from "components/modals/adminModals/EditProductModal"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect, useState } from "react"
-import { Col, Container, Row } from "react-bootstrap"
+import { Row } from "react-bootstrap"
 import ShopListItem from "./ShopListItem"
 
 const ShopList = observer(() => {

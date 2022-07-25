@@ -1,6 +1,6 @@
 import { Context } from "index"
 import React, { useContext } from "react"
-import { Button, Dropdown, Nav } from "react-bootstrap"
+import { Dropdown, Nav } from "react-bootstrap"
 
 const UserMenu = (props) => {
     const {user} = useContext(Context)

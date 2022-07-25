@@ -14,7 +14,7 @@ const App = () => {
         check().then(userData => {
           user.setUser(userData)
           user.setIsAuth(true)
-        })
+        }) 
     },[])
 
     return (

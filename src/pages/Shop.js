@@ -26,7 +26,7 @@ const ShopPage = observer(() => {
             <ControlBar/> 
             <Row>
                 <Col>  
-                                     
+              
                     <ShopList/>
                     <Pagination/> 
                 </Col>

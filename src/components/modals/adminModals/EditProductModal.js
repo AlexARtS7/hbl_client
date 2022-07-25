@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 import { PRODUCTS_ROUTE } from "utils/const"
 import { generateFormData } from "./generateFormData"
 import PreviewImages from "./PreviewImages"
-import { Button, Modal } from "react-bootstrap"
+import { Accordion, Button, Modal } from "react-bootstrap"
 
 const EditProductModal = (props) => {
     const navigate = useNavigate()
@@ -85,6 +85,14 @@ const EditProductModal = (props) => {
                 label='Категория'
                 defaultValue='Выберите категорию' value={typeName} setValue={setTypeName}
                 types={products._types} />
+            <Accordion className="mb-3">
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header>Информация</Accordion.Header>
+                    <Accordion.Body>
+                        <div>fdgdf</div>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
             <LabelInput label='Стоимость' value={price} setValue={setPrice} type='number'/>
             <AddFilesInput 
                 files={files} setFiles={setFiles} 
