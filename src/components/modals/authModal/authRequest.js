@@ -11,6 +11,7 @@ export const authRequest = async(isLoginIn, user, setEmailErr, setPasswordErr, s
         }  
         user.setUser(userData)   
         user.setIsAuth(true)
+        return true
     } catch (e) {
         setErrorsVisible(true)
         switch(e.response.data.index) {

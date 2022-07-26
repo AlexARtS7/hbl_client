@@ -4,7 +4,7 @@ import { fetchProducts, fetchTypes } from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import ControlBar from "components/controlBar/ControlBar"
-import Pagination from "components/pagination/Pagination"
+import PagesPagination from "components/pagination/PagesPagination"
 import { Col, Container, Row, Spinner } from "react-bootstrap"
 
 const ShopPage = observer(() => {
@@ -31,12 +31,13 @@ const ShopPage = observer(() => {
                     {products._loading && 
                         <div className="d-flex justify-content-center m-3">
                             <Spinner animation="border"/> 
-                        </div>
-                    }  
+                        </div>}  
+                    {!products._loading && products._products.length === 0 &&
+                        <div className="d-flex justify-content-center fs-5">К сожалению в этом разделе ничего нет :(</div>}  
                     {!products._loading && 
                         <>
                             <ShopList/>
-                            <Pagination/>
+                            <PagesPagination/>
                         </>
                     }             
                 </Col>

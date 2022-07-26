@@ -9,11 +9,10 @@ import { generateFormData } from "./generateFormData"
 import PreviewImages from "./PreviewImages"
 import { Accordion, Button, Modal } from "react-bootstrap"
 
-const EditProductModal = (props) => {
+const EditProductModal = () => {
     const navigate = useNavigate()
-    const {products} = useContext(Context)
-    const {onHide, product = ''} = props    
-    
+    const {products, modals} = useContext(Context)
+    const {show, product = ''} = modals._editProduct   
     const {value:name, setValue:setName} = useInput(product.name || '')
     const {value:price, setValue:setPrice} = useInput(product.price || 0)
     const type = product.id ? products._types.filter(type => type.id === +product.typeId)[0].name : ''
@@ -22,16 +21,18 @@ const EditProductModal = (props) => {
     const [files, setFiles] = useState({})
     const buttonRef = useRef()
 
+    const onHide = () => modals.setEditProduct(false)
+
     const addProduct = () => {
         const formData = generateFormData({
             name, price, files, types:products._types, typeName
         })
         createProduct(formData).then(data => {
             navigate(PRODUCTS_ROUTE + '/' +  data.id)
-            onHide(false)
+            onHide()
         })            
     }
-
+    
     const addFiles = () => {
         const formData = generateFormData({id:product.id, files, filesArray:loadedFiles})
         uploadFiles(formData).then(response => {
@@ -52,7 +53,7 @@ const EditProductModal = (props) => {
         updateData(formData)
         .then(response => {
             products.initReload()
-            onHide(false)
+            onHide()
         })        
     }
 
@@ -62,14 +63,15 @@ const EditProductModal = (props) => {
             deleteProduct(product.id)
             .then(response => {
                 products.initReload()
-                onHide(false)
+                onHide()
             })            
         }        
     }
     
     return (
         <Modal
-            {...props}
+            show={show}
+            onHide={onHide}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
@@ -99,7 +101,7 @@ const EditProductModal = (props) => {
                 addButton={product.id && files[0]} onButtonClick={addFiles} buttonRef={buttonRef}/>
             {product.id && 
                 <PreviewImages
-                    product={product} 
+                    product={product} reload={() => products.initReload()}
                     loadedFiles={loadedFiles} setLoadedFiles={setLoadedFiles}
                 />
             }
@@ -113,7 +115,7 @@ const EditProductModal = (props) => {
             }
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={() => onHide(false)} variant='outline-secondary'>Закрыть</Button>
+            <Button onClick={onHide} variant='outline-secondary'>Закрыть</Button>
             {product.id ?
             <Button onClick={updateProduct} variant='success'>Обновить</Button>
             :

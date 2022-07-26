@@ -1,8 +1,7 @@
 
-@import '../../styles/variables.scss';
+
 
 .productsheet {
-    height: calc(100vh - $navBarHeigth);
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -28,7 +27,6 @@
         }
         &_label {
             font-size: 14px;
-            color: $gColor;
         }
         &_name {
             font-size: 20px;
@@ -43,7 +41,6 @@
     
     &_carousel {
         width: 50%;
-        // height: calc(100vh - $navBarHeigth);
         overflow: hidden;
         &_imgblock {
             position: relative;

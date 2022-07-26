@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import Navbar from './components/navbar/NavBar'
 import './styles/style.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Modals from 'components/modals/Modals'
 
 const App = () => {
     const {user} = useContext(Context)
@@ -19,6 +20,7 @@ const App = () => {
 
     return (
         <BrowserRouter>
+            <Modals/>
             <Navbar/>
             <AppRouter/>
         </BrowserRouter>

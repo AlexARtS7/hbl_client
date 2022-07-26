@@ -1,5 +1,6 @@
 import { fetchOneProduct } from "http/productApi"
 import React, { useEffect, useState } from "react"
+import { Carousel, Col, Container, Row, Image } from "react-bootstrap"
 import { useParams } from "react-router-dom"
 import './productSheet.scss'
 
@@ -13,8 +14,25 @@ const ProductSheet = () => {
     }, [])
     
     return (
-        <>
-            { product.id && <div className='productsheet'>
+        <Container fluid className="mt-3">
+            <Row>
+                <Col>
+                    <Carousel fade>
+                        {product.id &&
+                            product.img.map((element,i) => 
+                                <Carousel.Item key={i}>
+                                    <img
+                                    className="d-block w-100"
+                                    src={process.env.REACT_APP_API_URL + `${product.id}/` + product.img[i]}
+                                    />
+                                </Carousel.Item>
+                            )                           
+                        }
+                    </Carousel>
+                </Col>
+                <Col>gfhfhhf</Col>
+            </Row>
+            {/* { product.id && <div className='productsheet'>
                 <div className='productsheet_container'>
                     <div className='productsheet_carousel'>
                         <div className='productsheet_carousel_imgblock'>
@@ -55,8 +73,8 @@ const ProductSheet = () => {
                         <p className='productsheet_description_price'>{product.price} <span className='shoplistitem_price_rub'>Р</span></p>
                     </div>
                 </div>
-            </div>}
-        </>       
+            </div>} */}
+        </Container>       
     )
 }
 

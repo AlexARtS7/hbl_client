@@ -1,12 +1,10 @@
 import { deleteFiles } from "http/productApi"
-import { Context } from "index"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap"
 import { generateFormData } from "./generateFormData"
 
 const PreviewImages = (props) => {
-    const {products} = useContext(Context)
-    const {product, loadedFiles, setLoadedFiles} = props
+    const {product, loadedFiles, setLoadedFiles, reload} = props
     const [delArray, setDelArray] = useState([...loadedFiles.map(element => ({name: element, status: false}))])
     const [delFilesBtnActive, setDelFilesBtnActive] = useState(false)
     
@@ -32,7 +30,7 @@ const PreviewImages = (props) => {
         .then(response => {
             setLoadedFiles(resultArray)
             setDelArray(delArray.filter(item => !item.status))
-            products.initReload()
+            reload()
         })
     }
 

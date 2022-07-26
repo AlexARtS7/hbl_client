@@ -6,22 +6,24 @@ import useInput from "components/hooks/useInput"
 import { Button, Modal } from "react-bootstrap"
 import { LabelInput } from "../modalsComponents"
 
-const TypeHandlerModal = (props) => {
-    const {products} = useContext(Context)
-    const {onHide} = props
+const EditTypeModal = () => {
+    const {products, modals} = useContext(Context)
     const {value:type, setValue:setType} =  useInput('')
+
+    const onHide = () => modals.setEditType(false)
 
     const addType = () => {
         createType({name: type})
         .then(data => {
             products.addOneType(data)
-            onHide(false)
+            onHide()
         })
     }
 
     return (
         <Modal
-            {...props}
+            show={modals._editType.show}
+            onHide={onHide}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
@@ -35,11 +37,11 @@ const TypeHandlerModal = (props) => {
             <LabelInput label='Введите название нового типа' value={type} setValue={setType} type='name'/>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={() => onHide(false)} variant='outline-secondary'>Закрыть</Button>
+            <Button onClick={onHide} variant='outline-secondary'>Закрыть</Button>
             <Button onClick={addType} variant='success'>Добавить тип</Button>          
         </Modal.Footer>
         </Modal>
     )
 }
 
-export default TypeHandlerModal
+export default EditTypeModal

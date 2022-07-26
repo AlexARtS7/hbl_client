@@ -5,9 +5,8 @@ import { authRequest } from "./authRequest"
 import { Button, Modal } from "react-bootstrap"
 import { LabelInput } from "../modalsComponents"
 
-const AuthModal = (props) => {
-    const {user} = useContext(Context)
-    const {onHide} = props
+const AuthModal = () => {
+    const {user, modals} = useContext(Context)
     const [isLoginIn, setIsLoginIn] = useState(true)
     
     const {value:login, setValue:setLogin, validErr:loginErr} = 
@@ -17,6 +16,8 @@ const AuthModal = (props) => {
     const {value:password, setValue:setPassword, validErr:passwordErr, setValidErr:setPasswordErr} = 
         useInput('', {isEmpty:true, minLength:6, maxLength:50})
     const [errorsVisible, setErrorsVisible] = useState(false)
+
+    const onHide = () => modals.setAuth(false)
     
     const enter = () => {
         if(!isLoginIn && loginErr || emailErr || passwordErr) {
@@ -24,6 +25,7 @@ const AuthModal = (props) => {
             return
         }        
         authRequest(isLoginIn, user, setEmailErr, setPasswordErr, setErrorsVisible, {email, password, login})
+        .then(response => onHide())
     }  
 
     useEffect(() => {
@@ -34,12 +36,6 @@ const AuthModal = (props) => {
     }, [isLoginIn])
 
     useEffect(() => {
-        if(user._isAuth) {
-            onHide(false)
-        }
-    }, [user._isAuth])
-
-    useEffect(() => {
         const onKeypress = e => {if(e.key === 'Enter') enter()}
         
         document.addEventListener('keypress', onKeypress);
@@ -48,7 +44,8 @@ const AuthModal = (props) => {
 
     return (
         <Modal 
-            {...props}
+            show={modals._auth.show}
+            onHide={onHide}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered>
@@ -72,7 +69,7 @@ const AuthModal = (props) => {
             } 
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => onHide(false)} variant='outline-secondary'>Закрыть</Button>
+                <Button onClick={onHide} variant='outline-secondary'>Закрыть</Button>
                 {isLoginIn ? 
                     <Button onClick={enter} variant='success'>Вход</Button> :
                     <Button onClick={enter} variant='success'>Регистрация</Button>}          

@@ -2,21 +2,8 @@ import { Context } from "index"
 import React, { useContext } from "react"
 import { Dropdown, Nav } from "react-bootstrap"
 
-const UserMenu = (props) => {
-    const {user} = useContext(Context)
-    const {
-        role,      
-        setEditProductModalActive,
-        setTypeHandleModalActive} = props
-    
-
-    const editProductModalHandler = () => {
-        setEditProductModalActive(true)
-    }
-
-    const typeModalHandler = () => {
-        setTypeHandleModalActive(true)
-    }
+const UserMenu = () => {
+    const {user, modals} = useContext(Context)
 
     const removeUserAcount = () => {
         localStorage.removeItem('token')
@@ -35,10 +22,10 @@ const UserMenu = (props) => {
                     >                        
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    {role === 'ADMIN' && 
+                    {user._user.role === 'ADMIN' && 
                         <>
-                            <Dropdown.Item onClick={() => editProductModalHandler()}>Добавить продукт</Dropdown.Item>
-                            <Dropdown.Item onClick={() => typeModalHandler()}>Добавить/Удалить тип</Dropdown.Item>
+                            <Dropdown.Item onClick={() => modals.setEditProduct({show:true})}>Добавить продукт</Dropdown.Item>
+                            <Dropdown.Item onClick={() => modals.setEditType({show:true})}>Добавить/Удалить тип</Dropdown.Item>
                             <Dropdown.Divider />
                         </>
                     }

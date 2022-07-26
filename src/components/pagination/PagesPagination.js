@@ -1,26 +1,26 @@
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext } from "react"
-import './pagination.scss'
+import { Pagination } from "react-bootstrap";
 
-const Pagination = observer(() => {
+const PagesPagination = observer(() => {
     const {products} = useContext(Context)
     const pageCount = Math.ceil(products._totalCount / products._limit)
     const pages=[]
     for (let i = 0; i < pageCount; i++) { pages.push(i + 1) }
 
     return (
-        <div className='pagination'>
+        <Pagination className="d-flex justify-content-center mt-5">
             {pages.map(page => 
-            <div 
-                className={products._page === page ? 'pagination_block pagination_block_active':'pagination_block'} 
+            <Pagination.Item
+                active={products._page === page}
                 key={page}
                 onClick={() => products.setPage(page)}>
                 {page}
-            </div>
+            </Pagination.Item>
             )}
-        </div>        
+        </Pagination>        
     )
 })
 
-export default Pagination
+export default PagesPagination

@@ -1,4 +1,3 @@
-@import './variables.scss';
 
 @font-face {
 	font-family: 'MontserratAlternates'; 
@@ -13,26 +12,4 @@
     margin: 0;
     box-sizing: border-box;
     user-select: none;
-}
-
-.pagecontainer {
-    &_std {
-        height: calc(100vh - $navBarHeigth);
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-    &_control {
-        height: calc(100vh - ($navBarHeigth + $controlBarHeigth));
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-    
-}
-
-.flex {
-    &_between { 
-        display: flex;
-        justify-content: space-between;
-        align-items:center;
-    }
 }

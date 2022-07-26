@@ -1,12 +1,14 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { PRODUCTS_ROUTE } from "utils/const"
 import './shopListItem.scss'
 import noImage from '../../assets/images/no-image.svg'
 import { Card, Col, Image, Spinner } from "react-bootstrap"
+import { Context } from "index"
 
-const ShopListItem = (props) => {
-    const {product, role, setProduct} = props
+const ShopListItem = ({product}) => {
+    const {user, modals} = useContext(Context)
+    const role = user._user.role  
     const navigate = useNavigate()
     const [imageLoaded, setImageLoaded] = useState(false)    
     const [noImageLoaded, setNoImageLoaded] = useState(false)
@@ -14,7 +16,7 @@ const ShopListItem = (props) => {
   
     const editProduct = (e) => {
         e.stopPropagation()
-        setProduct(product)
+        modals.setEditProduct({show:true,product})
     }
     
     return (
@@ -23,7 +25,7 @@ const ShopListItem = (props) => {
                 style={{width: 250, minHeight:250, cursor: 'pointer'}} 
                 className="overflow-hidden d-flex flex-column justify-content-between" 
                 onClick={() => navigate(PRODUCTS_ROUTE + '/' +  product.id)}>
-                <Image src={src} style={imageLoaded ? {display:'block'} : { display: 'none' }} onLoad={() => setImageLoaded(true)}/>
+                <img src={src} style={imageLoaded ? {display:'block', height:180} : { display: 'none' }} onLoad={() => setImageLoaded(true)}/>
                 {!imageLoaded && <Image src={noImage} onLoad={() => setNoImageLoaded(true)}/>}
                 {!imageLoaded && !noImageLoaded &&
                     <div className="d-flex justify-content-center align-items-center" style={{height:180}}><Spinner animation="border"/></div>}
