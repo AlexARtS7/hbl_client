@@ -14,12 +14,12 @@ export const FullButton = (props) => {
 }
 
 export const LabelInput = (props) => {
-    const {label, type, value, setValue} = props
+    const {label, type, value, setValue, className} = props
     return (
         <FloatingLabel
             controlId="floatingInput"
             label={label}
-            className="mb-3"
+            className={className}
         >
             <Form.Control 
                 type={type} 

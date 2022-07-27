@@ -20,9 +20,11 @@ const App = () => {
 
     return (
         <BrowserRouter>
-            <Modals/>
-            <Navbar/>
-            <AppRouter/>
+            <div className="d-flex flex-column app">
+                <Modals/>
+                <Navbar/>
+                <AppRouter/>
+            </div>            
         </BrowserRouter>
     )
 }

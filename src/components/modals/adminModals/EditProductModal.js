@@ -84,13 +84,13 @@ const EditProductModal = () => {
         </Modal.Header>
         <Modal.Body>
             {product && <div className="border rounded px-3 py-1 mb-3 bg-warning">ID: {product.id}</div>}
-            <LabelInput label='Название' value={name} setValue={setName} type='name'/>
+            <LabelInput label="Название" value={name} setValue={setName} type="name" className="mb-3"/>
             <SelectInput 
                 label='Категория'
                 defaultValue='Выберите категорию' value={typeName} setValue={setTypeName}
                 types={products._types} />
             <AccordionInfo/>
-            <LabelInput label='Стоимость' value={price} setValue={setPrice} type='number'/>
+            <LabelInput label='Стоимость' value={price} setValue={setPrice} type='number' className="mb-3"/>
             <AddFilesInput 
                 files={files} setFiles={setFiles} 
                 addButton={product.id && files[0]} onButtonClick={addFiles} buttonRef={buttonRef}/>

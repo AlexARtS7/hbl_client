@@ -60,12 +60,12 @@ const AuthModal = () => {
             <Modal.Body>
                 {!isLoginIn && 
                     // {errorsVisible && loginErr && <p className='modal_error'>{loginErr}</p>}
-                    <LabelInput label='Логин' value={login} setValue={setLogin} type='name'/>
+                    <LabelInput label='Логин' value={login} setValue={setLogin} type='name' className="mb-3"/>
                 }
                 {/* {errorsVisible && emailErr && <p className='modal_error'>{emailErr}</p>}  */}
-                    <LabelInput label='email' value={email} setValue={setEmail} type='email'/>
+                    <LabelInput label='email' value={email} setValue={setEmail} type='email' className="mb-3"/>
                 {/* {errorsVisible && passwordErr && <p className='modal_error'>{passwordErr}</p>} */}
-                    <LabelInput label='Пароль' value={password} setValue={setPassword} type='password'/>
+                    <LabelInput label='Пароль' value={password} setValue={setPassword} type='password' className="mb-3"/>
                     {isLoginIn ?
                 <div style={{marginLeft:10}}>Нет акаунта? <span style={{color:'blue', cursor:'pointer'}} onClick={() => setIsLoginIn(!isLoginIn)}>Зарегистрируйтесь</span></div> :
                 <div style={{marginLeft:10}}>Есть акаунт? <span style={{color:'blue', cursor:'pointer'}} onClick={() => setIsLoginIn(!isLoginIn)}>Войдите</span></div>

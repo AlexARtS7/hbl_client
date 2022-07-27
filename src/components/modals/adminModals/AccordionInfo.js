@@ -1,26 +1,43 @@
-import useInput from 'components/hooks/useInput'
 import React, { useState } from 'react'
-import { Accordion, Button, Col, Row } from 'react-bootstrap'
+import { Accordion, Button, Card, Col, Row } from 'react-bootstrap'
 import { LabelInput } from '../modalsComponents'
 
 const AccordionInfo = () => {
     const [info, setInfo] = useState([])
-    const {value:name, setValue:setName} = useInput(info.name || '')
-    const {value:price, setValue:setPrice} = useInput(info.description || '')
+
+    const addInfo = () => {
+        setInfo([...info, {title: '', description: '', number: Date.now()}])
+    }
+
+    const changeInfo = (key, value, number) => {
+        setInfo(info.map(i => i.number === number ? {...i, [key]: value} : i))
+    }
 
     return (
         <Accordion className="mb-3">
             <Accordion.Item eventKey="0">
                 <Accordion.Header>Информация</Accordion.Header>
                 <Accordion.Body>
-                    {info.map(info => 
-                        <Row>
-                            <Col>
-                                <LabelInput label='Название' value={name} setValue={setName} type='name'/>
-                            </Col>
-                        </Row>
+                    {info.map(i => 
+                        <Card className="p-2 mb-3" style={{background:'lightgray'}}>
+                            <Row>
+                                <Col>
+                                    <LabelInput 
+                                        label='Название' 
+                                        onChange={(e) => changeInfo('title', e.target.value, i.number)} type='name'/>
+                                </Col>
+                                <Col>
+                                    <LabelInput label='Информация' type='name'/>
+                                </Col>
+                                <Col className='w-25'>
+                                    <Button >Удалить</Button>
+                                </Col>
+                            </Row>
+                        </Card>
+                        
+                            
                     )}
-                    <Button variant="outline-success" size="sm" className="w-100">Добавить информацию</Button>
+                    <Button onClick={addInfo} variant="outline-success" size="sm" className="w-100">Добавить информацию</Button>
                 </Accordion.Body>
             </Accordion.Item>
         </Accordion>

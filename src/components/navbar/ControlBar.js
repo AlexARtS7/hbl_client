@@ -27,7 +27,7 @@ const ControlBar = observer(() => {
     }
          
     return (
-        <Container className="p-2 mt-2 mb-2">
+        <Container className="p-1 my-2">
             <InputGroup size="sm">
                 <DropdownButton 
                     variant="outline-secondary"

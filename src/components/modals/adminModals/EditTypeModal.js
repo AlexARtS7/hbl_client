@@ -34,7 +34,7 @@ const EditTypeModal = () => {
             </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <LabelInput label='Введите название нового типа' value={type} setValue={setType} type='name'/>
+            <LabelInput label='Введите название нового типа' value={type} setValue={setType} type='name' className="mb-3"/>
         </Modal.Body>
         <Modal.Footer>
             <Button onClick={onHide} variant='outline-secondary'>Закрыть</Button>

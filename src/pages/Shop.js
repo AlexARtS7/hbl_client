@@ -3,7 +3,6 @@ import ShopList from "components/shoplist/ShopList"
 import { fetchProducts, fetchTypes } from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
-import ControlBar from "components/controlBar/ControlBar"
 import PagesPagination from "components/pagination/PagesPagination"
 import { Col, Container, Row } from "react-bootstrap"
 import Loading from "components/loading/Loading"
@@ -25,8 +24,7 @@ const ShopPage = observer(() => {
     }, [products._selectedType, products._page, products._reload])
     
     return (
-        <Container fluid>
-            <ControlBar/> 
+        <Container fluid style={{overflowY:'auto'}}>
             <Row>
                 <Col>  
                     {products._loading && <Loading/>}
@@ -41,7 +39,6 @@ const ShopPage = observer(() => {
                 </Col>
             </Row>        
         </Container>
-        
     )
 })
 
