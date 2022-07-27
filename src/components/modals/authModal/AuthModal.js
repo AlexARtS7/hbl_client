@@ -6,7 +6,7 @@ import { Button, Modal } from "react-bootstrap"
 import { LabelInput } from "../modalsComponents"
 
 const AuthModal = () => {
-    const {user, modals} = useContext(Context)
+    const {products, user, modals} = useContext(Context)
     const [isLoginIn, setIsLoginIn] = useState(true)
     
     const {value:login, setValue:setLogin, validErr:loginErr} = 
@@ -25,7 +25,10 @@ const AuthModal = () => {
             return
         }        
         authRequest(isLoginIn, user, setEmailErr, setPasswordErr, setErrorsVisible, {email, password, login})
-        .then(response => onHide())
+        .then(response => {
+            products.initReload()
+            onHide()
+        })
     }  
 
     useEffect(() => {

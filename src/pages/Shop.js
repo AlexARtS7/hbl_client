@@ -5,7 +5,8 @@ import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import ControlBar from "components/controlBar/ControlBar"
 import PagesPagination from "components/pagination/PagesPagination"
-import { Col, Container, Row, Spinner } from "react-bootstrap"
+import { Col, Container, Row } from "react-bootstrap"
+import Loading from "components/loading/Loading"
 
 const ShopPage = observer(() => {
     const {products} = useContext(Context)
@@ -28,10 +29,7 @@ const ShopPage = observer(() => {
             <ControlBar/> 
             <Row>
                 <Col>  
-                    {products._loading && 
-                        <div className="d-flex justify-content-center m-3">
-                            <Spinner animation="border"/> 
-                        </div>}  
+                    {products._loading && <Loading/>}
                     {!products._loading && products._products.length === 0 &&
                         <div className="d-flex justify-content-center fs-5">К сожалению в этом разделе ничего нет :(</div>}  
                     {!products._loading && 

@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom"
 import { PRODUCTS_ROUTE } from "utils/const"
 import './shopListItem.scss'
 import noImage from '../../assets/images/no-image.svg'
-import { Card, Col, Image, Spinner } from "react-bootstrap"
+import { Card, Col, Image } from "react-bootstrap"
 import { Context } from "index"
+import Loading from "components/loading/Loading"
 
 const ShopListItem = ({product}) => {
     const {user, modals} = useContext(Context)
@@ -27,8 +28,7 @@ const ShopListItem = ({product}) => {
                 onClick={() => navigate(PRODUCTS_ROUTE + '/' +  product.id)}>
                 <img src={src} style={imageLoaded ? {display:'block', height:180} : { display: 'none' }} onLoad={() => setImageLoaded(true)}/>
                 {!imageLoaded && <Image src={noImage} onLoad={() => setNoImageLoaded(true)}/>}
-                {!imageLoaded && !noImageLoaded &&
-                    <div className="d-flex justify-content-center align-items-center" style={{height:180}}><Spinner animation="border"/></div>}
+                {!imageLoaded && !noImageLoaded && <Loading/>}
                 <div>
                     <p className="m-1">{product.name}</p>
                     <p className="m-1">{product.price} ₽</p>

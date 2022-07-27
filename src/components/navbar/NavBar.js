@@ -12,7 +12,7 @@ const NavBar = observer(() => {
         <div>
             <Navbar bg='secondary' expand="lg">
                 <Container fluid className='d-flex justify-content-between'>
-                    <Navbar.Brand className='text-white' href="/">HobbyLaser</Navbar.Brand>
+                    <Navbar.Brand className='text-white fs-3' href="/">HobbyLaser</Navbar.Brand>
                     {user._isAuth ? 
                     <UserMenu/>
                     :

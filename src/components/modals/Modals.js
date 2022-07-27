@@ -21,11 +21,11 @@ const Modals = observer(() => {
     },[modals._auth.show])
 
     return (
-        <div>
+        <>
             {modals._editProduct.show && <EditProductModal/>}   
             {modals._editType.show && <EditTypeModal/>} 
             {modals._auth.show && <AuthModal/>} 
-        </div>
+        </>
     )
 })
 

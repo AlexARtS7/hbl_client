@@ -7,12 +7,13 @@ import { useNavigate } from "react-router-dom"
 import { PRODUCTS_ROUTE } from "utils/const"
 import { generateFormData } from "./generateFormData"
 import PreviewImages from "./PreviewImages"
-import { Accordion, Button, Modal } from "react-bootstrap"
+import { Button, Modal } from "react-bootstrap"
+import AccordionInfo from "./AccordionInfo"
 
 const EditProductModal = () => {
     const navigate = useNavigate()
     const {products, modals} = useContext(Context)
-    const {show, product = ''} = modals._editProduct   
+    const {show, product = ''} = modals._editProduct 
     const {value:name, setValue:setName} = useInput(product.name || '')
     const {value:price, setValue:setPrice} = useInput(product.price || 0)
     const type = product.id ? products._types.filter(type => type.id === +product.typeId)[0].name : ''
@@ -82,19 +83,13 @@ const EditProductModal = () => {
             </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+            {product && <div className="border rounded px-3 py-1 mb-3 bg-warning">ID: {product.id}</div>}
             <LabelInput label='Название' value={name} setValue={setName} type='name'/>
             <SelectInput 
                 label='Категория'
                 defaultValue='Выберите категорию' value={typeName} setValue={setTypeName}
                 types={products._types} />
-            <Accordion className="mb-3">
-                <Accordion.Item eventKey="0">
-                    <Accordion.Header>Информация</Accordion.Header>
-                    <Accordion.Body>
-                        <div>fdgdf</div>
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion>
+            <AccordionInfo/>
             <LabelInput label='Стоимость' value={price} setValue={setPrice} type='number'/>
             <AddFilesInput 
                 files={files} setFiles={setFiles} 

@@ -3,12 +3,13 @@ import React, { useContext } from "react"
 import { Dropdown, Nav } from "react-bootstrap"
 
 const UserMenu = () => {
-    const {user, modals} = useContext(Context)
+    const {products, user, modals} = useContext(Context)
 
     const removeUserAcount = () => {
         localStorage.removeItem('token')
         user.setUser({})
         user.setIsAuth(false)
+        products.initReload()
     }
     
     return (
