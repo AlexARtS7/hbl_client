@@ -1,5 +1,5 @@
 import Loading from "components/loading/Loading"
-import { fetchOneProduct } from "http/productApi"
+import { fetchOneProduct, fetchProductInfo, fetchTypes } from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect, useState } from "react"
@@ -10,13 +10,14 @@ import './productSheet.scss'
 const ProductSheet = observer(() => {
     const {products, modals, user} = useContext(Context)
     const [product, setProduct] = useState({})
+    const [productInfo, setProductInfo] = useState([])
     const [slide, setSlide] = useState(0)
     const {id} = useParams()
     
     const handleSelect = (selectedIndex, e) => {
         setSlide(selectedIndex);
     }
-
+    
     const editProduct = (e) => {
         e.stopPropagation()
         modals.setEditProduct({show:true,product})
@@ -24,7 +25,12 @@ const ProductSheet = observer(() => {
 
     useEffect(() => {
         fetchOneProduct(id).then(data => setProduct(data))
+        fetchProductInfo(id).then(data => setProductInfo(data))
     }, [products._reload])
+
+    useEffect(() => {
+        fetchTypes().then(data => products.setTypes(data)) 
+    },[])
     
     return (
         <Container fluid style={{overflowY:'auto'}}>
@@ -72,7 +78,15 @@ const ProductSheet = observer(() => {
                         </Row>
                         <Row className="mt-5">
                             <hr/>
-                            <p>Информация</p>
+                            {productInfo &&
+                                productInfo.map(info => 
+                                    <div key={info.id}>
+                                        <div>{info.title}</div>
+                                        <div>{info.info}</div>
+                                    </div>
+                                    
+                                )
+                            }
                         </Row>
                     </>
                     : <Loading/>

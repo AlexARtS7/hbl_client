@@ -17,10 +17,6 @@ export default class ProductStore {
         this._loading = value
     }
 
-    initReload() {
-        this._reload = !this._reload
-    }
-
     setTypes(types) {
         this._types = types
     }
@@ -44,5 +40,9 @@ export default class ProductStore {
 
     setProducts(products) {
         this._products = products
+    }
+
+    initReload() {
+        this._reload = !this._reload
     }
 }

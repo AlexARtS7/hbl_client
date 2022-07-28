@@ -31,6 +31,11 @@ export const fetchOneProduct = async(id) => {
     return data
 }
 
+export const fetchProductInfo = async(id) => {
+    const {data} = await $host.get('api/products/info/' + id)
+    return data
+}
+
 export const deleteFiles = async(formData) => {
     const {data} = await $authHost.post('api/products/deletefiles', formData)
     return data
