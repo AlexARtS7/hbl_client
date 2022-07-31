@@ -28,7 +28,14 @@ const EditProductModal = observer(() => {
     const {value:description, setValue:setDescription} = useInput('')
     const buttonRef = useRef()
 
-    const onHide = () => modals.setEditProduct(false)    
+    const onHide = () => modals.setEditProduct(false)  
+    
+    const fetching = () => {
+        products.item.id ?
+            fetchOneProduct(product.id)
+            :
+            fetchProducts()
+    }
     
     const addProduct = () => {
         const formData = generateFormData({
@@ -46,6 +53,7 @@ const EditProductModal = observer(() => {
             const data = JSON.parse(response)
             setLoadedFiles(data)            
             setFiles({})
+            fetching()
             buttonRef.current.value = ''
         })
     }
@@ -58,10 +66,7 @@ const EditProductModal = observer(() => {
             id:product.id, name, price, types:products.types, typeName, info:products.itemInfo})
         updateData(formData)
         .then(response => {
-            products.item.id ?
-            fetchOneProduct(product.id)
-            :
-            fetchProducts()
+            fetching()
             onHide()
         })        
     }
@@ -108,7 +113,7 @@ const EditProductModal = observer(() => {
                 addButton={product.id && files[0]} onButtonClick={addFiles} buttonRef={buttonRef}/>
             {product.id && 
                 <PreviewImages
-                    product={product} reload={() => products.initReload()}
+                    product={product} fetching={() => fetching()}
                     loadedFiles={loadedFiles} setLoadedFiles={setLoadedFiles}
                 />
             }

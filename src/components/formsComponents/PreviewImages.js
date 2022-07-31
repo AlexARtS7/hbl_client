@@ -4,7 +4,7 @@ import { Button, Card, Col, Container, Form, Row } from "react-bootstrap"
 import { generateFormData } from "../modals/adminModals/generateFormData"
 
 const PreviewImages = (props) => {
-    const {product, loadedFiles, setLoadedFiles, reload} = props
+    const {product, loadedFiles, setLoadedFiles, fetching} = props
     const [delArray, setDelArray] = useState([...loadedFiles.map(element => ({name: element, status: false}))])
     const [delFilesBtnActive, setDelFilesBtnActive] = useState(false)
     
@@ -30,7 +30,7 @@ const PreviewImages = (props) => {
         .then(response => {
             setLoadedFiles(resultArray)
             setDelArray(delArray.filter(item => !item.status))
-            reload()
+            fetching()
         })
     }
 
