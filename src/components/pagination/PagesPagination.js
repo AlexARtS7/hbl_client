@@ -13,7 +13,7 @@ const PagesPagination = observer(() => {
         <Pagination className="d-flex justify-content-center mt-5">
             {pages.map(page => 
             <Pagination.Item
-                active={products._page === page}
+                active={products.page === page}
                 key={page}
                 onClick={() => products.setPage(page)}>
                 {page}

@@ -5,6 +5,8 @@ export default class ProductStore {
         this._types = []
         this._selectedType = {}
         this._list = []
+        this._item = {}
+        this._itemInfo = []
         this._page = 1
         this._totalCount = 0
         this._limit = 9
@@ -28,12 +30,28 @@ export default class ProductStore {
         this._selectedType = type
     }
 
-    setProducts(list) {
+    setList(list) {
         this._list = list
+    }
+
+    setItem(item) {
+        this._item = item
+    }
+
+    setItemInfo(info) {
+        this._itemInfo = info
     }
 
     get list() {
         return this._list
+    }
+
+    get item() {
+        return this._item
+    }
+
+    get itemInfo() {
+        return this._itemInfo
     }
 
     get types() {

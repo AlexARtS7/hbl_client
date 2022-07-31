@@ -1,19 +1,21 @@
-import React from 'react'
+import { Context } from 'index'
+import { observer } from 'mobx-react-lite'
+import React, { useContext } from 'react'
 import { Accordion, Button, Form, InputGroup } from 'react-bootstrap'
 
-const AccordionInfo = (props) => {
-    const {info, setInfo, id} = props
+const AccordionInfo = observer(() => {
+    const {products} = useContext(Context)
     
     const addInfo = () => {
-        setInfo([...info, {title: '', info: '', idKey: Math.round(Date.now() / 2000)}])
+        products.setItemInfo([...products.itemInfo, {title: '', info: '', idKey: Math.round(Date.now() / 2000)}])
     }
     
     const changeInfo = (key, value, idKey) => {
-        setInfo(info.map(i => i.idKey === idKey ? {...i, [key]: value} : i))
+        products.setItemInfo(products.itemInfo.map(i => i.idKey === idKey ? {...i, [key]: value} : i))
     }
 
     const removeInfo = (idKey) => {
-        setInfo(info.filter(i => i.idKey !== idKey))
+        products.setItemInfo(products.itemInfo.filter(i => i.idKey !== idKey))
     }
     
     return (
@@ -21,14 +23,14 @@ const AccordionInfo = (props) => {
             <Accordion.Item eventKey="0">
                 <Accordion.Header>Информация</Accordion.Header>
                 <Accordion.Body>
-                    {info && info.map((item,i) => 
+                    {products.itemInfo && products.itemInfo.map((item,i) => 
                         <InputGroup className="mb-3" key={i}>
-                        <InputGroup.Text id="basic-addon1">Название</InputGroup.Text>
+                        <InputGroup.Text>Название</InputGroup.Text>
                         <Form.Control
                             value={item.title}
                             onChange={(e) => changeInfo('title', e.target.value, item.idKey)}
                         />
-                        <InputGroup.Text id="basic-addon1">Инфо</InputGroup.Text>
+                        <InputGroup.Text>Инфо</InputGroup.Text>
                         <Form.Control
                             value={item.info}
                             onChange={(e) => changeInfo('info', e.target.value, item.idKey)}
@@ -41,6 +43,6 @@ const AccordionInfo = (props) => {
             </Accordion.Item>
         </Accordion>
     )
-}
+})
 
 export default AccordionInfo

@@ -2,17 +2,56 @@ import { Context } from "index";
 import { useContext } from "react";
 import { $authHost, $host } from "./index";
 
+const productApi = () => {
+    const {loading, products} = useContext(Context)
 
+    const fetchProducts = async(
+            typeId = products.selectedType.id, 
+            page = products.page, 
+            limit = products.limit) => {
+        loading.setStatus(true)
+        const {data} = await $host.get('api/products', {params: {typeId, page, limit}})
+        products.setList(data.rows.map(e => ({ ...e, img: JSON.parse(e.img) })))
+        products.setTotalCount(data.count)
+        loading.setStatus(false)
+        return data
+    }
 
-export const createType = async(type) => {
-    const {data} = await $authHost.post('api/type', type)
-    return data
+    const fetchOneProduct = async(id) => {
+        const {data} = await $host.get('api/products/' + id)
+        data.img = JSON.parse(data.img)
+        products.setItem(data)
+        return data
+    }
+
+    const fetchProductInfo = async(id) => {
+        const {data} = await $host.get('api/products/info/' + id)
+        products.setItemInfo(data)
+        return data
+    }
+
+    const createType = async(type) => {
+        const {data} = await $authHost.post('api/type', type)
+        products.setTypes([...products.types, data])
+        return data
+    }
+
+    const fetchTypes = async() => {
+        const {data} = await $host.get('api/type')
+        products.setTypes(data)
+        return data
+    }
+
+    return {
+        fetchProducts,
+        fetchOneProduct,
+        fetchProductInfo,
+        fetchTypes,
+        createType
+    }
 }
 
-export const fetchTypes = async() => {
-    const {data} = await $host.get('api/type')
-    return data
-}
+export default productApi
 
 export const createProduct = async(formData) => {
     const {data} = await $authHost.post('api/products/create', formData)
@@ -24,23 +63,11 @@ export const uploadFiles = async(formData) => {
     return data
 }
 
-export const fetchProducts = async(typeId, page, limit) => {
-    const {data} = await $host.get('api/products', {params: {typeId, page, limit}})
-    return data
-}
 
-export const fetchOneProduct = async(id) => {
-    const {data} = await $host.get('api/products/' + id)
-    data.img = JSON.parse(data.img)
-    return data
-}
 
-export const fetchProductInfo = async(id) => {
-    const {data} = await $host.get('api/products/info/' + id)
-    // TODO не обновляются данные всех компонентов, так как обновляется стейт внутри компонента
-    // нужно здесь менять контекст
-    return data
-}
+
+
+
 
 export const deleteFiles = async(formData) => {
     const {data} = await $authHost.post('api/products/deletefiles', formData)

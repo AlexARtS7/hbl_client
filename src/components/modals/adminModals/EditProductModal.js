@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react"
-import { changeOrderFiles, createProduct, deleteProduct, fetchProductInfo, updateData, uploadFiles } from "http/productApi"
+import productApi, { changeOrderFiles, createProduct, deleteProduct, updateData, uploadFiles } from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { useNavigate } from "react-router-dom"
@@ -12,18 +12,19 @@ import AccordionDescription from "../../formsComponents/AccordionDescription"
 import { LabelInput } from "components/formsComponents/LabelInput"
 import { SelectInput } from "components/formsComponents/SelectInput"
 import { AddFilesInput } from "components/formsComponents/AddFiles"
+import { observer } from "mobx-react-lite"
 
-const EditProductModal = () => {
+const EditProductModal = observer(() => {
     const navigate = useNavigate()
+    const {fetchProductInfo, fetchProducts, fetchOneProduct} = productApi()
     const {products, modals} = useContext(Context)
-    const {show, product = ''} = modals._editProduct 
+    const {show, product = ''} = modals.editProduct 
     const {value:name, setValue:setName} = useInput(product.name || '')
     const {value:price, setValue:setPrice} = useInput(product.price || 0)
-    const type = product.id && products._types.length > 0 ? products._types.filter(type => type.id === +product.typeId)[0].name : ''
+    const type = product.id && products.types.length > 0 ? products.types.filter(type => type.id === +product.typeId)[0].name : ''
     const {value:typeName, setValue:setTypeName} = useInput(type)
     const [loadedFiles, setLoadedFiles] = useState(product.img)
     const [files, setFiles] = useState({})
-    const [info, setInfo] = useState([])
     const {value:description, setValue:setDescription} = useInput('')
     const buttonRef = useRef()
 
@@ -31,7 +32,7 @@ const EditProductModal = () => {
     
     const addProduct = () => {
         const formData = generateFormData({
-            name, price, files, types:products.types, typeName, info
+            name, price, files, types:products.types, typeName, info:products.itemInfo
         })
         createProduct(formData).then(data => {
             navigate(PRODUCTS_ROUTE + '/' +  data.id)
@@ -46,7 +47,6 @@ const EditProductModal = () => {
             setLoadedFiles(data)            
             setFiles({})
             buttonRef.current.value = ''
-            products.initReload()
         })
     }
 
@@ -55,10 +55,13 @@ const EditProductModal = () => {
         let formData = generateFormData({id:product.id, filesArray:loadedFiles})
         changeOrderFiles(formData)
         formData = generateFormData({
-            id:product.id, name, price, types:products.types, typeName, info})
+            id:product.id, name, price, types:products.types, typeName, info:products.itemInfo})
         updateData(formData)
         .then(response => {
-            products.initReload()
+            products.item.id ?
+            fetchOneProduct(product.id)
+            :
+            fetchProducts()
             onHide()
         })        
     }
@@ -68,14 +71,13 @@ const EditProductModal = () => {
         if(confirmed){
             deleteProduct(product.id)
             .then(response => {
-                products.initReload()
                 onHide()
             })            
         }        
     }
 
     useEffect(() => {
-        if(product.id) fetchProductInfo(product.id).then(data => setInfo(data))
+        if(product.id) fetchProductInfo(product.id)
     }, [product])
     
     return (
@@ -99,7 +101,7 @@ const EditProductModal = () => {
                 defaultValue='Выберите категорию' value={typeName} setValue={setTypeName}
                 types={products.types} />
             <AccordionDescription id={product.id} description={description} setDescription={setDescription}/>
-            <AccordionInfo id={product.id} info={info} setInfo={setInfo}/>
+            <AccordionInfo/>
             <LabelInput label='Стоимость' value={price} setValue={setPrice} type='number' className="mb-3"/>
             <AddFilesInput 
                 files={files} setFiles={setFiles} 
@@ -129,7 +131,7 @@ const EditProductModal = () => {
         </Modal.Footer>
         </Modal>
     )
-}
+})
 
 export default EditProductModal
 

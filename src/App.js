@@ -13,7 +13,7 @@ const App = () => {
 
     useEffect(() => {
         check().then(userData => {
-          user.setUser(userData)
+          user.setData(userData)
           user.setIsAuth(true)
         }) 
     },[])

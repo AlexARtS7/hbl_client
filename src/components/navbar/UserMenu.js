@@ -3,27 +3,26 @@ import React, { useContext } from "react"
 import { Dropdown, Nav } from "react-bootstrap"
 
 const UserMenu = () => {
-    const {products, user, modals} = useContext(Context)
+    const {user, modals} = useContext(Context)
 
     const removeUserAcount = () => {
         localStorage.removeItem('token')
-        user.setUser({})
+        user.setData({})
         user.setIsAuth(false)
-        products.initReload()
     }
     
     return (
         <div className='d-flex align-items-center'>
-            <div style={{marginRight: 10}} className='text-white'>{user.user.login}</div>
+            <div style={{marginRight: 10}} className='text-white'>{user.data.login}</div>
             <Dropdown align="end">
                 <Dropdown.Toggle id="dropdown-basic" variant="outline-light"  className=
-                {user.user.role === 'USER'? 
+                {user.data.role === 'USER'? 
                     'navbar_logo_user' :
                     'navbar_logo_admin'}
                     >                        
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    {user.user.role === 'ADMIN' && 
+                    {user.data.role === 'ADMIN' && 
                         <>
                             <Dropdown.Item onClick={() => modals.setEditProduct({show:true})}>Добавить продукт</Dropdown.Item>
                             <Dropdown.Item onClick={() => modals.setEditType({show:true})}>Добавить/Удалить тип</Dropdown.Item>

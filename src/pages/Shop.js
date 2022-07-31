@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react"
 import ShopList from "components/shoplist/ShopList"
-import { fetchProducts, fetchTypes } from "http/productApi"
+import productApi from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import PagesPagination from "components/pagination/PagesPagination"
@@ -9,20 +9,15 @@ import Loading from "components/loading/Loading"
 
 const ShopPage = observer(() => {
     const {products, loading} = useContext(Context)
+    const {fetchProducts, fetchTypes} = productApi()
 
     useEffect(() => {
-        fetchTypes().then(data => products.setTypes(data)) 
+        products.setItem({})
+        fetchTypes()
     },[])
     
-    // TODO не вызывать каждый раз тут запрос при изменении данных
-
     useEffect(() => {
-        loading.setStatus(true)
-        fetchProducts(products.selectedType.id, products.page, products.limit).then(data => {
-            products.setProducts(data.rows.map(e => ({ ...e, img: JSON.parse(e.img) })))
-            products.setTotalCount(data.count)
-            loading.setStatus(false)
-        })
+        fetchProducts()
     }, [products.selectedType, products.page])
     
     return (
