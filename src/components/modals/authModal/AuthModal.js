@@ -3,7 +3,7 @@ import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { authRequest } from "./authRequest"
 import { Button, Modal } from "react-bootstrap"
-import { LabelInput } from "../modalsComponents"
+import { LabelInput } from "components/formsComponents/LabelInput"
 
 const AuthModal = () => {
     const {products, user, modals} = useContext(Context)
@@ -49,7 +49,6 @@ const AuthModal = () => {
         <Modal 
             show={modals._auth.show}
             onHide={onHide}
-            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered>
             <Modal.Header >

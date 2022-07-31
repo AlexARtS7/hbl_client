@@ -10,7 +10,7 @@ const ControlBar = observer(() => {
     const {value:findText, setValue:setFindText} = useInput('')
     
     const setType = (e) => {
-        products.setSelectedType(products._types.find(type => type.name.includes(e.target.textContent)))
+        products.setSelectedType(products.types.find(type => type.name.includes(e.target.textContent)))
         setFindText('')
     }
 
@@ -21,7 +21,7 @@ const ControlBar = observer(() => {
 
     const findType = (value) => {
         setFindText(value)
-        const findResult = products._types.find(type => type.name.toLowerCase().includes(value.toLowerCase())) || {}
+        const findResult = products.types.find(type => type.name.toLowerCase().includes(value.toLowerCase())) || {}
         value && findResult.name && products.setSelectedType(findResult) 
         !value && products.setSelectedType({}) 
     }
@@ -31,12 +31,12 @@ const ControlBar = observer(() => {
             <InputGroup size="sm">
                 <DropdownButton 
                     variant="outline-secondary"
-                    title={products._selectedType.name ? products._selectedType.name : "Все категории"}
+                    title={products.selectedType.name ? products.selectedType.name : "Все категории"}
                     id="input-group-dropdown-1"
                 >
                     <Dropdown.Item onClick={selectAllTypes}>Все категории</Dropdown.Item>  
                     <Dropdown.Divider />
-                    {products._types.map(type => 
+                    {products.types.map(type => 
                         <Dropdown.Item onClick={e => setType(e)} key={type.id}>{type.name}</Dropdown.Item>
                     )}
                 </DropdownButton>

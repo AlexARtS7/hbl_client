@@ -9,7 +9,7 @@ import Loading from "components/loading/Loading"
 
 const ShopListItem = ({product}) => {
     const {user, modals} = useContext(Context)
-    const role = user._user.role  
+    const role = user.user.role  
     const navigate = useNavigate()
     const [imageLoaded, setImageLoaded] = useState(false)    
     const [noImageLoaded, setNoImageLoaded] = useState(false)

@@ -5,7 +5,7 @@ import { Pagination } from "react-bootstrap";
 
 const PagesPagination = observer(() => {
     const {products} = useContext(Context)
-    const pageCount = Math.ceil(products._totalCount / products._limit)
+    const pageCount = Math.ceil(products.totalCount / products.limit)
     const pages=[]
     for (let i = 0; i < pageCount; i++) { pages.push(i + 1) }
 

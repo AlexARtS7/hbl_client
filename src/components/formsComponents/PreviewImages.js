@@ -1,7 +1,7 @@
 import { deleteFiles } from "http/productApi"
 import React, { useEffect, useState } from "react"
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap"
-import { generateFormData } from "./generateFormData"
+import { generateFormData } from "../modals/adminModals/generateFormData"
 
 const PreviewImages = (props) => {
     const {product, loadedFiles, setLoadedFiles, reload} = props

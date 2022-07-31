@@ -14,16 +14,16 @@ const UserMenu = () => {
     
     return (
         <div className='d-flex align-items-center'>
-            <div style={{marginRight: 10}} className='text-white'>{user._user.login}</div>
+            <div style={{marginRight: 10}} className='text-white'>{user.user.login}</div>
             <Dropdown align="end">
                 <Dropdown.Toggle id="dropdown-basic" variant="outline-light"  className=
-                {user._user.role === 'USER'? 
+                {user.user.role === 'USER'? 
                     'navbar_logo_user' :
                     'navbar_logo_admin'}
                     >                        
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    {user._user.role === 'ADMIN' && 
+                    {user.user.role === 'ADMIN' && 
                         <>
                             <Dropdown.Item onClick={() => modals.setEditProduct({show:true})}>Добавить продукт</Dropdown.Item>
                             <Dropdown.Item onClick={() => modals.setEditType({show:true})}>Добавить/Удалить тип</Dropdown.Item>

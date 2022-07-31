@@ -1,5 +1,6 @@
 import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
+import LoadingStore from 'store/LoadingStore';
 import ModalStore from 'store/ModalStore';
 import ProductStore from 'store/ProductStore';
 import UserStore from 'store/UserStore';
@@ -12,7 +13,8 @@ ReactDOM.createRoot(document.getElementById('root'))
   <Context.Provider value={{
     user: new UserStore(),
     products: new ProductStore(),
-    modals: new ModalStore()
+    modals: new ModalStore(),
+    loading: new LoadingStore()
   }}>
     <App />
   </Context.Provider>

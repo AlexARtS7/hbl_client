@@ -9,7 +9,7 @@ const ShopList = observer(() => {
 
     return (
         <Row className="d-flex justify-content-center">
-            {products._products && products._products.map(product => 
+            {products.list && products.list.map(product => 
             <ShopListItem 
                 product={product} 
                 key={product.id}/>

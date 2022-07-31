@@ -8,29 +8,31 @@ import { Col, Container, Row } from "react-bootstrap"
 import Loading from "components/loading/Loading"
 
 const ShopPage = observer(() => {
-    const {products} = useContext(Context)
+    const {products, loading} = useContext(Context)
 
     useEffect(() => {
         fetchTypes().then(data => products.setTypes(data)) 
     },[])
+    
+    // TODO не вызывать каждый раз тут запрос при изменении данных
 
     useEffect(() => {
-        products.setLoading(true)
-        fetchProducts(products._selectedType.id, products._page, products._limit).then(data => {
+        loading.setStatus(true)
+        fetchProducts(products.selectedType.id, products.page, products.limit).then(data => {
             products.setProducts(data.rows.map(e => ({ ...e, img: JSON.parse(e.img) })))
             products.setTotalCount(data.count)
-            products.setLoading(false)
+            loading.setStatus(false)
         })
-    }, [products._selectedType, products._page, products._reload])
+    }, [products.selectedType, products.page])
     
     return (
         <Container fluid style={{overflowY:'auto'}}>
             <Row>
                 <Col>  
-                    {products._loading && <Loading/>}
-                    {!products._loading && products._products.length === 0 &&
+                    {loading.status && <Loading/>}
+                    {!loading.status && products.list.length === 0 &&
                         <div className="d-flex justify-content-center fs-5">К сожалению в этом разделе ничего нет :(</div>}  
-                    {!products._loading && 
+                    {!loading.status && 
                         <>
                             <ShopList/>
                             <PagesPagination/>

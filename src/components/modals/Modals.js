@@ -9,22 +9,22 @@ const Modals = observer(() => {
     const {modals} = useContext(Context)
 
     useEffect(() => {
-        if(!modals._editProduct.show) modals.setEditProduct({show:false})
-    },[modals._editProduct.show])
+        if(!modals.editProduct.show) modals.setEditProduct({show:false})
+    },[modals.editProduct.show])
 
     useEffect(() => {
-        if(!modals._editType.show) modals.setEditType({show:false})
-    },[modals._editType.show])
+        if(!modals.editType.show) modals.setEditType({show:false})
+    },[modals.editType.show])
 
     useEffect(() => {
-        if(!modals._auth.show) modals.setAuth({show:false})
-    },[modals._auth.show])
+        if(!modals.auth.show) modals.setAuth({show:false})
+    },[modals.auth.show])
 
     return (
         <>
-            {modals._editProduct.show && <EditProductModal/>}   
-            {modals._editType.show && <EditTypeModal/>} 
-            {modals._auth.show && <AuthModal/>} 
+            {modals.editProduct.show && <EditProductModal/>}   
+            {modals.editType.show && <EditTypeModal/>} 
+            {modals.auth.show && <AuthModal/>} 
         </>
     )
 })

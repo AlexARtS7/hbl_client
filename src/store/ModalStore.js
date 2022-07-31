@@ -19,4 +19,16 @@ export default class ModalStore {
     setAuth(value) {
         this._auth = value
     }
+
+    get editProduct() {
+        return this._editProduct
+    }
+
+    get editType() {
+        return this._editType
+    }
+
+    get auth() {
+        return this._auth
+    }
 }

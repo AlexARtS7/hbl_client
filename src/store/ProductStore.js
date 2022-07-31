@@ -4,17 +4,11 @@ export default class ProductStore {
     constructor() {
         this._types = []
         this._selectedType = {}
-        this._products = []
+        this._list = []
         this._page = 1
         this._totalCount = 0
         this._limit = 9
-        this._reload = false
-        this._loading = true
         makeAutoObservable(this)
-    }
-    
-    setLoading(value) {
-        this._loading = value
     }
 
     setTypes(types) {
@@ -34,15 +28,31 @@ export default class ProductStore {
         this._selectedType = type
     }
 
-    addOneType(type) {
-        this._types = [...this._types, type]
+    setProducts(list) {
+        this._list = list
     }
 
-    setProducts(products) {
-        this._products = products
+    get list() {
+        return this._list
     }
 
-    initReload() {
-        this._reload = !this._reload
+    get types() {
+        return this._types
+    }
+
+    get selectedType() {
+        return this._selectedType
+    }
+
+    get page() {
+        return this._page
+    }
+
+    get totalCount() {
+        return this._totalCount
+    }
+
+    get limit() {
+        return this._limit
     }
 }

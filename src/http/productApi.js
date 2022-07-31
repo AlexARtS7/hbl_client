@@ -1,4 +1,8 @@
+import { Context } from "index";
+import { useContext } from "react";
 import { $authHost, $host } from "./index";
+
+
 
 export const createType = async(type) => {
     const {data} = await $authHost.post('api/type', type)
@@ -33,6 +37,8 @@ export const fetchOneProduct = async(id) => {
 
 export const fetchProductInfo = async(id) => {
     const {data} = await $host.get('api/products/info/' + id)
+    // TODO не обновляются данные всех компонентов, так как обновляется стейт внутри компонента
+    // нужно здесь менять контекст
     return data
 }
 

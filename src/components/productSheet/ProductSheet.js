@@ -3,7 +3,7 @@ import { fetchOneProduct, fetchProductInfo, fetchTypes } from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect, useState } from "react"
-import { Carousel, Col, Container, Row, Button } from "react-bootstrap"
+import { Carousel, Col, Container, Row, Button, Table } from "react-bootstrap"
 import { useParams } from "react-router-dom"
 import './productSheet.scss'
 
@@ -26,7 +26,7 @@ const ProductSheet = observer(() => {
     useEffect(() => {
         fetchOneProduct(id).then(data => setProduct(data))
         fetchProductInfo(id).then(data => setProductInfo(data))
-    }, [products._reload])
+    }, [])
 
     useEffect(() => {
         fetchTypes().then(data => products.setTypes(data)) 
@@ -78,14 +78,20 @@ const ProductSheet = observer(() => {
                         </Row>
                         <Row className="mt-5">
                             <hr/>
-                            {productInfo &&
-                                productInfo.map(info => 
-                                    <div key={info.id}>
-                                        <div>{info.title}</div>
-                                        <div>{info.info}</div>
-                                    </div>
-                                    
-                                )
+                            {productInfo.length > 0 &&
+                                <Table striped>
+                                    <thead>
+                                        <tr><th>Информация</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        {productInfo.map(info => 
+                                            <tr key={info.id}>
+                                                <td>{info.title}</td>
+                                                <td className="text-end">{info.info}</td>
+                                            </tr>
+                                        )}                                        
+                                    </tbody>
+                                </Table>   
                             }
                         </Row>
                     </>

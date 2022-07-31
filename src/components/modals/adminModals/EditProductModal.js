@@ -2,13 +2,16 @@ import React, { useContext, useEffect, useRef, useState } from "react"
 import { changeOrderFiles, createProduct, deleteProduct, fetchProductInfo, updateData, uploadFiles } from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
-import { AddFilesInput, LabelInput, SelectInput } from "../modalsComponents"
 import { useNavigate } from "react-router-dom"
 import { PRODUCTS_ROUTE } from "utils/const"
 import { generateFormData } from "./generateFormData"
-import PreviewImages from "./PreviewImages"
+import PreviewImages from "../../formsComponents/PreviewImages"
 import { Button, Modal } from "react-bootstrap"
-import AccordionInfo from "./AccordionInfo"
+import AccordionInfo from "../../formsComponents/AccordionInfo"
+import AccordionDescription from "../../formsComponents/AccordionDescription"
+import { LabelInput } from "components/formsComponents/LabelInput"
+import { SelectInput } from "components/formsComponents/SelectInput"
+import { AddFilesInput } from "components/formsComponents/AddFiles"
 
 const EditProductModal = () => {
     const navigate = useNavigate()
@@ -21,13 +24,14 @@ const EditProductModal = () => {
     const [loadedFiles, setLoadedFiles] = useState(product.img)
     const [files, setFiles] = useState({})
     const [info, setInfo] = useState([])
+    const {value:description, setValue:setDescription} = useInput('')
     const buttonRef = useRef()
 
     const onHide = () => modals.setEditProduct(false)    
     
     const addProduct = () => {
         const formData = generateFormData({
-            name, price, files, types:products._types, typeName, info
+            name, price, files, types:products.types, typeName, info
         })
         createProduct(formData).then(data => {
             navigate(PRODUCTS_ROUTE + '/' +  data.id)
@@ -51,7 +55,7 @@ const EditProductModal = () => {
         let formData = generateFormData({id:product.id, filesArray:loadedFiles})
         changeOrderFiles(formData)
         formData = generateFormData({
-            id:product.id, name, price, types:products._types, typeName, info})
+            id:product.id, name, price, types:products.types, typeName, info})
         updateData(formData)
         .then(response => {
             products.initReload()
@@ -93,7 +97,8 @@ const EditProductModal = () => {
             <SelectInput 
                 label='Категория'
                 defaultValue='Выберите категорию' value={typeName} setValue={setTypeName}
-                types={products._types} />
+                types={products.types} />
+            <AccordionDescription id={product.id} description={description} setDescription={setDescription}/>
             <AccordionInfo id={product.id} info={info} setInfo={setInfo}/>
             <LabelInput label='Стоимость' value={price} setValue={setPrice} type='number' className="mb-3"/>
             <AddFilesInput 

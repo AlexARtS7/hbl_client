@@ -4,7 +4,7 @@ import { createType } from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { Button, Modal } from "react-bootstrap"
-import { LabelInput } from "../modalsComponents"
+import { LabelInput } from "components/formsComponents/LabelInput"
 
 const EditTypeModal = () => {
     const {products, modals} = useContext(Context)
@@ -14,15 +14,15 @@ const EditTypeModal = () => {
 
     const addType = () => {
         createType({name: type})
-        .then(data => {
-            products.addOneType(data)
+        .then(type => {
+            products.setTypes([...products.types, type])
             onHide()
         })
     }
 
     return (
         <Modal
-            show={modals._editType.show}
+            show={modals.editType.show}
             onHide={onHide}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
