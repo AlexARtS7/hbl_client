@@ -1,4 +1,4 @@
-import inputValidation from "components/hooks/inputValidation"
+import inputValidation from "components/formsComponents/inputValidation"
 import { useEffect, useState } from "react"
 
 const useInput = (initialValue, validations) => {

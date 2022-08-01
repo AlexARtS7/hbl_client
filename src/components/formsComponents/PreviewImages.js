@@ -1,10 +1,11 @@
-import { deleteFiles } from "http/productApi"
 import React, { useEffect, useState } from "react"
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap"
 import { generateFormData } from "../modals/adminModals/generateFormData"
+import productApi from "http/productApi"
 
 const PreviewImages = (props) => {
     const {product, loadedFiles, setLoadedFiles, fetching} = props
+    const {deleteFiles} = productApi()
     const [delArray, setDelArray] = useState([...loadedFiles.map(element => ({name: element, status: false}))])
     const [delFilesBtnActive, setDelFilesBtnActive] = useState(false)
     

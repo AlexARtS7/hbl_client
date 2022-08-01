@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react"
-import productApi, { changeOrderFiles, createProduct, deleteProduct, updateData, uploadFiles } from "http/productApi"
+import productApi from "http/productApi"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { useNavigate } from "react-router-dom"
@@ -8,7 +8,6 @@ import { generateFormData } from "./generateFormData"
 import PreviewImages from "../../formsComponents/PreviewImages"
 import { Button, Modal } from "react-bootstrap"
 import AccordionInfo from "../../formsComponents/AccordionInfo"
-import AccordionDescription from "../../formsComponents/AccordionDescription"
 import { LabelInput } from "components/formsComponents/LabelInput"
 import { SelectInput } from "components/formsComponents/SelectInput"
 import { AddFilesInput } from "components/formsComponents/AddFiles"
@@ -16,7 +15,9 @@ import { observer } from "mobx-react-lite"
 
 const EditProductModal = observer(() => {
     const navigate = useNavigate()
-    const {fetchProductInfo, fetchProducts, fetchOneProduct} = productApi()
+    const { fetchProductInfo, fetchProducts, fetchOneProduct, 
+            createProduct, uploadFiles, 
+            changeOrderFiles, updateData, deleteProduct} = productApi()
     const {products, modals} = useContext(Context)
     const {show, product = ''} = modals.editProduct 
     const {value:name, setValue:setName} = useInput(product.name || '')
@@ -25,7 +26,6 @@ const EditProductModal = observer(() => {
     const {value:typeName, setValue:setTypeName} = useInput(type)
     const [loadedFiles, setLoadedFiles] = useState(product.img)
     const [files, setFiles] = useState({})
-    const {value:description, setValue:setDescription} = useInput('')
     const buttonRef = useRef()
 
     const onHide = () => modals.setEditProduct(false)  
@@ -82,9 +82,11 @@ const EditProductModal = observer(() => {
     }
 
     useEffect(() => {
-        if(product.id) fetchProductInfo(product.id)
+        if(product.id) {
+            fetchProductInfo(product.id)
+        }
     }, [product])
-    
+
     return (
         <Modal
             show={show}
@@ -105,7 +107,6 @@ const EditProductModal = observer(() => {
                 label='Категория'
                 defaultValue='Выберите категорию' value={typeName} setValue={setTypeName}
                 types={products.types} />
-            <AccordionDescription id={product.id} description={description} setDescription={setDescription}/>
             <AccordionInfo/>
             <LabelInput label='Стоимость' value={price} setValue={setPrice} type='number' className="mb-3"/>
             <AddFilesInput 
