@@ -1,21 +1,20 @@
 import { Context } from 'index'
-import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { Accordion, Button, Form, InputGroup } from 'react-bootstrap'
 
-const AccordionInfo = observer(() => {
+const AccordionInfo = ({info, setInfo}) => {
     const {products} = useContext(Context)
     
     const addInfo = () => {
-        products.setItemInfo([...products.itemInfo, {title: '', info: '', idKey: Math.round(Date.now() / 2000)}])
+        setInfo([...info, {title: '', info: '', idKey: Math.round(Date.now() / 2000)}])
     }
     
     const changeInfo = (key, value, idKey) => {
-        products.setItemInfo(products.itemInfo.map(i => i.idKey === idKey ? {...i, [key]: value} : i))
+        setInfo(info.map(i => i.idKey === idKey ? {...i, [key]: value} : i))
     }
 
     const removeInfo = (idKey) => {
-        products.setItemInfo(products.itemInfo.filter(i => i.idKey !== idKey))
+        setInfo(info.filter(i => i.idKey !== idKey))
     }
     
     return (
@@ -23,7 +22,7 @@ const AccordionInfo = observer(() => {
             <Accordion.Item eventKey="0">
                 <Accordion.Header>Информация</Accordion.Header>
                 <Accordion.Body>
-                    {products.itemInfo && products.itemInfo.map((item,i) => 
+                    {info && info.map((item,i) => 
                         <InputGroup className="mb-3" key={i}>
                         <InputGroup.Text>Название</InputGroup.Text>
                         <Form.Control
@@ -43,6 +42,6 @@ const AccordionInfo = observer(() => {
             </Accordion.Item>
         </Accordion>
     )
-})
+}
 
 export default AccordionInfo

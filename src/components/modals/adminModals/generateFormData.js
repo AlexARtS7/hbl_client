@@ -1,5 +1,5 @@
 export const generateFormData = (params) => {
-    const {id, name, price, files, filesArray, types, typeName, info} = params
+    const {id, name, price, files, filesArray, types, typeName, info, description} = params
     const formData = new FormData()
    
     id && formData.append('id', id)
@@ -11,5 +11,6 @@ export const generateFormData = (params) => {
     }, files)
     types && formData.append('typeId', types.filter(type => type.name === typeName)[0].id)
     info && formData.append('info', JSON.stringify(info))
+    description && formData.append('description', description)
     return formData
 }

@@ -40,6 +40,12 @@ const productApi = () => {
         return data
     }
 
+    const fetchProductDescription = async(id) => {
+        const {data} = await $host.get('api/products/description/' + id)
+        products.setItemDescription(data.description)
+        return data.description
+    }
+
     const createType = async(type) => {
         const {data} = await $authHost.post('api/type', type)
         products.setTypes([...products.types, data])
@@ -78,6 +84,7 @@ const productApi = () => {
         fetchProducts,
         fetchOneProduct,
         fetchProductInfo,
+        fetchProductDescription,
         fetchTypes,
         createType,
         uploadFiles,

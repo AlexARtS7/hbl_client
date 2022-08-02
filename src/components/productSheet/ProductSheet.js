@@ -9,7 +9,7 @@ import './productSheet.scss'
 
 const ProductSheet = observer(() => {
     const {products, modals, user} = useContext(Context)
-    const {fetchTypes, fetchOneProduct, fetchProductInfo} = productApi()
+    const {fetchTypes, fetchOneProduct, fetchProductInfo, fetchProductDescription} = productApi()
     const [slide, setSlide] = useState(0)
     const {id} = useParams()
     
@@ -26,7 +26,8 @@ const ProductSheet = observer(() => {
         fetchTypes()
         fetchOneProduct(id)
         fetchProductInfo(id)
-    }, [])
+        fetchProductDescription(id)
+    }, [id])
     
     return (
         <Container fluid style={{overflowY:'auto'}}>
@@ -69,6 +70,7 @@ const ProductSheet = observer(() => {
                             </Col>
                             <Col className="d-flex flex-column justify-content-between">
                                     <div className="d-flex justify-content-end fs-4">{products.item.name}</div>
+                                    {products.itemDescription && <div><hr/>{products.itemDescription}</div>}
                                     <div className="d-flex justify-content-end fs-5">{products.item.price} ₽</div>
                             </Col>
                         </Row>
