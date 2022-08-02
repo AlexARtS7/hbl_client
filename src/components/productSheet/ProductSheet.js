@@ -12,7 +12,7 @@ const ProductSheet = observer(() => {
     const {fetchTypes, fetchOneProduct, fetchProductInfo, fetchProductDescription} = productApi()
     const [slide, setSlide] = useState(0)
     const {id} = useParams()
-    
+
     const handleSelect = (selectedIndex, e) => {
         setSlide(selectedIndex);
     }
@@ -69,8 +69,11 @@ const ProductSheet = observer(() => {
                                 </div>               
                             </Col>
                             <Col className="d-flex flex-column justify-content-between">
-                                    <div className="d-flex justify-content-end fs-4">{products.item.name}</div>
-                                    {products.itemDescription && <div><hr/>{products.itemDescription}</div>}
+                                    <div>
+                                        <div className="d-flex justify-content-end fs-4">{products.item.name}</div>
+                                        <hr/>
+                                        {products.itemDescription && <div>{products.itemDescription}</div>}
+                                    </div>
                                     <div className="d-flex justify-content-end fs-5">{products.item.price} ₽</div>
                             </Col>
                         </Row>
