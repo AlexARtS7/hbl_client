@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
-import { authRequest } from "./authRequest"
 import { Button, Modal } from "react-bootstrap"
 import { LabelInput } from "components/formsComponents/LabelInput"
+import { loginIn, registration } from "http/userApi"
 
 const AuthModal = () => {
     const {products, user, modals} = useContext(Context)
-    const [isLoginIn, setIsLoginIn] = useState(true)
     
     const {value:login, setValue:setLogin, validErr:loginErr} = 
         useInput('', {isEmpty:true, minLength:3, maxLength:50})
@@ -15,6 +14,8 @@ const AuthModal = () => {
         useInput('', {isEmpty:true, email:true})
     const {value:password, setValue:setPassword, validErr:passwordErr, setValidErr:setPasswordErr} = 
         useInput('', {isEmpty:true, minLength:6, maxLength:50})
+
+    const [isLoginIn, setIsLoginIn] = useState(true)
     const [errorsVisible, setErrorsVisible] = useState(false)
 
     const onHide = () => modals.setAuth(false)
@@ -23,12 +24,29 @@ const AuthModal = () => {
         if(!isLoginIn && loginErr || emailErr || passwordErr) {
             setErrorsVisible(true)
             return
-        }        
-        authRequest(isLoginIn, user, setEmailErr, setPasswordErr, setErrorsVisible, {email, password, login})
-        .then(response => {
-            products.initReload()
-            onHide()
-        })
+        }
+
+        try {
+            let userData
+            if(isLoginIn) {
+                userData = loginIn(email, password)
+            } else {
+                userData = registration(login, email, password)
+            }  
+            userData.then(response => {
+                user.setData(userData)   
+                user.setIsAuth(true)
+                onHide()
+            })       
+        } catch (e) {
+            setErrorsVisible(true)
+            switch(e.response.data.index) {
+                case 1: setEmailErr(e.response.data.message)
+                    break;
+                case 2: setPasswordErr(e.response.data.message)
+                    break;
+            }  
+        }  
     }  
 
     useEffect(() => {

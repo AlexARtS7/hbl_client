@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap"
-import { generateFormData } from "../modals/adminModals/generateFormData"
+import { generateFormData } from "../modals/adminModals/formData"
 import productApi from "http/productApi"
 
 const PreviewImages = (props) => {
