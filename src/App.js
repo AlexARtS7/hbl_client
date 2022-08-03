@@ -7,8 +7,9 @@ import Navbar from './components/navbar/NavBar'
 import './styles/style.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modals from 'components/modals/Modals'
+import { observer } from 'mobx-react-lite'
 
-const App = () => {
+const App = observer(() => {
     const {user} = useContext(Context)
 
     useEffect(() => {
@@ -17,7 +18,7 @@ const App = () => {
           user.setIsAuth(true)
         }) 
     },[])
-
+    
     return (
         <BrowserRouter>
             <div className="d-flex flex-column app">
@@ -27,6 +28,6 @@ const App = () => {
             </div>            
         </BrowserRouter>
     )
-}
+})
 
 export default App

@@ -72,7 +72,7 @@ const ProductSheet = observer(() => {
                                     <div>
                                         <div className="d-flex justify-content-end fs-4">{products.item.name}</div>
                                         <hr/>
-                                        {products.itemDescription && <div>{products.itemDescription}</div>}
+                                        {products.itemDescription && <div className="fs-6">{products.itemDescription}</div>}
                                     </div>
                                     <div className="d-flex justify-content-end fs-5">{products.item.price} ₽</div>
                             </Col>

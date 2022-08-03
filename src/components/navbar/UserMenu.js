@@ -1,6 +1,7 @@
 import { Context } from "index"
 import React, { useContext } from "react"
 import { Dropdown, Nav } from "react-bootstrap"
+import { BASKET_ROUTE } from "utils/const"
 
 const UserMenu = () => {
     const {user, modals} = useContext(Context)
@@ -15,10 +16,10 @@ const UserMenu = () => {
         <div className='d-flex align-items-center'>
             <div style={{marginRight: 10}} className='text-white'>{user.data.login}</div>
             <Dropdown align="end">
-                <Dropdown.Toggle id="dropdown-basic" variant="outline-light"  className=
-                {user.data.role === 'USER'? 
-                    'navbar_logo_user' :
-                    'navbar_logo_admin'}
+                <Dropdown.Toggle variant="outline-light"  className=
+                    {user.data.role === 'USER'? 
+                        'navbar_logo_user' :
+                        'navbar_logo_admin'}
                     >                        
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -32,7 +33,7 @@ const UserMenu = () => {
                     <Dropdown.Item onClick={() => removeUserAcount()}>Выйти из акаунта</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-            <Nav.Link className='navbar_box_contur navbar_logo_basket' href='/basket'></Nav.Link>
+            <Nav.Link className='navbar_box_contur navbar_logo_basket' href={BASKET_ROUTE}></Nav.Link>
         </div>       
     )
 }

@@ -18,7 +18,7 @@ const NavBar = observer(() => {
             <Navbar bg='secondary' expand="lg">
                 <Container  fluid className='d-flex justify-content-between'>
                     <Navbar.Brand className='text-white fs-3' href="/">HobbyLaser</Navbar.Brand>
-                    {user._isAuth ? 
+                    {user.isAuth ? 
                     <UserMenu/>
                     :
                     <Button size='sm' variant='outline-light' onClick={() => modals.setAuth({show:true})}>Авторизация</Button>
