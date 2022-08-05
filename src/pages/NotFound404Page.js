@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Nav } from 'react-bootstrap'
 
 const NotFound404Page = () => {
-    const location = document.location.href
+    const location = decodeURI(document.location.href)
 
   return (
     <div className='d-flex justify-content-center align-items-center h-100 text-center'>

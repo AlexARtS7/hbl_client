@@ -28,9 +28,11 @@ const productApi = () => {
     }
 
     const fetchOneProduct = async(id) => {
+        loading.setStatus(true)
         const {data} = await $host.get('api/products/' + id)
         data.img = JSON.parse(data.img)
         products.setItem(data)
+        loading.setStatus(false)
         return data
     }
 
