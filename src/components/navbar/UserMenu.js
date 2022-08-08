@@ -17,9 +17,11 @@ const UserMenu = () => {
             <div style={{marginRight: 10}} className='text-white'>{user.data.login}</div>
             <Dropdown align="end">
                 <Dropdown.Toggle variant="outline-light"  className=
-                    {user.data.role === 'USER'? 
-                        'navbar_logo_user' :
-                        'navbar_logo_admin'}
+                    {user.data.role === 'ADMIN'? 
+                        'navbar_logo_admin'
+                        :
+                        'navbar_logo_user' 
+                        }
                     >                        
                 </Dropdown.Toggle>
                 <Dropdown.Menu>

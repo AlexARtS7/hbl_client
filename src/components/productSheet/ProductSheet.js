@@ -1,4 +1,6 @@
 import Loading from "components/loading/Loading"
+import { addProduct } from "http/basketApi"
+import { generateFormData } from "http/formData"
 import productApi from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
@@ -20,6 +22,10 @@ const ProductSheet = observer(() => {
     const editProduct = (e) => {
         e.stopPropagation()
         modals.setEditProduct({show:true,product:products.item})
+    }
+
+    const addToBasket = () => {
+        addProduct(user.data.id, Number(id))
     }
 
     useEffect(() => {
@@ -72,9 +78,16 @@ const ProductSheet = observer(() => {
                                     <div>
                                         <div className="d-flex justify-content-end fs-4">{products.item.name}</div>
                                         <hr/>
-                                        {products.itemDescription && <div className="fs-6">{products.itemDescription}</div>}
+                                        {products.itemDescription && <div className="fs-6 text-end">{products.itemDescription}</div>}
                                     </div>
-                                    <div className="d-flex justify-content-end fs-5">{products.item.price} ₽</div>
+                                    <div>
+                                        <div className="d-flex justify-content-end fs-5">{products.item.price} ₽</div>
+                                        <div className="d-flex justify-content-end mt-4">
+                                            <Button size="sm" variant="success" className="me-4">Купить в один Клик</Button>
+                                            <Button size="sm" variant="success" onClick={addToBasket}>В корзину</Button>
+                                        </div>                                        
+                                        
+                                    </div>                                    
                             </Col>
                         </Row>
                         <Row className="mt-5">
