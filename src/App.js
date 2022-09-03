@@ -11,7 +11,7 @@ import { observer } from 'mobx-react-lite'
 
 const App = observer(() => {
     const {user} = useContext(Context)
-
+    
     useEffect(() => {
         check().then(userData => {
           user.setData(userData)

@@ -9,9 +9,3 @@ export const fetchBasketProducts = async() => {
     const {data} = await $authHost.get('api/basket/products') 
     return data
 }
-
-// export const check = async() => {
-//     const {data} = await $authHost.get('api/user/auth')
-//     localStorage.setItem('token', data.token)
-//     return jwt_decode(data.token)
-// }

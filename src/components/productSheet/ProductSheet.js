@@ -1,6 +1,5 @@
 import Loading from "components/loading/Loading"
 import { addProduct } from "http/basketApi"
-import { generateFormData } from "http/formData"
 import productApi from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
@@ -20,7 +19,6 @@ const ProductSheet = observer(() => {
     }
     
     const editProduct = (e) => {
-        e.stopPropagation()
         modals.setEditProduct({show:true,product:products.item})
     }
 

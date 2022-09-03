@@ -1,10 +1,12 @@
 import { Context } from "index"
 import React, { useContext } from "react"
 import { Dropdown, Nav } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 import { BASKET_ROUTE } from "utils/const"
 
 const UserMenu = () => {
     const {user, modals} = useContext(Context)
+    const navigate = useNavigate()
 
     const removeUserAcount = () => {
         localStorage.removeItem('token')
@@ -35,7 +37,7 @@ const UserMenu = () => {
                     <Dropdown.Item onClick={() => removeUserAcount()}>Выйти из акаунта</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-            <Nav.Link className='navbar_box_contur navbar_logo_basket' href={BASKET_ROUTE}></Nav.Link>
+            <div className='navbar_box_contur navbar_logo_basket' onClick={() => navigate(BASKET_ROUTE)}></div>
         </div>       
     )
 }
