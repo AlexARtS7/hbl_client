@@ -6,7 +6,7 @@ import { LabelInput } from "components/formsComponents/LabelInput"
 import { loginIn, registration } from "http/userApi"
 
 const AuthModal = () => {
-    const {products, user, modals} = useContext(Context)
+    const {user, modals} = useContext(Context)
     
     const {value:login, setValue:setLogin, validErr:loginErr} = 
         useInput('', {isEmpty:true, minLength:3, maxLength:50})
@@ -33,8 +33,8 @@ const AuthModal = () => {
             } else {
                 userData = registration(login, email, password)
             }  
-            userData.then(response => {
-                user.setData(userData)   
+            userData.then(data => {
+                user.setData(data)   
                 user.setIsAuth(true)
                 onHide()
             })       

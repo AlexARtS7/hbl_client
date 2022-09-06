@@ -5,7 +5,7 @@ import React, { useContext } from "react"
 import { Container, Dropdown, DropdownButton, Form, InputGroup } from "react-bootstrap"
 import './controlBar.scss'
 
-const ControlBar = observer(() => {
+const SearchBar = observer(() => {
     const {products} = useContext(Context)
     const {value:findText, setValue:setFindText} = useInput('')
     
@@ -50,4 +50,4 @@ const ControlBar = observer(() => {
     )
 })
 
-export default ControlBar
+export default SearchBar

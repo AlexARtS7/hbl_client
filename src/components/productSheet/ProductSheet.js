@@ -1,5 +1,5 @@
 import Loading from "components/loading/Loading"
-import { addProduct, fetchBasketProduct } from "http/basketApi"
+import { addProduct } from "http/basketApi"
 import productApi from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
@@ -12,7 +12,6 @@ const ProductSheet = observer(() => {
     const {products, modals, user} = useContext(Context)
     const {fetchTypes, fetchOneProduct, fetchProductInfo, fetchProductDescription} = productApi()
     const [slide, setSlide] = useState(0)
-    const [inBasket, setInBasket] = useState(true)
     const {id} = useParams()
 
     const handleSelect = (selectedIndex, e) => {
@@ -25,7 +24,6 @@ const ProductSheet = observer(() => {
 
     const addToBasket = () => {
         addProduct(user.data.id, Number(id))
-        setInBasket(true)
     }
 
     useEffect(() => {
@@ -33,7 +31,6 @@ const ProductSheet = observer(() => {
         fetchOneProduct(id)
         fetchProductInfo(id)
         fetchProductDescription(id)
-        if(user.data.id) fetchBasketProduct(user.data.id, id).then(response => setInBasket(response !== null))
     }, [id, user.data.id])
 
     return (
@@ -85,7 +82,8 @@ const ProductSheet = observer(() => {
                                         <div className="d-flex justify-content-end fs-5">{products.item.price} ₽</div>
                                         <div className="d-flex justify-content-end mt-4">
                                             <Button size="sm" variant="success" className="me-4">Купить в один Клик</Button>
-                                            {!inBasket && <Button title='dfd' size="sm" variant="success" onClick={addToBasket}>В корзину</Button>}
+                                            {user.isAuth && 
+                                                <Button title='dfd' size="sm" variant="success" onClick={addToBasket}>В корзину</Button>}
                                         </div>                                        
                                         
                                     </div>                                    
@@ -112,8 +110,7 @@ const ProductSheet = observer(() => {
                     </>
                     : <Loading/>
                 }
-            </Container>
-            
+            </Container>  
         </Container>       
     )
 })

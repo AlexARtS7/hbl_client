@@ -5,7 +5,7 @@ import React, { useContext } from "react"
 import { Button, Container, Navbar } from "react-bootstrap"
 import { useLocation } from "react-router-dom"
 import { SHOP_ROUTE } from "utils/const"
-import ControlBar from "./ControlBar"
+import SearchBar from "./SearchBar"
 import './navBar.scss'
 
 const NavBar = observer(() => {
@@ -28,7 +28,7 @@ const NavBar = observer(() => {
             </Navbar>
             {isShop &&
                 <Container  fluid className='d-flex justify-content-between bg-light border-bottom'>
-                    <ControlBar/>
+                    <SearchBar/>
                 </Container> 
             } 
         </div>

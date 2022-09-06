@@ -1,6 +1,6 @@
 import { Context } from "index"
 import React, { useContext } from "react"
-import { Dropdown, Nav } from "react-bootstrap"
+import { Dropdown } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { BASKET_ROUTE } from "utils/const"
 

@@ -10,7 +10,7 @@ export const fetchBasketProduct = async(userId, productId) => {
     return data
 }
 
-export const fetchBasketProducts = async() => {
-    const {data} = await $authHost.get('api/basket/products') 
+export const fetchBasketProducts = async(userId) => {
+    const {data} = await $authHost.get('api/basket/products?userId=' + userId) 
     return data
 }
