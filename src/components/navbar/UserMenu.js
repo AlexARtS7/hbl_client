@@ -1,11 +1,13 @@
+import { fetchBasketProducts } from "http/basketApi"
 import { Context } from "index"
-import React, { useContext } from "react"
-import { Dropdown } from "react-bootstrap"
+import { observer } from "mobx-react-lite"
+import React, { useContext, useEffect } from "react"
+import { Badge, Dropdown } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { BASKET_ROUTE } from "utils/const"
 
-const UserMenu = () => {
-    const {user, modals} = useContext(Context)
+const UserMenu = observer(() => {
+    const {user, modals, basket} = useContext(Context)
     const navigate = useNavigate()
 
     const removeUserAcount = () => {
@@ -13,7 +15,11 @@ const UserMenu = () => {
         user.setData({})
         user.setIsAuth(false)
     }
-    
+
+    useEffect(() => {
+        if(user.data.id) fetchBasketProducts(user.data.id).then(data => basket.setProducts(data))
+    },[user.data.id])
+   
     return (
         <div className='d-flex align-items-center'>
             <div style={{marginRight: 10}} className='text-white'>{user.data.login}</div>
@@ -24,7 +30,7 @@ const UserMenu = () => {
                         :
                         'navbar_logo_user' 
                         }
-                    >                        
+                    >                       
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     {user.data.role === 'ADMIN' && 
@@ -37,9 +43,11 @@ const UserMenu = () => {
                     <Dropdown.Item onClick={() => removeUserAcount()}>Выйти из акаунта</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-            <div className='navbar_box_contur navbar_logo_basket' onClick={() => navigate(BASKET_ROUTE)}></div>
+            <div className='navbar_box_contur navbar_logo_basket' onClick={() => navigate(BASKET_ROUTE)}>
+                {basket.products.length > 0 && <div className="basket_badge">{basket.products.length}</div>}
+            </div>
         </div>       
     )
-}
+})
 
 export default UserMenu

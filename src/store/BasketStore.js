@@ -6,7 +6,7 @@ export default class BasketStore {
         makeAutoObservable(this)
     }
     
-    setProduct(value) {
+    setProducts(value) {
         this._products = value
     }
 
