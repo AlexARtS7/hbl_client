@@ -1,5 +1,5 @@
 import Loading from "components/loading/Loading"
-import { addProduct } from "http/basketApi"
+import { addProduct, fetchBasketProducts } from "http/basketApi"
 import productApi from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom"
 import './productSheet.scss'
 
 const ProductSheet = observer(() => {
-    const {products, modals, user} = useContext(Context)
+    const {products, modals, user, basket} = useContext(Context)
     const {fetchTypes, fetchOneProduct, fetchProductInfo, fetchProductDescription} = productApi()
     const [slide, setSlide] = useState(0)
     const {id} = useParams()
@@ -23,7 +23,7 @@ const ProductSheet = observer(() => {
     }
 
     const addToBasket = () => {
-        addProduct(user.data.id, Number(id))
+        addProduct(user.data.id, Number(id)).then(data => basket.products.push(data))        
     }
 
     useEffect(() => {

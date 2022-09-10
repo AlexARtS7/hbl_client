@@ -2,7 +2,7 @@ import {makeAutoObservable} from 'mobx'
 
 export default class BasketStore {
     constructor() {
-        this._products = {}
+        this._products = []
         makeAutoObservable(this)
     }
     

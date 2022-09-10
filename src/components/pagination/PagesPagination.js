@@ -2,6 +2,7 @@ import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext } from "react"
 import { Pagination } from "react-bootstrap";
+import "./pagination.scss";
 
 const PagesPagination = observer(() => {
     const {products} = useContext(Context)
