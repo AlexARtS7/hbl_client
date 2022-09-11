@@ -7,7 +7,7 @@ import { PRODUCTS_ROUTE, SHOP_ROUTE } from "utils/const"
 import { generateFormData } from "../../../http/formData"
 import PreviewImages from "../../formsComponents/PreviewImages"
 import { Button, Modal } from "react-bootstrap"
-import AccordionInfo from "../../formsComponents/AccordionInfo"
+import AddInfoAccordion from "../../formsComponents/AddInfoAccordion"
 import { LabelInput } from "components/formsComponents/LabelInput"
 import { SelectInput } from "components/formsComponents/SelectInput"
 import { AddFilesInput } from "components/formsComponents/AddFiles"
@@ -127,7 +127,7 @@ const EditProductModal = observer(() => {
                 value={description} setValue={setDescription} 
                 label='Описание' type="description" textarea="textarea" className="mb-3"
             />
-            <AccordionInfo info={info} setInfo={setInfo}/>
+            <AddInfoAccordion info={info} setInfo={setInfo}/>
             <LabelInput label='Стоимость' value={price} setValue={setPrice} type='number' className="mb-3"/>
             <AddFilesInput 
                 files={files} setFiles={setFiles} 

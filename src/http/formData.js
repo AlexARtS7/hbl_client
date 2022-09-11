@@ -1,7 +1,7 @@
 export const generateFormData = (params) => {
     const {id, name, price, files, filesArray, types, typeName, info, description} = params
     const formData = new FormData()
-   
+   console.log(description)
     id && formData.append('id', id)
     name && formData.append('name', name)
     price && formData.append('price', `${price}`)

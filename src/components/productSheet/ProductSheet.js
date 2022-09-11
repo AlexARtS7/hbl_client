@@ -1,16 +1,17 @@
+import InfoTable from "components/formsComponents/InfoTable"
 import Loading from "components/loading/Loading"
 import { addProduct, fetchBasketProducts } from "http/basketApi"
 import productApi from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect, useState } from "react"
-import { Carousel, Col, Container, Row, Button, Table } from "react-bootstrap"
+import { Carousel, Col, Container, Row, Button } from "react-bootstrap"
 import { useParams } from "react-router-dom"
 import './productSheet.scss'
 
 const ProductSheet = observer(() => {
     const {products, modals, user, basket} = useContext(Context)
-    const {fetchTypes, fetchOneProduct, fetchProductInfo, fetchProductDescription} = productApi()
+    const {fetchTypes, fetchOneProduct} = productApi()
     const [slide, setSlide] = useState(0)
     const {id} = useParams()
 
@@ -31,10 +32,8 @@ const ProductSheet = observer(() => {
     useEffect(() => {
         fetchTypes()
         fetchOneProduct(id)
-        fetchProductInfo(id)
-        fetchProductDescription(id)
     }, [id, user.data.id])
-
+    
     return (
         <Container fluid style={{overflowY:'auto'}}>
             <Container className="mt-5">
@@ -78,14 +77,15 @@ const ProductSheet = observer(() => {
                                     <div>
                                         <div className="d-flex justify-content-end fs-4">{products.item.name}</div>
                                         <hr/>
-                                        {products.itemDescription && <div className="fs-6 text-end">{products.itemDescription}</div>}
+                                        {products.item.product_description.description && 
+                                            <div className="fs-6 text-end">{products.item.product_description.description}</div>}
                                     </div>
                                     <div>
                                         <div className="d-flex justify-content-end fs-5">{products.item.price} ₽</div>
                                         <div className="d-flex justify-content-end mt-4">
                                             <Button size="sm" variant="success" className="me-4">Купить в один Клик</Button>
-                                            {user.isAuth && 
-                                                <Button title='dfd' size="sm" variant="success" onClick={addToBasket}>В корзину</Button>}
+                                            {user.isAuth && !basket.products.find(product => product.productId === products.item.id) &&
+                                                <Button size="sm" variant="success" onClick={addToBasket}>В корзину</Button>}
                                         </div>                                        
                                         
                                     </div>                                    
@@ -93,21 +93,7 @@ const ProductSheet = observer(() => {
                         </Row>
                         <Row className="mt-5">
                             <hr/>
-                            {products.itemInfo.length > 0 &&
-                                <Table striped>
-                                    <thead>
-                                        <tr><th>Информация</th></tr>
-                                    </thead>
-                                    <tbody>
-                                        {products.itemInfo.map((info,i) => 
-                                            <tr key={i}>
-                                                <td>{info.title}</td>
-                                                <td className="text-end">{info.info}</td>
-                                            </tr>
-                                        )}                                        
-                                    </tbody>
-                                </Table>   
-                            }
+                            <InfoTable info={products.item.product_infos} label='Информация'></InfoTable>
                         </Row>
                     </>
                     : <Loading/>

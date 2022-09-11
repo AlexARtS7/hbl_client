@@ -6,8 +6,6 @@ export default class ProductStore {
         this._selectedType = {}
         this._list = []
         this._item = {}
-        this._itemInfo = []
-        this._itemDescription = ''
         this._page = 1
         this._totalCount = 0
         this._limit = 9
@@ -53,14 +51,6 @@ export default class ProductStore {
 
     get item() {
         return this._item
-    }
-
-    get itemInfo() {
-        return this._itemInfo
-    }
-
-    get itemDescription() {
-        return this._itemDescription
     }
 
     get types() {
