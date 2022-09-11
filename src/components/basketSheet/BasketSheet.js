@@ -17,7 +17,8 @@ const BasketSheet = observer(() => {
                     // style={{minHeight:200, cursor: 'pointer'}}
                     >
                     {product.product === null ?
-                    <div className='d-flex justify-content-center'>К сожалению данный продукт более не доступен :( приносим свои извинения...</div>
+                    <div className='d-flex justify-content-center'>
+                        К сожалению продукт {product.name} более не доступен :( приносим свои извинения...</div>
                     :
                     <>
                         <img 
