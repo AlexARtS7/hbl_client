@@ -9,3 +9,9 @@ export const fetchBasketProducts = async(userId) => {
     const {data} = await $authHost.get('api/basket/products?userId=' + userId) 
     return data
 }
+
+export const deleteProduct = async(id) => {
+    const {data} = await $authHost.delete('api/basket/deleteproduct?id=' + id)
+    return data
+}
+

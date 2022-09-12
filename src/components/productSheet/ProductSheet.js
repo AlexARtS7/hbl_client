@@ -33,7 +33,7 @@ const ProductSheet = observer(() => {
         fetchTypes()
         fetchOneProduct(id)
     }, [id, user.data.id])
-    
+   
     return (
         <Container fluid style={{overflowY:'auto'}}>
             <Container className="mt-5">
@@ -77,8 +77,8 @@ const ProductSheet = observer(() => {
                                     <div>
                                         <div className="d-flex justify-content-end fs-4">{products.item.name}</div>
                                         <hr/>
-                                        {products.item.product_description.description && 
-                                            <div className="fs-6 text-end">{products.item.product_description.description}</div>}
+                                        {/* {products.item && 
+                                            <div className="fs-6 text-end">{products.item.product_description.description}</div>} */}
                                     </div>
                                     <div>
                                         <div className="d-flex justify-content-end fs-5">{products.item.price} ₽</div>
