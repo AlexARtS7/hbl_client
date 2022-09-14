@@ -3,7 +3,6 @@ import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { Button, Modal } from "react-bootstrap"
 import { LabelInput } from "components/formsComponents/LabelInput"
-import { loginIn, registration } from "http/userApi"
 
 const AuthModal = () => {
     const {user, modals} = useContext(Context)
@@ -29,15 +28,11 @@ const AuthModal = () => {
         try {
             let userData
             if(isLoginIn) {
-                userData = loginIn(email, password)
+                userData = user.loginIn(email, password)
             } else {
-                userData = registration(login, email, password)
-            }  
-            userData.then(data => {
-                user.setData(data)   
-                user.setIsAuth(true)
-                onHide()
-            })       
+                userData = user.registration(login, email, password)
+            }    
+            onHide()    
         } catch (e) {
             setErrorsVisible(true)
             switch(e.response.data.index) {

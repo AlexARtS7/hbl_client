@@ -1,4 +1,3 @@
-import { fetchBasketProducts } from "http/basketApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect } from "react"
@@ -16,9 +15,9 @@ const UserMenu = observer(() => {
         user.setIsAuth(false)
     }
 
-    useEffect(() => {
-        if(user.data.id) fetchBasketProducts(user.data.id).then(data => basket.setProducts(data))
-    },[user.data.id])
+    // useEffect(() => {
+    //     if(user.data.id) fetchBasketProducts(user.data.id).then(data => basket.setProducts(data))
+    // },[user.data.id])
    
     return (
         <div className='d-flex align-items-center'>

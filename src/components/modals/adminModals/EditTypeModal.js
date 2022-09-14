@@ -4,18 +4,16 @@ import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { Button, Modal } from "react-bootstrap"
 import { LabelInput } from "components/formsComponents/LabelInput"
-import productApi from "http/productApi"
 
 const EditTypeModal = () => {
-    const {modals} = useContext(Context)
-    const {createType} = productApi()
+    const {modals, products} = useContext(Context)
     const {value:type, setValue:setType} =  useInput('')
 
     const onHide = () => modals.setEditType(false)
 
     const addType = () => {
-        createType({name: type})
-        .then(type => onHide())
+        products.addType({name: type})
+        .then(_ => onHide())
     }
 
     return (

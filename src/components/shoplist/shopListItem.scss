@@ -6,12 +6,15 @@
             right: 10px;
         }
         &_button {
+            font-size: 12px;
             outline: .5px solid white;
+            background-color: rgba(73, 175, 42, .5);
             color: white;
             border-radius: 3px;
             text-align: center;
             padding: 3px;
             margin-left: 10px;
+            margin-bottom: 3px;
             cursor: pointer;
             &:hover {
                 background-color: rgb(73, 175, 42);

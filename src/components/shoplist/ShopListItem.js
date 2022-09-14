@@ -13,11 +13,16 @@ const ShopListItem = ({product}) => {
     const navigate = useNavigate()
     const [imageLoaded, setImageLoaded] = useState(false)    
     const [noImageLoaded, setNoImageLoaded] = useState(false)
-    const src = process.env.REACT_APP_API_URL + `${product.id}/` + product.img[0]
-  
+    
+
     const editProduct = (e) => {
         e.stopPropagation()
         modals.setEditProduct({show:true,product})
+    }
+
+    const editImages = (e) => {
+        e.stopPropagation()
+        modals.setEditImages({show:true,product})
     }
     
     return (
@@ -26,7 +31,10 @@ const ShopListItem = ({product}) => {
                 style={{width: 250, minHeight:250, cursor: 'pointer'}} 
                 className="overflow-hidden d-flex flex-column justify-content-between" 
                 onClick={() => navigate(PRODUCTS_ROUTE + '/' +  product.id)}>
-                <img src={src} style={imageLoaded ? {display:'block', height:180} : { display: 'none' }} onLoad={() => setImageLoaded(true)}/>
+                {product.imgs.length > 0 && 
+                    <img 
+                        src={process.env.REACT_APP_API_URL + `${product.id}/` + product.imgs.find(e => e.preview).img} 
+                        style={imageLoaded ? {display:'block', height:180} : { display: 'none' }} onLoad={() => setImageLoaded(true)}/>}
                 {!imageLoaded && <Image src={noImage} onLoad={() => setNoImageLoaded(true)}/>}
                 {!imageLoaded && !noImageLoaded && <Loading/>}
                 <div>
@@ -36,6 +44,7 @@ const ShopListItem = ({product}) => {
                 {role === 'ADMIN' && 
                 <div className='shoplistitem_admin_buttonblock'>
                     <div className='shoplistitem_admin_button' onClick={(e) => editProduct(e)}>edit</div>
+                    <div className='shoplistitem_admin_button' onClick={(e) => editImages(e)}>images</div>
                 </div>}
             </Card>
         </Col>

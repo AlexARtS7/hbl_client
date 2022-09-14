@@ -3,6 +3,7 @@ import {makeAutoObservable} from 'mobx'
 export default class ModalStore {
     constructor() {
         this._editProduct = {show:false}
+        this._editImages = {show:false}
         this._editType = {show:false}
         this._auth = {show:false}
         makeAutoObservable(this)
@@ -10,6 +11,10 @@ export default class ModalStore {
     
     setEditProduct(value) {
         this._editProduct = value
+    }
+
+    setEditImages(value) {
+        this._editImages = value
     }
 
     setEditType(value) {
@@ -22,6 +27,10 @@ export default class ModalStore {
 
     get editProduct() {
         return this._editProduct
+    }
+
+    get editImages() {
+        return this._editImages
     }
 
     get editType() {

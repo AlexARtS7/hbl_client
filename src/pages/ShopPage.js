@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react"
 import ShopList from "components/shoplist/ShopList"
-import productApi from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import PagesPagination from "components/pagination/PagesPagination"
@@ -8,28 +7,26 @@ import { Col, Container, Row } from "react-bootstrap"
 import Loading from "components/loading/Loading"
 
 const ShopPage = observer(() => {
-    const {products, loading} = useContext(Context)
-    const {fetchProducts, fetchTypes} = productApi()
-
+    const {products} = useContext(Context)
+ 
     useEffect(() => {
-        products.setItem({})
-        fetchTypes()
+        products.fetchTypes()
     },[])
-    
+   
     useEffect(() => {
-        fetchProducts()
+        products.fetchProducts()
     }, [products.selectedType, products.page])
     
     return (
         <Container fluid style={{overflowY:'auto'}}>
             <Row>
                 <Col>  
-                    {loading.status && <Loading/>}
-                    {!loading.status && products.list.length === 0 &&
+                    {products.loading && <Loading/>}
+                    {!products.loading && products.list.length === 0 &&
                         <div className="d-flex justify-content-center fs-5">К сожалению в этом разделе ничего нет :(</div>}  
-                    {!loading.status && 
+                    {!products.loading && 
                         <>
-                            <ShopList/>
+                            <ShopList products={products}/>
                             <PagesPagination/>
                         </>
                     }             

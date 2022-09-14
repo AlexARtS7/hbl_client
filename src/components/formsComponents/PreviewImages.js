@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap"
-import { generateFormData } from "../../http/formData"
-import productApi from "http/productApi"
 
 const PreviewImages = (props) => {
     const {product, loadedFiles, setLoadedFiles, fetching} = props
-    const {deleteFiles} = productApi()
     const [delArray, setDelArray] = useState([...loadedFiles.map(element => ({name: element, status: false}))])
     const [delFilesBtnActive, setDelFilesBtnActive] = useState(false)
     
@@ -24,15 +21,15 @@ const PreviewImages = (props) => {
     }
 
     const deleteSelectedFiles = () => {
-        const formData = generateFormData({id:product.id, 
-            filesArray:delArray.filter(item => item.status)})
-            const resultArray = loadedFiles.filter(filename => !delArray.find(item => item.name === filename).status)
-        deleteFiles(formData)        
-        .then(response => {
-            setLoadedFiles(resultArray)
-            setDelArray(delArray.filter(item => !item.status))
-            fetching()
-        })
+        // const formData = generateFormData({id:product.id, 
+        //     filesArray:delArray.filter(item => item.status)})
+        //     const resultArray = loadedFiles.filter(filename => !delArray.find(item => item.name === filename).status)
+        // // deleteFiles(formData)        
+        // .then(response => {
+        //     setLoadedFiles(resultArray)
+        //     setDelArray(delArray.filter(item => !item.status))
+        //     fetching()
+        // })
     }
 
     useEffect(() => {
@@ -55,18 +52,19 @@ const PreviewImages = (props) => {
         <>   
         <Container className='border rounded mb-3 d-flex flex-row'>
             <Row>
-                {loadedFiles.map((element,i) => 
+                {loadedFiles.length > 0 ? loadedFiles.map((element,i) => 
                     <Col key={i}>
                         <Card style={{ width: '5rem' }} className='m-1 position-relative'>
                             <Card.Img 
                                 onClick={() => setPreview(i, element)}
-                                src={process.env.REACT_APP_API_URL + `${product.id}/` + element} 
-                                title={element}/>
+                                src={process.env.REACT_APP_API_URL + `${product.id}/` + element.img} 
+                                title={element.img}
+                            />
                             { i === 0 && 
-                            <div 
-                                className='w-100 text-center' 
-                                style={{fontSize: 10}}>ПРЕВЬЮ
-                            </div>}
+                                <div 
+                                    className='w-100 text-center' 
+                                    style={{fontSize: 10}}>ПРЕВЬЮ
+                                </div>}
                             { i > 0 && 
                                 <div className='d-flex justify-content-around'>
                                     <span style={{fontSize: 10}}>Удалить</span>
@@ -76,10 +74,15 @@ const PreviewImages = (props) => {
                                     style={{fontSize: 10}}
                                     type='checkbox'
                                     />
-                                </div>}
+                                </div>
+                            }
                         </Card>
-                    </Col>                      
-                )}
+                    </Col>)
+                    :
+                    <>
+                        <div className="text-center my-2">Изображения на сервере отсутствуют...</div>
+                    </>
+                }
             </Row> 
         </Container>
             <Button 

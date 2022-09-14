@@ -1,24 +1,16 @@
-import React, { useContext, useEffect, useRef, useState } from "react"
-import productApi from "http/productApi"
+import React, { useContext, useState } from "react"
 import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { useNavigate } from "react-router-dom"
-import { PRODUCTS_ROUTE, SHOP_ROUTE } from "utils/const"
-import { generateFormData } from "../../../http/formData"
-import PreviewImages from "../../formsComponents/PreviewImages"
+import { PRODUCTS_ROUTE, SHOP_ROUTE} from "utils/const"
 import { Button, Modal } from "react-bootstrap"
 import AddInfoAccordion from "../../formsComponents/AddInfoAccordion"
 import { LabelInput } from "components/formsComponents/LabelInput"
 import { SelectInput } from "components/formsComponents/SelectInput"
-import { AddFilesInput } from "components/formsComponents/AddFiles"
 import { observer } from "mobx-react-lite"
 
 const EditProductModal = observer(() => {
     const navigate = useNavigate()
-    const { fetchProductInfo, fetchProductDescription,
-            fetchProducts, fetchOneProduct, 
-            createProduct, uploadFiles, 
-            changeOrderFiles, updateData, deleteProduct} = productApi()
 
     const {products, modals} = useContext(Context)
     const {show, product = ''} = modals.editProduct 
@@ -27,80 +19,40 @@ const EditProductModal = observer(() => {
     const {value:name, setValue:setName} = useInput(product.name || '')
     const {value:price, setValue:setPrice} = useInput(product.price || 0)
     const {value:typeName, setValue:setTypeName} = useInput(type)
-    const {value:description, setValue:setDescription} = useInput('')    
+    const {value:description, setValue:setDescription} = useInput(product.description || '')    
+    const [info, setInfo] = useState(product.product_infos || [])   
     
-    const [loadedFiles, setLoadedFiles] = useState(product.img)
-    const [info, setInfo] = useState([])    
-    const [files, setFiles] = useState({})
-    const buttonRef = useRef()
-
     const onHide = () => modals.setEditProduct(false)  
     
-    const fetching = () => {
-        if(products.item.id){
-            fetchOneProduct(product.id)
-            fetchProductInfo(product.id)
-            fetchProductDescription(product.id)
-        } else {
-            fetchProducts()
-        }            
-    }
-    
     const addProduct = () => {
-        const formData = generateFormData({
-            name, price, files, types:products.types, typeName, info, description
-        })
-        createProduct(formData).then(data => {
-            navigate(PRODUCTS_ROUTE + '/' +  data.id)
-            onHide()
-        })            
+        products.saveProduct(
+            {name, price, typeId:products.types.find(type => type.name === typeName).id, typeName, info, description}) 
+        .then(res => {
+            navigate(PRODUCTS_ROUTE + '/' + res.id)
+            onHide() 
+        })       
     }
     
-    const addFiles = () => {
-        const formData = generateFormData({id:product.id, files, filesArray:loadedFiles})
-        uploadFiles(formData).then(response => {
-            const data = JSON.parse(response)
-            setLoadedFiles(data)            
-            setFiles({})
-            fetching()
-            buttonRef.current.value = ''
-        })
-    }
-
     const updateProduct = () => {
-        if(product && files[0]) addFiles()
-        let formData = generateFormData({id:product.id, filesArray:loadedFiles})
-        changeOrderFiles(formData)
-        formData = generateFormData({
-            id:product.id, name, price, types:products.types, typeName, info, description})
-        updateData(formData)
-        .then(response => {
-            fetching()
-            onHide()
+        products.saveProduct(
+            {name, id:product.id, price, typeId:products.types.find(type => type.name === typeName).id, typeName, info, description}) 
+        .then(res => {
+            if(product.id) products.fetchOneProduct(product.id)
+            onHide()  
         })        
     }
 
-    const deleteHandler = () => {
-        const confirmed = confirm(`Продукт с ID: ${product.id} будет удален! Продолжить?`)
-        if(confirmed){
-            deleteProduct(product.id)
-            .then(response => {
-                if(products.item.id){
-                    navigate(SHOP_ROUTE)
-                } else {
-                    fetching()
-                }
-                onHide()
-            })            
-        }        
+    const deleteProduct = () => {
+        products.destroyProduct(product.id)
+        .then(res => {
+            if(product.id) {
+                navigate(SHOP_ROUTE)
+            } else {                
+                products.fetchOneProduct(product.id)
+            }
+            onHide()  
+        })        
     }
-
-    useEffect(() => {
-        if(product.id) {
-            fetchProductInfo(product.id).then(data => setInfo(data))
-            fetchProductDescription(product.id).then(data => setDescription(data))
-        }
-    }, [product])
 
     return (
         <Modal
@@ -129,22 +81,13 @@ const EditProductModal = observer(() => {
             />
             <AddInfoAccordion info={info} setInfo={setInfo}/>
             <LabelInput label='Стоимость' value={price} setValue={setPrice} type='number' className="mb-3"/>
-            <AddFilesInput 
-                files={files} setFiles={setFiles} 
-                addButton={product.id && files[0]} onButtonClick={addFiles} buttonRef={buttonRef}
-            />
-            {product.id && 
-                <PreviewImages
-                    product={product} fetching={() => fetching()}
-                    loadedFiles={loadedFiles} setLoadedFiles={setLoadedFiles}
-                />
-            }
+           
             {product.id && 
                 <Button 
                     size="sm"
                     className='mb-3 w-100' 
                     variant='outline-danger'
-                    onClick={deleteHandler}
+                    onClick={deleteProduct}
                 >Удалить продукт из базы данных</Button>
             }
         </Modal.Body>

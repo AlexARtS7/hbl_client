@@ -1,5 +1,4 @@
 import AppRouter from 'components/AppRouter'
-import { check } from 'http/userApi'
 import { Context } from 'index'
 import React, { useContext, useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
@@ -13,12 +12,9 @@ const App = observer(() => {
     const {user} = useContext(Context)
     
     useEffect(() => {
-        check().then(userData => {
-          user.setData(userData)
-          user.setIsAuth(true)
-        }) 
+        user.check()
     },[])
-    
+  
     return (
         <BrowserRouter>
             <div className="d-flex flex-column app">

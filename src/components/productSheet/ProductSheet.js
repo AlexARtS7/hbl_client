@@ -1,7 +1,5 @@
 import InfoTable from "components/formsComponents/InfoTable"
 import Loading from "components/loading/Loading"
-import { addProduct, fetchBasketProducts } from "http/basketApi"
-import productApi from "http/productApi"
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect, useState } from "react"
@@ -11,7 +9,6 @@ import './productSheet.scss'
 
 const ProductSheet = observer(() => {
     const {products, modals, user, basket} = useContext(Context)
-    const {fetchTypes, fetchOneProduct} = productApi()
     const [slide, setSlide] = useState(0)
     const {id} = useParams()
 
@@ -23,35 +20,46 @@ const ProductSheet = observer(() => {
         modals.setEditProduct({show:true,product:products.item})
     }
 
+    const editImages = (e) => {
+        modals.setEditImages({show:true,product:products.item})
+    }
+
     const addToBasket = () => {
-        addProduct(user.data.id, Number(id), products.item.name)
-        .then(response => fetchBasketProducts(user.data.id)
-        .then(data => basket.setProducts(data)))        
+        // addProduct(user.data.id, Number(id), products.item.name)
+        // .then(response => fetchBasketProducts(user.data.id)
+        // .then(data => basket.setProducts(data)))        
     }
 
     useEffect(() => {
-        fetchTypes()
-        fetchOneProduct(id)
+        products.setItem()
+        products.fetchTypes()
+        products.fetchOneProduct(id)
     }, [id, user.data.id])
-   
+    
     return (
         <Container fluid style={{overflowY:'auto'}}>
             <Container className="mt-5">
                 {products.item.id ?
                     <>  
                         {user.data.role === 'ADMIN' && 
+                        <div className="d-flex justify-content-between">
                             <Button 
                                 variant="outline-success" 
-                                size="sm" className='w-100 mb-4' 
-                                onClick={(e) => editProduct(e)}>edit</Button>}
+                                size="sm" className='w-50 mb-4 mx-2' 
+                                onClick={(e) => editProduct(e)}>edit</Button>
+                            <Button 
+                                variant="outline-success" 
+                                size="sm" className='w-50 mb-4 mx-2' 
+                                onClick={(e) => editImages(e)}>images</Button>
+                        </div>}
                         <Row >
                             <Col>
                                 <Carousel 
                                     activeIndex={slide} 
                                     onSelect={handleSelect} 
                                     indicators={false} 
-                                    controls={products.item.img.length > 1}>
-                                    {products.item.img.map((_,i) => 
+                                    controls={products.item.imgs.length > 1}>
+                                    {products.item.imgs.map((_,i) => 
                                             <Carousel.Item key={i}>
                                                 <img className="d-block w-100"
                                                 src={process.env.REACT_APP_API_URL + `${products.item.id}/` + products.item.img[i]}/>
@@ -60,7 +68,7 @@ const ProductSheet = observer(() => {
                                     }
                                 </Carousel>     
                                 <div className="d-flex mt-1">
-                                    {products.item.img.map((element,i) => 
+                                    {products.item.imgs.map((element,i) => 
                                         <div key={i}>
                                             <img                                         
                                                 className={i===slide ? 'opacity-100':'opacity-50 border'}
@@ -77,8 +85,8 @@ const ProductSheet = observer(() => {
                                     <div>
                                         <div className="d-flex justify-content-end fs-4">{products.item.name}</div>
                                         <hr/>
-                                        {/* {products.item && 
-                                            <div className="fs-6 text-end">{products.item.product_description.description}</div>} */}
+                                        {products.item && 
+                                            <div className="fs-6 text-end">{products.item.description}</div>}
                                     </div>
                                     <div>
                                         <div className="d-flex justify-content-end fs-5">{products.item.price} ₽</div>

@@ -11,8 +11,7 @@ export const AddFilesInput = (props) => {
                 {addButton && <Button variant="outline-secondary" id="button-addon2" onClick={onButtonClick}>Загрузить на сервер</Button>}
                 </InputGroup>
             </Form.Group>
-            <ListGroup variant="flush">
-                {/* TODO */}                
+            <ListGroup variant="flush">              
                 {files && files[1] && Object.keys(files).map(function (key,i) {
                 return <ListGroup.Item key={i}>{this[key].name}</ListGroup.Item>
                 }, files)}   
