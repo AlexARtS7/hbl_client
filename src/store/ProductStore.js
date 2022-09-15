@@ -32,7 +32,7 @@ export default class ProductStore {
         this._list = data.rows
         this._totalCount = data.count
         this._loading = false
-        return
+        return data
     }
 
     async fetchOneProduct(id) {
@@ -60,10 +60,10 @@ export default class ProductStore {
         return data
     }
 
-    async setPreviewImage(id){
-        const {data} = await $authHost.post('api/images/setpreview?id=' + id)
+    async setPreviewImage(id, productId){
+        const {data} = await $authHost.post('api/images/setpreview?id=' + id + '&productId=' + productId)
         return data
-    }
+    } 
 
     setItem(item = {}){
         this._item = item

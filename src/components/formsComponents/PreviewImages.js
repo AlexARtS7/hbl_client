@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap"
 
-const PreviewImages = (props) => {
-    const {product, loadedFiles, setLoadedFiles, fetching} = props
+const PreviewImages = ({product, loadedFiles, setLoadedFiles}) => {
+    
     const [delArray, setDelArray] = useState([...loadedFiles.map(element => ({name: element, status: false}))])
     const [delFilesBtnActive, setDelFilesBtnActive] = useState(false)
     
     const setPreview = (index, element) => {
         setDelArray(delArray.map(item => item.name === element? {...item, status:false}:item))
-        setLoadedFiles([...loadedFiles.filter((_,i) => i === index), ...loadedFiles.filter((_,i) => i !== index)])
+        setLoadedFiles([...loadedFiles.filter((_,i) => i === index), ...loadedFiles.filter((_,i) => i !== index)])        
     }
 
     const selectDelFiles = (index) => {
@@ -20,18 +20,6 @@ const PreviewImages = (props) => {
         return item ? item.status:false
     }
 
-    const deleteSelectedFiles = () => {
-        // const formData = generateFormData({id:product.id, 
-        //     filesArray:delArray.filter(item => item.status)})
-        //     const resultArray = loadedFiles.filter(filename => !delArray.find(item => item.name === filename).status)
-        // // deleteFiles(formData)        
-        // .then(response => {
-        //     setLoadedFiles(resultArray)
-        //     setDelArray(delArray.filter(item => !item.status))
-        //     fetching()
-        // })
-    }
-
     useEffect(() => {
         if(delArray.length !== loadedFiles.length) {
             const addArray = []
@@ -41,18 +29,18 @@ const PreviewImages = (props) => {
                 ...delArray.map(element => ({name: element.name, status: element.status})),
                 ...addArray
             ])
-        }        
+        }  
     }, [loadedFiles])
-
+    
     useEffect(() => {
         delArray.find(item => item.status === true) ? setDelFilesBtnActive(true):setDelFilesBtnActive(false)
     },[delArray])
-    
+
     return (
         <>   
         <Container className='border rounded mb-3 d-flex flex-row'>
             <Row>
-                {loadedFiles.length > 0 ? loadedFiles.map((element,i) => 
+                {loadedFiles ? loadedFiles.map((element,i) => 
                     <Col key={i}>
                         <Card style={{ width: '5rem' }} className='m-1 position-relative'>
                             <Card.Img 
@@ -90,7 +78,7 @@ const PreviewImages = (props) => {
                 disabled={!delFilesBtnActive}
                 className='mb-3 w-100' 
                 variant='outline-danger'
-                onClick={deleteSelectedFiles}
+                // onClick={deleteSelectedFiles}
             >Удалить отмеченные изображения</Button>
         </>
     )

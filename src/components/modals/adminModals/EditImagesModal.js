@@ -12,8 +12,8 @@ const EditImagesModal = observer(() => {
     const {show, product = ''} = modals.editImages
     
     const [files, setFiles] = useState({})
-    const [loadedFiles, setLoadedFiles] = useState([product.imgs.find(e=>e.preview), ...product.imgs.filter(e=>!e.preview)])
-
+    const [loadedFiles, setLoadedFiles] = useState([product.imgs.find(e => e.preview), ...product.imgs.filter(e => !e.preview)])
+    
     const onHide = () => modals.setEditImages(false)  
     
     const addFiles = () => {
@@ -28,11 +28,17 @@ const EditImagesModal = observer(() => {
     }
 
     const onExit = () => {
-        products.setPreviewImage(loadedFiles[0].id)
-        products.fetchProducts()
-        onHide()
+        if(product.id && product.imgs.length > 0) {
+            products.setPreviewImage(loadedFiles[0].id, product.id)
+            .then(_=> {
+                products.fetchProducts()
+                onHide()
+            })
+        } else {
+            onHide()
+        }
     }
-
+    
     return (
         <Modal
             show={show}
@@ -51,7 +57,7 @@ const EditImagesModal = observer(() => {
                 files={files} setFiles={setFiles} 
                 addButton={product.id && files[0]} onButtonClick={addFiles}
             />
-            {product.id && 
+            {product.imgs.length > 0 &&  
                 <PreviewImages
                     product={product} loadedFiles={loadedFiles} setLoadedFiles={setLoadedFiles}
                 />

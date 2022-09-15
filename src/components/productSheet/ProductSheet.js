@@ -29,7 +29,7 @@ const ProductSheet = observer(() => {
         // .then(response => fetchBasketProducts(user.data.id)
         // .then(data => basket.setProducts(data)))        
     }
-
+   
     useEffect(() => {
         products.setItem()
         products.fetchTypes()
@@ -62,7 +62,7 @@ const ProductSheet = observer(() => {
                                     {products.item.imgs.map((_,i) => 
                                             <Carousel.Item key={i}>
                                                 <img className="d-block w-100"
-                                                src={process.env.REACT_APP_API_URL + `${products.item.id}/` + products.item.img[i]}/>
+                                                src={process.env.REACT_APP_API_URL + `${products.item.id}/` + products.item.imgs[i].img}/>
                                             </Carousel.Item>
                                         )
                                     }
@@ -74,7 +74,7 @@ const ProductSheet = observer(() => {
                                                 className={i===slide ? 'opacity-100':'opacity-50 border'}
                                                 style={{height:50, cursor:'pointer'}} 
                                                 onClick={() => setSlide(i)}
-                                                src={process.env.REACT_APP_API_URL + `${products.item.id}/` + element}/>
+                                                src={process.env.REACT_APP_API_URL + `${products.item.id}/` + element.img}/>
                                             {i===slide && 
                                                 <div className="bg-secondary opacity-50 rounded mt-1" style={{height:5}}></div>}
                                         </div>                                
