@@ -13,7 +13,12 @@ const ShopListItem = ({product}) => {
     const navigate = useNavigate()
     const [imageLoaded, setImageLoaded] = useState(false)    
     const [noImageLoaded, setNoImageLoaded] = useState(false)
-    
+
+    let src 
+    if(product.imgs.length > 0){
+        src = product.imgs.find(e => e.preview)
+        if(src) {src = src.img} else src = product.imgs[0].img
+    } 
 
     const editProduct = (e) => {
         e.stopPropagation()
@@ -33,7 +38,7 @@ const ShopListItem = ({product}) => {
                 onClick={() => navigate(PRODUCTS_ROUTE + '/' +  product.id)}>
                 {product.imgs.length > 0 && 
                     <img 
-                        src={process.env.REACT_APP_API_URL + `${product.id}/` + product.imgs.find(e => e.preview).img} 
+                        src={process.env.REACT_APP_API_URL + `${product.id}/` + src} 
                         style={imageLoaded ? {display:'block', height:180} : { display: 'none' }} onLoad={() => setImageLoaded(true)}/>}
                 {!imageLoaded && <Image src={noImage} onLoad={() => setNoImageLoaded(true)}/>}
                 {!imageLoaded && !noImageLoaded && <Loading/>}
