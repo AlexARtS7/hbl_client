@@ -10,6 +10,7 @@ const ShopPage = observer(() => {
     const {products} = useContext(Context)
  
     useEffect(() => {
+        products.setItem()
         products.fetchTypes()
     },[])
    

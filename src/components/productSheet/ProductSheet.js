@@ -31,7 +31,6 @@ const ProductSheet = observer(() => {
     }
    
     useEffect(() => {
-        products.setItem()
         products.fetchTypes()
         products.fetchOneProduct(id)
     }, [id, user.data.id])
