@@ -1,7 +1,7 @@
 import { Context } from "index"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect } from "react"
-import { Badge, Dropdown } from "react-bootstrap"
+import { Dropdown } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { BASKET_ROUTE } from "utils/const"
 
@@ -15,9 +15,9 @@ const UserMenu = observer(() => {
         user.setIsAuth(false)
     }
 
-    // useEffect(() => {
-    //     if(user.data.id) fetchBasketProducts(user.data.id).then(data => basket.setProducts(data))
-    // },[user.data.id])
+    useEffect(() => {
+        if(user.data.id) basket.fetchBasketProducts(user.data.id)
+    },[user.data.id])
    
     return (
         <div className='d-flex align-items-center'>

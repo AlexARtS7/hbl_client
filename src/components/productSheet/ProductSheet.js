@@ -25,11 +25,10 @@ const ProductSheet = observer(() => {
     }
 
     const addToBasket = () => {
-        // addProduct(user.data.id, Number(id), products.item.name)
-        // .then(response => fetchBasketProducts(user.data.id)
-        // .then(data => basket.setProducts(data)))        
+        basket.addProduct(user.data.id, Number(id), products.item.name)
+        basket.fetchBasketProducts(user.data.id)      
     }
-   
+    
     useEffect(() => {
         products.fetchTypes()
         products.fetchOneProduct(id)
