@@ -45,23 +45,31 @@ export default class ProductStore {
 
     async saveProduct(params) {
         const {data} = await $authHost.post('api/products/create', params)
-        this.fetchProducts()
+        await this.fetchProducts()
         return data
     }
 
     async destroyProduct(id) {
         const {data} = await $authHost.delete('api/products/delete?id=' + id)
-        this.fetchProducts()
+        await this.fetchProducts()
+        return data
+    }
+
+    async deleteImages(id, delArray) {
+        const {data} = await $authHost.delete('api/images/delete?id=' + id + '&imgs[]=' + delArray.join('&imgs[]='))
+        await this.fetchProducts()
         return data
     }
 
     async uploadImages(formData){
-        const {data} = await $authHost.post('api/images/addfiles', formData)
+        const {data} = await $authHost.post('api/images/add', formData)
+        await this.fetchProducts()
         return data
     }
 
     async setPreviewImage(id, productId){
         const {data} = await $authHost.post('api/images/setpreview?id=' + id + '&productId=' + productId)
+        await this.fetchProducts()
         return data
     } 
 

@@ -15,7 +15,6 @@ const EditImagesModal = observer(() => {
     const btnRef = useRef()
     const [files, setFiles] = useState({})
     const [loadedFiles, setLoadedFiles] = useState([])
-    
     const onHide = () => modals.setEditImages(false)  
     
     const addFiles = () => {
@@ -27,22 +26,15 @@ const EditImagesModal = observer(() => {
 
         products.uploadImages(formData)
         .then(_ => {
-            products.fetchProducts().then(_ => modals.setEditImages({show:true,product:products.list.find(e => e.id === product.id)}))
+            modals.setEditImages({show:true,product:products.list.find(e => e.id === product.id)})
             if(location.pathname !== SHOP_ROUTE) products.fetchOneProduct(product.id)
             btnRef.current.value = ''
         })
     }
 
     const onExit = () => {
-        if(product.id && product.imgs.length > 0) {
-            products.setPreviewImage(loadedFiles[0].id, product.id)
-            .then(_=> {
-                products.fetchProducts()
-                onHide()
-            })
-        } else {
-            onHide()
-        }
+        if(product.id && product.imgs.length > 0) products.setPreviewImage(loadedFiles[0].id, product.id)
+        onHide()
     }
 
     useEffect(() => {
@@ -72,13 +64,10 @@ const EditImagesModal = observer(() => {
                 <PreviewImages
                     product={product} loadedFiles={loadedFiles} setLoadedFiles={setLoadedFiles}
                 />
-            }
-            
+            }            
         </Modal.Body>
-        <Modal.Footer>
-            
-            <Button  variant='success' onClick={onExit}>Закрыть</Button>
-                       
+        <Modal.Footer>      
+            <Button  variant='success' onClick={onExit}>Закрыть</Button>    
         </Modal.Footer>
         </Modal>
     )
