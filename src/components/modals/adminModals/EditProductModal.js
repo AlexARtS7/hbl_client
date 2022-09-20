@@ -12,7 +12,7 @@ import { observer } from "mobx-react-lite"
 const EditProductModal = observer(() => {
     const navigate = useNavigate()
 
-    const {products, modals, basket, user} = useContext(Context)
+    const {products, modals, toasts, basket, user} = useContext(Context)
     const {show, product = ''} = modals.editProduct 
     const type = product.id && products.types.length > 0 ? products.types.filter(type => type.id === +product.typeId)[0].name : ''
 
@@ -28,6 +28,7 @@ const EditProductModal = observer(() => {
         products.saveProduct(
             {name, price, typeId:products.types.find(type => type.name === typeName).id, typeName, info, description}) 
         .then(res => {
+            toasts.addToast({text:'Продукт успешно добавлен.'})
             navigate(PRODUCTS_ROUTE + '/' + res.id)
             onHide() 
         })       
@@ -51,6 +52,7 @@ const EditProductModal = observer(() => {
                 products.fetchOneProduct(product.id)
             }
             basket.fetchBasketProducts(user.data.id)
+            toasts.addToast({text:'Продукт удален.'})
             onHide()  
         })        
     }

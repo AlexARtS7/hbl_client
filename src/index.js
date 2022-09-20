@@ -4,6 +4,7 @@ import BasketStore from 'store/BasketStore';
 import LoadingStore from 'store/LoadingStore';
 import ModalStore from 'store/ModalStore';
 import ProductStore from 'store/ProductStore';
+import ToastsStore from 'store/ToastsStore';
 import UserStore from 'store/UserStore';
 import App from './App';
 
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root'))
     basket: new BasketStore(),
     products: new ProductStore(),
     modals: new ModalStore(),
+    toasts: new ToastsStore(),
     loading: new LoadingStore()
   }}>
     <App />

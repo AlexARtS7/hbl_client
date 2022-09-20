@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom"
 import './productSheet.scss'
 
 const ProductSheet = observer(() => {
-    const {products, modals, user, basket} = useContext(Context)
+    const {products, modals, user, basket, toasts} = useContext(Context)
     const [slide, setSlide] = useState(0)
     const {id} = useParams()
 
@@ -26,7 +26,8 @@ const ProductSheet = observer(() => {
 
     const addToBasket = () => {
         basket.addProduct(user.data.id, Number(id), products.item.name)
-        basket.fetchBasketProducts(user.data.id)      
+        basket.fetchBasketProducts(user.data.id) 
+        toasts.addToast({text:'Продукт добавлен в корзину.'})     
     }
     
     useEffect(() => {

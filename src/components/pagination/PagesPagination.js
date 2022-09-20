@@ -12,7 +12,7 @@ const PagesPagination = observer(() => {
 
     return (
         <Pagination className="d-flex justify-content-center mt-5">
-            {pages.map(page => 
+            {pages.length > 1 && pages.map(page => 
             <Pagination.Item
                 active={products.page === page}
                 key={page}

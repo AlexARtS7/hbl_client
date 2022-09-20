@@ -7,6 +7,7 @@ import './styles/style.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modals from 'components/modals/Modals'
 import { observer } from 'mobx-react-lite'
+import Toasts from 'components/modals/Toasts'
 
 const App = observer(() => {
     const {user} = useContext(Context)
@@ -19,6 +20,7 @@ const App = observer(() => {
         <BrowserRouter>
             <div className="d-flex flex-column app">
                 <Modals/>
+                <Toasts/>
                 <Navbar/>
                 <AppRouter/>
             </div>            
