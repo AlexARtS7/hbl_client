@@ -43,7 +43,7 @@ const UserMenu = observer(() => {
                 </Dropdown.Menu>
             </Dropdown>
             <div className='navbar_box_contur navbar_logo_basket' onClick={() => navigate(BASKET_ROUTE)}>
-                {basket.products.length > 0 && <div className="basket_badge">{basket.products.length}</div>}
+                {basket.totalCount > 0 && <div className="basket_badge">{basket.totalCount}</div>}
             </div>
         </div>       
     )

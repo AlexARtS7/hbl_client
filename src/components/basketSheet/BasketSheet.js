@@ -32,7 +32,7 @@ const BasketSheet = observer(() => {
                     <>
                         <div className='d-flex justify-content-between'>
                             <img 
-                            src={ item.product.imgs.find(e => e.preview)? 
+                            src={ item.product.imgs && item.product.imgs.find(e => e.preview)? 
                                 process.env.REACT_APP_API_URL + `${item.product.id}/` + item.product.imgs.find(e => e.preview).img
                                 :
                                 noImage

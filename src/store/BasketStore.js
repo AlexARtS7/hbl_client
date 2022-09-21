@@ -1,9 +1,12 @@
-import { $authHost, $host } from "../axios/index";
+import { $authHost } from "../axios/index";
 import {makeAutoObservable} from 'mobx'
 
 export default class BasketStore {
     constructor() {
         this._products = []
+        this._page = 1
+        this._totalCount = 0
+        this._limit = 2
         makeAutoObservable(this)
     }
 
@@ -14,8 +17,9 @@ export default class BasketStore {
     }
     
     async fetchBasketProducts(userId){
-        const {data} = await $authHost.get('api/basket/products?userId=' + userId) 
-        this._products = data
+        const {data} = await $authHost.get('api/basket/products', {params: {userId, page:this._page, limit:this._limit}})
+        this._products = data.rows
+        this._totalCount = data.count
         return data
     }
     
@@ -29,7 +33,23 @@ export default class BasketStore {
         this._products = value
     }
 
+    setPage(page) {
+        this._page = page
+    }
+
     get products() {
         return this._products
+    }
+
+    get page() {
+        return this._page
+    }
+
+    get totalCount() {
+        return this._totalCount
+    }
+
+    get limit() {
+        return this._limit
     }
 }

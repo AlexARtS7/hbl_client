@@ -4,9 +4,8 @@ import React, { useContext } from "react"
 import { Pagination } from "react-bootstrap";
 import "./pagination.scss";
 
-const PagesPagination = observer(() => {
-    const {products} = useContext(Context)
-    const pageCount = Math.ceil(products.totalCount / products.limit)
+const PagesPagination = ({store}) => {
+    const pageCount = Math.ceil(store.totalCount / store.limit)
     const pages=[]
     for (let i = 0; i < pageCount; i++) { pages.push(i + 1) }
 
@@ -14,14 +13,14 @@ const PagesPagination = observer(() => {
         <Pagination className="d-flex justify-content-center mt-5">
             {pages.length > 1 && pages.map(page => 
             <Pagination.Item
-                active={products.page === page}
+                active={store.page === page}
                 key={page}
-                onClick={() => products.setPage(page)}>
+                onClick={() => store.setPage(page)}>
                 {page}
             </Pagination.Item>
             )}
         </Pagination>        
     )
-})
+}
 
 export default PagesPagination

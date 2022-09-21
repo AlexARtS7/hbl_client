@@ -9,7 +9,7 @@ export default class ProductStore {
         this._item = {}
         this._page = 1
         this._totalCount = 0
-        this._limit = 9
+        this._limit = 2
         this._loading = false
         makeAutoObservable(this)
     }

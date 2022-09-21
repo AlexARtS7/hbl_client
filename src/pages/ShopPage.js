@@ -28,7 +28,7 @@ const ShopPage = observer(() => {
                     {!products.loading && 
                         <>
                             <ShopList products={products}/>
-                            <PagesPagination/>
+                            <PagesPagination store={products}/>
                         </>
                     }             
                 </Col>
