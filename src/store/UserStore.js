@@ -1,6 +1,6 @@
-import { $authHost, $host } from "../axios/index";
 import jwt_decode from 'jwt-decode';
 import {makeAutoObservable} from 'mobx'
+import { userCheck, userLoginIn, userRegistration } from "http/requests/userApi";
 
 export default class UserStore {
     constructor() {
@@ -10,24 +10,21 @@ export default class UserStore {
     }
 
     async registration(login, email, password){
-        const {data} = await $host.post('api/user/registration', {login, email, password, role: 'USER'})
-        localStorage.setItem('token', data.token)
+        const data = await userRegistration(login, email, password)
         this._data = jwt_decode(data.token)
         this._isAuth = true
-        return 
+        return
     }
     
     async loginIn(email, password){
-        const {data} = await $host.post('api/user/login', {email, password})
-        localStorage.setItem('token', data.token)
+        const data = await userLoginIn(email, password)
         this._data = jwt_decode(data.token)
         this._isAuth = true
         return
     }
     
     async check(){
-        const {data} = await $authHost.get('api/user/auth')
-        localStorage.setItem('token', data.token)
+        const data = await userCheck()
         this._data = jwt_decode(data.token)
         this._isAuth = true
         return

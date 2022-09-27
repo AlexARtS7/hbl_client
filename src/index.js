@@ -1,7 +1,6 @@
 import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import BasketStore from 'store/BasketStore';
-import LoadingStore from 'store/LoadingStore';
 import ModalStore from 'store/ModalStore';
 import ProductStore from 'store/ProductStore';
 import ToastsStore from 'store/ToastsStore';
@@ -17,8 +16,7 @@ ReactDOM.createRoot(document.getElementById('root'))
     basket: new BasketStore(),
     products: new ProductStore(),
     modals: new ModalStore(),
-    toasts: new ToastsStore(),
-    loading: new LoadingStore()
+    toasts: new ToastsStore()
   }}>
     <App />
   </Context.Provider>

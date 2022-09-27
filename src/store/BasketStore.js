@@ -1,5 +1,5 @@
-import { $authHost } from "../axios/index";
 import {makeAutoObservable} from 'mobx'
+import { basketAddProduct, basketDeleteProduct, basketFetchProducts } from "http/requests/basketApi";
 
 export default class BasketStore {
     constructor() {
@@ -12,14 +12,14 @@ export default class BasketStore {
     }
 
     async addProduct(userId, productId, name){
-        const {data} = await $authHost.post('api/basket/addproduct', {userId, productId, name})
+        const data = await basketAddProduct(userId, productId, name)
         await this.fetchBasketProducts(userId)
         return data
     }
     
     async fetchBasketProducts(userId){
         this._loading = true
-        const {data} = await $authHost.get('api/basket/products', {params: {userId, page:this._page, limit:this._limit}})
+        const data = await basketFetchProducts({userId, page:this._page, limit:this._limit})
         this._products = data.rows
         this._totalCount = data.count
         this._loading = false
@@ -27,7 +27,7 @@ export default class BasketStore {
     }
     
     async deleteProduct(id, userId){
-        const {data} = await $authHost.delete('api/basket/deleteproduct?id=' + id)
+        const data = await basketDeleteProduct(id)
         await this.fetchBasketProducts(userId)
         return data
     }

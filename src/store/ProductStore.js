@@ -1,5 +1,7 @@
-import { $authHost, $host } from "../axios/index";
 import {makeAutoObservable} from 'mobx'
+import {productsAddType, productsDestroyOne, productsFetchAll, 
+        productsFetchOne, productsFetchTypes, productsSaveOne } from "http/requests/productsApi";
+import { imagesDelete, imagesSetPreview, imagesUpload } from "http/requests/imagesApi";
 
 export default class ProductStore {
     constructor() {
@@ -15,20 +17,20 @@ export default class ProductStore {
     }
 
     async addType(type) {
-        const {data} = await $authHost.post('api/type', type)
+        const data = await productsAddType(type)
         this._types = [...this._types, data]
         return
     }
     
     async fetchTypes() {
-        const {data} = await $host.get('api/type')
+        const data = await productsFetchTypes()
         this._types = data
         return
     }
 
     async fetchProducts(typeId = this._selectedType.id) {
         this._loading = true
-        const {data} = await $host.get('api/products', {params: {typeId, page:this._page, limit:this._limit}})
+        const data = await productsFetchAll({typeId, page:this._page, limit:this._limit})
         this._list = data.rows
         this._totalCount = data.count
         this._loading = false
@@ -37,38 +39,38 @@ export default class ProductStore {
 
     async fetchOneProduct(id) {
         this._loading = true
-        const {data} = await $host.get('api/products/' + id)
+        const data = await productsFetchOne(id)
         this._item = data
         this._loading = false
         return id
     }
 
     async saveProduct(params) {
-        const {data} = await $authHost.post('api/products/create', params)
+        const data = await productsSaveOne(params)
         await this.fetchProducts()
         return data
     }
 
     async destroyProduct(id) {
-        const {data} = await $authHost.delete('api/products/delete?id=' + id)
+        const data = await productsDestroyOne(id)
         await this.fetchProducts()
         return data
     }
 
     async deleteImages(id, delArray) {
-        const {data} = await $authHost.delete('api/images/delete?id=' + id + '&imgs[]=' + delArray.join('&imgs[]='))
+        const data = await imagesDelete(id, delArray)
         await this.fetchProducts()
         return data
     }
 
     async uploadImages(formData){
-        const {data} = await $authHost.post('api/images/add', formData)
+        const data = await imagesUpload(formData)
         await this.fetchProducts()
         return data
     }
 
     async setPreviewImage(id, productId){
-        const {data} = await $authHost.post('api/images/setpreview?id=' + id + '&productId=' + productId)
+        const data = await imagesSetPreview(id, productId)
         await this.fetchProducts()
         return data
     } 
