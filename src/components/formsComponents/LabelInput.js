@@ -2,14 +2,15 @@ import React from "react"
 import { FloatingLabel, Form } from "react-bootstrap"
 
 export const LabelInput = (props) => {
-    const {label, type, value, setValue, className, textarea} = props
+    const {label, type, value, setValue, className, textarea, isInvalid} = props
     return (
-        <FloatingLabel
+        <FloatingLabel 
             controlId="floatingInput"
             label={label}
             className={className}
         >
-            <Form.Control 
+            <Form.Control   
+                isInvalid={isInvalid}
                 style={textarea? {minHeight:55}:null}
                 as={textarea}
                 type={type} 
@@ -18,6 +19,7 @@ export const LabelInput = (props) => {
                 value={value} 
                 onChange={e => setValue(e.target.value)}
             />
+            <Form.Control.Feedback type="invalid">{isInvalid}</Form.Control.Feedback>
         </FloatingLabel>
     )
 }

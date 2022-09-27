@@ -1,9 +1,7 @@
 import { Context } from 'index'
 import { observer } from 'mobx-react-lite'
-import React, { useContext } from 'react'
-import { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Toast, ToastContainer } from 'react-bootstrap'
-import './toasts.scss'
 
 const Toasts = observer(() => {
     const {toasts} = useContext(Context)
@@ -16,21 +14,21 @@ const Toasts = observer(() => {
         if(toasts.list.length > 0) {
             const timer = setTimeout(() => {
                 toasts.shiftToast()
-              }, 8000);
+              }, toasts.list.length > 1 ? 800:3000);
               return () => clearTimeout(timer); 
         }
     }, [toasts.list.length])
-
+   
     return (
         <>
             {toasts.list.length > 0 &&
                 <ToastContainer position='bottom-end' className='p-3'>
-                    {toasts.list.map((e,i) => 
-                         <Toast key={i} onClose={() => onClose(i)} delay={5000} className='toast'>
+                    {toasts.list.map((item,index) => 
+                        <Toast key={index} onClose={() => onClose(index)}>
                             <Toast.Header>
-                                <strong className="me-auto">{e.label? e.label:'HobbyLaser'}</strong>
+                                <strong className="me-auto">{item.label? item.label:'HobbyLaser'}</strong>
                             </Toast.Header>
-                            <Toast.Body>{e.text && e.text}</Toast.Body>
+                            <Toast.Body>{item.text && item.text}</Toast.Body>
                         </Toast>
                     )} 
                 </ToastContainer>

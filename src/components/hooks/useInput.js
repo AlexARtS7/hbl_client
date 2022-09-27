@@ -1,17 +1,17 @@
-import inputValidation from "components/formsComponents/inputValidation"
+import formsValidation from "components/formsComponents/formsValidation"
 import { useEffect, useState } from "react"
 
 const useInput = (initialValue, validations) => {
     const [value, setValue] = useState(initialValue)
     const [validErr, setValidErr] = useState('')
-    
-    useEffect(() => setValidErr(inputValidation(value, validations)),[value])
+
+    useEffect(() => setValidErr(formsValidation(value, validations)),[value])
 
     return {
         value,
+        validErr,
         setValue,
-        setValidErr,
-        validErr
+        setValidErr
     }
 }
 

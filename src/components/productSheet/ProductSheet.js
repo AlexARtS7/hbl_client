@@ -11,29 +11,31 @@ const ProductSheet = observer(() => {
     const {products, modals, user, basket, toasts} = useContext(Context)
     const [slide, setSlide] = useState(0)
     const {id} = useParams()
+    const inBasket = products.item.basket_products? products.item.basket_products.length : 0 
 
-    const handleSelect = (selectedIndex, e) => {
+    const handleSelect = (selectedIndex) => {
         setSlide(selectedIndex);
     }
     
-    const editProduct = (e) => {
+    const editProduct = () => {
         modals.setEditProduct({show:true,product:products.item})
     }
 
-    const editImages = (e) => {
+    const editImages = () => {
         modals.setEditImages({show:true,product:products.item})
     }
 
     const addToBasket = () => {
         basket.addProduct(user.data.id, Number(id), products.item.name)
         basket.fetchBasketProducts(user.data.id) 
+
         toasts.addToast({text:'Продукт добавлен в корзину.'})     
     }
     
     useEffect(() => {
         products.fetchTypes()
         products.fetchOneProduct(id)
-    }, [id, user.data.id])
+    }, [id, user.data.id, basket.products])
     
     return (
         <Container fluid style={{overflowY:'auto'}}>
@@ -45,11 +47,11 @@ const ProductSheet = observer(() => {
                             <Button 
                                 variant="outline-success" 
                                 size="sm" className='w-50 mb-4 mx-2' 
-                                onClick={(e) => editProduct(e)}>edit</Button>
+                                onClick={editProduct}>edit</Button>
                             <Button 
                                 variant="outline-success" 
                                 size="sm" className='w-50 mb-4 mx-2' 
-                                onClick={(e) => editImages(e)}>images</Button>
+                                onClick={editImages}>images</Button>
                         </div>}
                         <Row >
                             <Col>
@@ -91,7 +93,7 @@ const ProductSheet = observer(() => {
                                         <div className="d-flex justify-content-end fs-5">{products.item.price} ₽</div>
                                         <div className="d-flex justify-content-end mt-4">
                                             <Button size="sm" variant="success" className="me-4">Купить в один Клик</Button>
-                                            {user.isAuth && !basket.products.find(product => product.productId === products.item.id) &&
+                                            {user.isAuth && !inBasket &&
                                                 <Button size="sm" variant="success" onClick={addToBasket}>В корзину</Button>}
                                         </div>                                        
                                         

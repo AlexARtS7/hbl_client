@@ -7,7 +7,7 @@ export default class ToastsStore {
     }
     
     addToast(toast) {
-        this._list.push(toast)
+        if(this.list.length < 5) this._list.push(toast)
     }
 
     shiftToast() {

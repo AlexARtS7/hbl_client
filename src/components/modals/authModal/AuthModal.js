@@ -7,23 +7,18 @@ import { LabelInput } from "components/formsComponents/LabelInput"
 const AuthModal = () => {
     const {user, modals} = useContext(Context)
     
-    const {value:login, setValue:setLogin, validErr:loginErr} = 
-        useInput('', {isEmpty:true, minLength:3, maxLength:50})
-    const {value:email, setValue:setEmail, validErr:emailErr, setValidErr:setEmailErr} = 
-        useInput('', {isEmpty:true, email:true})
-    const {value:password, setValue:setPassword, validErr:passwordErr, setValidErr:setPasswordErr} = 
-        useInput('', {isEmpty:true, minLength:6, maxLength:50})
+    const {value:login, setValue:setLogin} = useInput('')
+    const {value:email, setValue:setEmail, validErr:emailErr, setValidErr:setEmailErr} = useInput('',{email:true,isEmpty:true})
+    const {value:password, setValue:setPassword, validErr:passwordErr, setValidErr:setPasswordErr} = useInput('', {isEmpty:true})
 
     const [isLoginIn, setIsLoginIn] = useState(true)
-    const [errorsVisible, setErrorsVisible] = useState(false)
-
+    const [showErr, setShowErr] = useState(false)
+    
     const onHide = () => modals.setAuth(false)
     
     const enter = () => {
-        if(!isLoginIn && loginErr || emailErr || passwordErr) {
-            setErrorsVisible(true)
-            return
-        }
+        setShowErr(true)
+        if(emailErr || passwordErr) return
 
         try {
             let userData
@@ -34,7 +29,6 @@ const AuthModal = () => {
             }    
             onHide()    
         } catch (e) {
-            setErrorsVisible(true)
             switch(e.response.data.index) {
                 case 1: setEmailErr(e.response.data.message)
                     break;
@@ -48,15 +42,14 @@ const AuthModal = () => {
         setLogin('')
         setEmail('')
         setPassword('')
-        setErrorsVisible(false)
+        setShowErr(false)
     }, [isLoginIn])
 
     useEffect(() => {
         const onKeypress = e => {if(e.key === 'Enter') enter()}
-        
         document.addEventListener('keypress', onKeypress);
         return () => document.removeEventListener('keypress', onKeypress);
-    }, [loginErr, emailErr, passwordErr])
+    }, [emailErr])
 
     return (
         <Modal 
@@ -71,17 +64,23 @@ const AuthModal = () => {
             </Modal.Header>
             <Modal.Body>
                 {!isLoginIn && 
-                    // {errorsVisible && loginErr && <p className='modal_error'>{loginErr}</p>}
                     <LabelInput label='Логин' value={login} setValue={setLogin} type='name' className="mb-3"/>
                 }
-                {/* {errorsVisible && emailErr && <p className='modal_error'>{emailErr}</p>}  */}
-                    <LabelInput label='email' value={email} setValue={setEmail} type='email' className="mb-3"/>
-                {/* {errorsVisible && passwordErr && <p className='modal_error'>{passwordErr}</p>} */}
-                    <LabelInput label='Пароль' value={password} setValue={setPassword} type='password' className="mb-3"/>
+                    <LabelInput 
+                        label='email' value={email} setValue={setEmail} 
+                        isInvalid={showErr && emailErr} type='email' className="mb-3"/>
+                    <LabelInput 
+                        label='Пароль' value={password} setValue={setPassword} 
+                        isInvalid={showErr && passwordErr} type='password' className="mb-3"/>
                     {isLoginIn ?
-                <div style={{marginLeft:10}}>Нет акаунта? <span style={{color:'blue', cursor:'pointer'}} onClick={() => setIsLoginIn(!isLoginIn)}>Зарегистрируйтесь</span></div> :
-                <div style={{marginLeft:10}}>Есть акаунт? <span style={{color:'blue', cursor:'pointer'}} onClick={() => setIsLoginIn(!isLoginIn)}>Войдите</span></div>
-            } 
+                        <div style={{marginLeft:10}}>Нет акаунта? 
+                            <span style={{color:'blue', cursor:'pointer'}} 
+                                onClick={() => setIsLoginIn(!isLoginIn)}>Зарегистрируйтесь</span></div> 
+                            :
+                        <div style={{marginLeft:10}}>Есть акаунт? 
+                            <span style={{color:'blue', cursor:'pointer'}} 
+                                onClick={() => setIsLoginIn(!isLoginIn)}>Войдите</span></div>
+                    } 
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={onHide} variant='outline-secondary'>Закрыть</Button>
