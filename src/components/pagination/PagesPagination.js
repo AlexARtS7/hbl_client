@@ -1,6 +1,4 @@
-import { Context } from "index"
-import { observer } from "mobx-react-lite"
-import React, { useContext } from "react"
+import React, { useEffect } from "react"
 import { Pagination } from "react-bootstrap";
 import "./pagination.scss";
 
@@ -8,6 +6,10 @@ const PagesPagination = ({store}) => {
     const pageCount = Math.ceil(store.totalCount / store.limit)
     const pages=[]
     for (let i = 0; i < pageCount; i++) { pages.push(i + 1) }
+
+    useEffect(() => {
+        if(store.page > pageCount && pageCount > 0) store.setPage(pageCount)
+    }, [pageCount])
 
     return (
         <Pagination className="d-flex justify-content-center mt-5">

@@ -1,4 +1,5 @@
 import BasketSheet from 'components/basketSheet/BasketSheet'
+import Loading from 'components/loading/Loading'
 import PagesPagination from 'components/pagination/PagesPagination'
 import { Context } from 'index'
 import { observer } from 'mobx-react-lite'
@@ -16,8 +17,14 @@ const BasketPage = observer(() => {
     <Container fluid style={{overflowY:'auto'}}>
       <Row>
         <Col>  
-          <BasketSheet/>
-          <PagesPagination store={basket}/>      
+          {basket.loading && <Loading/>} 
+          {basket.products.length === 0 && <div className='d-flex justify-content-center fs-5 mt-5'>Вы пока ничего не добавили в корзину...</div>}
+          {!basket.loading && 
+            <>
+              <BasketSheet />
+              <PagesPagination store={basket}/>
+            </>
+          }  
         </Col>
       </Row> 
     </Container>       

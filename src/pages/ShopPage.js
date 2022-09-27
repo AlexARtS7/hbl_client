@@ -17,14 +17,14 @@ const ShopPage = observer(() => {
     useEffect(() => {
         products.fetchProducts()
     }, [products.selectedType, products.page])
-    
+ 
     return (
         <Container fluid style={{overflowY:'auto'}}>
             <Row>
                 <Col>  
                     {products.loading && <Loading/>}
                     {!products.loading && products.list.length === 0 &&
-                        <div className="d-flex justify-content-center fs-5">К сожалению в этом разделе ничего нет :(</div>}  
+                        <div className="d-flex justify-content-center fs-5 mt-5">К сожалению в этом разделе ничего нет :(</div>}  
                     {!products.loading && 
                         <>
                             <ShopList products={products}/>

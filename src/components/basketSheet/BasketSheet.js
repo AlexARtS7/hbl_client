@@ -10,13 +10,15 @@ const BasketSheet = observer(() => {
     const [imageLoaded, setImageLoaded] = useState(false)  
 
     const removeFromBasket = (id) => {
-        basket.deleteProduct(id, user.data.id)
-        toasts.addToast({text:'Продукт удален из корзины.'})
+        basket.deleteProduct(id, user.data.id).
+        then(_ => {
+            basket.fetchBasketProducts(user.data.id)
+            toasts.addToast({text:'Продукт удален из корзины.'})
+        })        
     }
 
     return (
         <Container className='mt-3'>
-            {basket.products.length === 0 && <div className='d-flex justify-content-center'>Вы пока ничего не добавили в корзину...</div>}
             {basket.products.map(item => 
                 <Card 
                     key={item.id}

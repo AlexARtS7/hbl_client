@@ -7,6 +7,7 @@ export default class BasketStore {
         this._page = 1
         this._totalCount = 0
         this._limit = 2
+        this._loading = false
         makeAutoObservable(this)
     }
 
@@ -17,9 +18,11 @@ export default class BasketStore {
     }
     
     async fetchBasketProducts(userId){
+        this._loading = true
         const {data} = await $authHost.get('api/basket/products', {params: {userId, page:this._page, limit:this._limit}})
         this._products = data.rows
         this._totalCount = data.count
+        this._loading = false
         return data
     }
     
@@ -51,5 +54,9 @@ export default class BasketStore {
 
     get limit() {
         return this._limit
+    }
+
+    get loading() {
+        return this._loading
     }
 }
