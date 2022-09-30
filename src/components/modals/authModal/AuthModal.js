@@ -7,25 +7,24 @@ import { LabelInput } from "components/formsComponents/LabelInput"
 const AuthModal = () => {
     const {user, modals} = useContext(Context)
     
-    const {value:login, setValue:setLogin} = useInput('')
-    const {value:email, setValue:setEmail, validErr:emailErr, setValidErr:setEmailErr} = useInput('',{email:true,isEmpty:true})
-    const {value:password, setValue:setPassword, validErr:passwordErr, setValidErr:setPasswordErr} = useInput('', {isEmpty:true})
+    const {value:login, setValue:setLogin, validErr:loginErr} = useInput('',{isEmpty:true})
+    const {value:email, setValue:setEmail, validErr:emailErr, setValidErr:setEmailErr} = useInput('',{email:true, isEmpty:true})
+    const {value:password, setValue:setPassword, validErr:passwordErr, setValidErr:setPasswordErr} = useInput('',{isEmpty:true})
 
     const [isLoginIn, setIsLoginIn] = useState(true)
     const [showErr, setShowErr] = useState(false)
     
     const onHide = () => modals.setAuth(false)
-    
     const enter = () => {
         setShowErr(true)
-        if(emailErr || passwordErr) return
+        if(isLoginIn && emailErr || passwordErr) return
+        if(!isLoginIn && emailErr || passwordErr || loginErr) return
 
         try {
-            let userData
             if(isLoginIn) {
-                userData = user.loginIn(email, password)
+                user.loginIn(email, password)
             } else {
-                userData = user.registration(login, email, password)
+                user.registration(login, email, password)
             }    
             onHide()    
         } catch (e) {
@@ -64,7 +63,9 @@ const AuthModal = () => {
             </Modal.Header>
             <Modal.Body>
                 {!isLoginIn && 
-                    <LabelInput label='Логин' value={login} setValue={setLogin} type='name' className="mb-3"/>
+                    <LabelInput 
+                        label='Логин' value={login} setValue={setLogin} 
+                        isInvalid={showErr && loginErr} type='name' className="mb-3"/>
                 }
                     <LabelInput 
                         label='email' value={email} setValue={setEmail} 
