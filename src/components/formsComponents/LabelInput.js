@@ -19,7 +19,7 @@ export const LabelInput = (props) => {
                 value={value} 
                 onChange={e => setValue(e.target.value)}
             />
-            <Form.Control.Feedback type="invalid">{isInvalid !== '_' && isInvalid}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">{isInvalid !== 'ERROR' && isInvalid}</Form.Control.Feedback>
         </FloatingLabel>
     )
 }

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 
 const useInput = (initialValue, validations) => {
     const [value, setValue] = useState(initialValue)
-    const [validErr, setValidErr] = useState(false)
+    const [validErr, setValidErr] = useState('')
 
     useEffect(() => setValidErr(formsValidation(value, validations)),[value])
 

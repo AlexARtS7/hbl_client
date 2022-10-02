@@ -15,23 +15,28 @@ const AuthModal = () => {
     const [showErr, setShowErr] = useState(false)
     
     const onHide = () => modals.setAuth(false)
-    const enter = () => {
+   
+    const enter = async() => {
         setShowErr(true)
-        if(isLoginIn && emailErr || passwordErr) return
-        if(!isLoginIn && emailErr || passwordErr || loginErr) return
-
+        
+        if(isLoginIn){
+            if(emailErr || passwordErr) return
+        } else {
+            if(emailErr || passwordErr || loginErr) return
+        }
+        
         try {
             if(isLoginIn) {
-                user.loginIn(email, password)
+                await user.loginIn(email, password)
             } else {
-                user.registration(login, email, password)
+                await user.registration(login, email, password)
             }    
             onHide()    
         } catch (e) {
             switch(e.response.data.index) {
-                case 1: setEmailErr(e.response.data.message)
+                case 'email': setEmailErr(e.response.data.message)
                     break;
-                case 2: setPasswordErr(e.response.data.message)
+                case 'password': setPasswordErr(e.response.data.message)
                     break;
             }  
         }  
