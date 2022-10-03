@@ -16,36 +16,46 @@ const EditProductModal = observer(() => {
     const {show, product = ''} = modals.editProduct 
     const type = product.id && products.types.length > 0 ? products.types.filter(type => type.id === +product.typeId)[0].name : ''
 
-    const {value:name, setValue:setName} = useInput(product.name || '')
+    const {value:name, setValue:setName, validErr:nameErr} = useInput(product.name || '', {isEmpty:true})
     const {value:price, setValue:setPrice} = useInput(product.price || 0)
-    const {value:typeName, setValue:setTypeName} = useInput(type)
+    const {value:typeName, setValue:setTypeName, validErr:typeErr} = useInput(type, {isEmpty:true})
     const {value:description, setValue:setDescription} = useInput(product.description || '')    
     const [info, setInfo] = useState(product.product_infos || [])   
+    const [showErr, setShowErr] = useState(false)
     
     const onHide = () => modals.setEditProduct(false)  
-    
+
+    const errors = () => {
+        setShowErr(true)
+        return nameErr || typeErr ? false:true
+    }
+     
     const addProduct = () => {
-        products.saveProduct(
+        if(errors()) {
+            products.saveProduct(
             {name, price, typeId:products.types.find(type => type.name === typeName).id, typeName, info, description}) 
-        .then(res => {
-            toasts.addToast({text:'Продукт успешно добавлен.'})
-            navigate(PRODUCTS_ROUTE + '/' + res.id)
-            onHide() 
-        })       
+            .then(res => {
+                toasts.addToast({text:'Продукт успешно добавлен.'})
+                navigate(PRODUCTS_ROUTE + '/' + res.id)
+                onHide() 
+            })  
+        }             
     }
     
     const updateProduct = () => {
-        products.saveProduct(
-            {name, id:product.id, price, typeId:products.types.find(type => type.name === typeName).id, typeName, info, description}) 
-        .then(res => {
-            if(product.id) products.fetchOneProduct(product.id)
-            onHide()  
-        })        
+        if(errors()){
+            products.saveProduct(
+                {name, id:product.id, price, typeId:products.types.find(type => type.name === typeName).id, typeName, info, description}) 
+            .then(_ => {
+                if(product.id) products.fetchOneProduct(product.id)
+                onHide()  
+            })   
+        }             
     }
 
     const deleteProduct = () => {
         products.destroyProduct(product.id)
-        .then(res => {
+        .then(_ => {
             if(product.id) {
                 navigate(SHOP_ROUTE)
             } else {                
@@ -72,8 +82,9 @@ const EditProductModal = observer(() => {
         </Modal.Header>
         <Modal.Body>
             {product && <div className="border rounded px-3 py-1 mb-3 bg-warning">ID: {product.id}</div>}
-            <LabelInput label="Название" value={name} setValue={setName} type="name" className="mb-3"/>
+            <LabelInput label="Название" value={name} setValue={setName} isInvalid={showErr && nameErr} type="name" className="mb-3"/>
             <SelectInput 
+                isInvalid={showErr && typeErr}
                 label='Категория'
                 defaultValue='Выберите категорию' value={typeName} setValue={setTypeName}
                 types={products.types} 

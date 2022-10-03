@@ -5,7 +5,7 @@ const formsValidation = (value, validations) => {
         const text = validations[validation].text || 'ERROR'
         switch (validation) {
             case 'isEmpty':
-                !value ? err = text : ''
+                !value || value === '0' ? err = text : ''
                 break; 
             case 'minLength':
                 value.length < validations[validation] ? err = text : ''
