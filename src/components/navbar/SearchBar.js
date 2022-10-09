@@ -9,21 +9,21 @@ const SearchBar = observer(() => {
     const {products} = useContext(Context)
     const {value:findText, setValue:setFindText} = useInput('')
     
-    const setType = (e) => {
-        products.setSelectedType(products.types.find(type => type.name.includes(e.target.textContent)))
+    const setCategory = (e) => {
+        products.setSelectedCategory(products.categories.find(category => category.name.includes(e.target.textContent)))
         setFindText('')
     }
 
-    const selectAllTypes = () => {
-        products.setSelectedType({})
+    const selectAllCategories = () => {
+        products.setSelectedCategory({})
         setFindText('')
     }
 
-    const findType = (value) => {
+    const findCategory = (value) => {
         setFindText(value)
-        const findResult = products.types.find(type => type.name.toLowerCase().includes(value.toLowerCase())) || {}
-        value && findResult.name && products.setSelectedType(findResult) 
-        !value && products.setSelectedType({}) 
+        const findResult = products.categories.find(category => category.name.toLowerCase().includes(value.toLowerCase())) || {}
+        value && findResult.name && products.setSelectedCategory(findResult) 
+        !value && products.setSelectedCategory({}) 
     }
          
     return (
@@ -31,20 +31,20 @@ const SearchBar = observer(() => {
             <InputGroup size="sm">
                 <DropdownButton 
                     variant="outline-secondary"
-                    title={products.selectedType.name ? products.selectedType.name : "Все категории"}
+                    title={products.selectedCategory.name ? products.selectedCategory.name : "Все категории"}
                     id="input-group-dropdown-1"
                 >
-                    <Dropdown.Item onClick={selectAllTypes}>Все категории</Dropdown.Item>  
+                    <Dropdown.Item onClick={selectAllCategories}>Все категории</Dropdown.Item>  
                     <Dropdown.Divider />
-                    {products.types.map(type => 
-                        <Dropdown.Item onClick={e => setType(e)} key={type.id}>{type.name}</Dropdown.Item>
+                    {products.categories.map(category => 
+                        <Dropdown.Item onClick={e => setCategory(e)} key={category.id}>{category.name}</Dropdown.Item>
                     )}
                 </DropdownButton>
                 <InputGroup.Text className="search"></InputGroup.Text>
                 <Form.Control 
                     value={findText} 
                     className="shadow-none" 
-                    onChange={(e) => findType(e.target.value)}/>
+                    onChange={(e) => findCategory(e.target.value)}/>
             </InputGroup>  
         </Container>              
     )

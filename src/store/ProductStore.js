@@ -1,12 +1,12 @@
 import {makeAutoObservable} from 'mobx'
-import {productsAddType, productsDestroyOne, productsFetchAll, 
-        productsFetchOne, productsFetchTypes, productsSaveOne } from "http/requests/productsApi";
+import {productsAddCategory, productsDestroyOne, productsFetchAll, 
+        productsFetchOne, productsFetchCategories, productsSaveOne } from "http/requests/productsApi";
 import { imagesDelete, imagesSetPreview, imagesUpload } from "http/requests/imagesApi";
 
 export default class ProductStore {
     constructor() {
-        this._types = []
-        this._selectedType = {}
+        this._categories = []
+        this._selectedCategory = {}
         this._list = []
         this._item = {}
         this._page = 1
@@ -16,21 +16,21 @@ export default class ProductStore {
         makeAutoObservable(this)
     }
 
-    async addType(type) {
-        const data = await productsAddType(type)
-        this._types = [...this._types, data]
+    async addCategory(category) {
+        const data = await productsAddCategory(category)
+        this._categories = [...this._categories, data]
         return
     }
     
-    async fetchTypes() {
-        const data = await productsFetchTypes()
-        this._types = data
+    async fetchCategories() {
+        const data = await productsFetchCategories()
+        this._categories = data
         return
     }
 
-    async fetchProducts(typeId = this._selectedType.id) {
+    async fetchProducts(categoryId = this._selectedCategory.id) {
         this._loading = true
-        const data = await productsFetchAll({typeId, page:this._page, limit:this._limit})
+        const data = await productsFetchAll({categoryId, page:this._page, limit:this._limit})
         this._list = data.rows
         this._totalCount = data.count
         this._loading = false
@@ -83,9 +83,9 @@ export default class ProductStore {
         this._page = page
     }
 
-    setSelectedType(type) {
+    setSelectedCategory(category) {
         this.setPage(1)
-        this._selectedType = type
+        this._selectedCategory = category
     }
 
     setItemInfo(info) {
@@ -100,12 +100,12 @@ export default class ProductStore {
         return this._item
     }
 
-    get types() {
-        return this._types
+    get categories() {
+        return this._categories
     }
 
-    get selectedType() {
-        return this._selectedType
+    get selectedCategory() {
+        return this._selectedCategory
     }
 
     get page() {

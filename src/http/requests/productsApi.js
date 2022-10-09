@@ -1,17 +1,17 @@
 import { $authHost, $host } from "http/axios"
 
-export const productsAddType = async(type) => {
-    const {data} = await $authHost.post('api/type', type)
+export const productsAddCategory = async(category) => {
+    const {data} = await $authHost.post('api/category', category)
     return data
 }
 
-export const productsFetchTypes = async() => {
-    const {data} = await $host.get('api/type')
+export const productsFetchCategories = async() => {
+    const {data} = await $host.get('api/category')
     return data
 }
 
-export const productsFetchAll = async({typeId, page, limit}) => {
-    const {data} = await $host.get('api/products', {params: {typeId, page, limit}})
+export const productsFetchAll = async({categoryId, page, limit}) => {
+    const {data} = await $host.get('api/products', {params: {categoryId, page, limit}})
     return data
 }
 

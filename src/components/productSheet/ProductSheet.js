@@ -33,7 +33,7 @@ const ProductSheet = observer(() => {
     }
     
     useEffect(() => {
-        products.fetchTypes()
+        products.fetchCategories()
         products.fetchOneProduct(id)
     }, [id, user.data.id, basket.products])
     

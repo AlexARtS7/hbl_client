@@ -35,7 +35,7 @@ const UserMenu = observer(() => {
                     {user.data.role === 'ADMIN' && 
                         <>
                             <Dropdown.Item onClick={() => modals.setEditProduct({show:true})}>Редактор продуктов</Dropdown.Item>
-                            <Dropdown.Item onClick={() => modals.setEditType({show:true})}>Редактор типов</Dropdown.Item>
+                            <Dropdown.Item onClick={() => modals.setEditCategory({show:true})}>Редактор категорий</Dropdown.Item>
                             <Dropdown.Divider />
                         </>
                     }

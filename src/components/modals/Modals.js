@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import EditImagesModal from './adminModals/EditImagesModal'
 import EditProductModal from './adminModals/EditProductModal'
-import EditTypeModal from './adminModals/EditTypeModal'
+import EditCategoryModal from './adminModals/EditCategoryModal'
 import AuthModal from './authModal/AuthModal'
 
 const Modals = observer(() => {
@@ -18,8 +18,8 @@ const Modals = observer(() => {
     },[modals.editImages.show])
 
     useEffect(() => {
-        if(!modals.editType.show) modals.setEditType({show:false})
-    },[modals.editType.show])
+        if(!modals.editCategory.show) modals.setEditCategory({show:false})
+    },[modals.editCategory.show])
 
     useEffect(() => {
         if(!modals.auth.show) modals.setAuth({show:false})
@@ -29,7 +29,7 @@ const Modals = observer(() => {
         <>
             {modals.editProduct.show && <EditProductModal/>}   
             {modals.editImages.show && <EditImagesModal/>}  
-            {modals.editType.show && <EditTypeModal/>} 
+            {modals.editCategory.show && <EditCategoryModal/>} 
             {modals.auth.show && <AuthModal/>} 
         </>
     )

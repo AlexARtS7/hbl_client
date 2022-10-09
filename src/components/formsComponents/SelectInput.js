@@ -2,7 +2,7 @@ import React from "react"
 import { FloatingLabel, Form } from "react-bootstrap"
 
 export const SelectInput = (props) => {
-    const {label, value, defaultValue, setValue, types, isInvalid} = props
+    const {label, value, defaultValue, setValue, categories, isInvalid} = props
     return (
         <FloatingLabel
             controlId="floatingInput"
@@ -16,7 +16,7 @@ export const SelectInput = (props) => {
             onChange={(e) => setValue(e.target.value)}
         >
             <option value={0}>{defaultValue}</option>
-            {types.map(e => 
+            {categories.map(e => 
                 <option 
                     key={e.id} 
                     value={e.name}  

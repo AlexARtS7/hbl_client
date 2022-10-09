@@ -4,7 +4,7 @@ export default class ModalStore {
     constructor() {
         this._editProduct = {show:false}
         this._editImages = {show:false}
-        this._editType = {show:false}
+        this._editCategory = {show:false}
         this._auth = {show:false}
         makeAutoObservable(this)
     }
@@ -17,8 +17,8 @@ export default class ModalStore {
         this._editImages = value
     }
 
-    setEditType(value) {
-        this._editType = value
+    setEditCategory(value) {
+        this._editCategory = value
     }
 
     setAuth(value) {
@@ -33,8 +33,8 @@ export default class ModalStore {
         return this._editImages
     }
 
-    get editType() {
-        return this._editType
+    get editCategory() {
+        return this._editCategory
     }
 
     get auth() {

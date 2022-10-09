@@ -11,12 +11,12 @@ const ShopPage = observer(() => {
  
     useEffect(() => {
         products.setItem()
-        products.fetchTypes()
+        products.fetchCategories()
     },[])
    
     useEffect(() => {
         products.fetchProducts()
-    }, [products.selectedType, products.page])
+    }, [products.selectedCategory, products.page])
  
     return (
         <Container fluid style={{overflowY:'auto'}}>

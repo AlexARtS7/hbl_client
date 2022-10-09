@@ -14,11 +14,12 @@ const EditProductModal = observer(() => {
 
     const {products, modals, toasts, basket, user} = useContext(Context)
     const {show, product = ''} = modals.editProduct 
-    const type = product.id && products.types.length > 0 ? products.types.filter(type => type.id === +product.typeId)[0].name : ''
+    const category = product.id && products.categories.length > 0 ? 
+        products.categories.filter(category => category.id === +product.categoryId)[0].name : ''
 
     const {value:name, setValue:setName, validErr:nameErr} = useInput(product.name || '', {isEmpty:true})
     const {value:price, setValue:setPrice} = useInput(product.price || 0)
-    const {value:typeName, setValue:setTypeName, validErr:typeErr} = useInput(type, {isEmpty:true})
+    const {value:categoryName, setValue:setCategoryName, validErr:categoryErr} = useInput(category, {isEmpty:true})
     const {value:description, setValue:setDescription} = useInput(product.description || '')    
     const [info, setInfo] = useState(product.product_infos || [])   
     const [showErr, setShowErr] = useState(false)
@@ -27,13 +28,13 @@ const EditProductModal = observer(() => {
 
     const errors = () => {
         setShowErr(true)
-        return nameErr || typeErr ? false:true
+        return nameErr || categoryErr ? false:true
     }
      
     const addProduct = () => {
         if(errors()) {
             products.saveProduct(
-            {name, price, typeId:products.types.find(type => type.name === typeName).id, typeName, info, description}) 
+            {name, price, categoryId:products.categories.find(category => category.name === categoryName).id, categoryName, info, description}) 
             .then(res => {
                 toasts.addToast({text:'Продукт успешно добавлен.'})
                 navigate(PRODUCTS_ROUTE + '/' + res.id)
@@ -45,7 +46,7 @@ const EditProductModal = observer(() => {
     const updateProduct = () => {
         if(errors()){
             products.saveProduct(
-                {name, id:product.id, price, typeId:products.types.find(type => type.name === typeName).id, typeName, info, description}) 
+                {name, id:product.id, price, categoryId:products.categories.find(category => category.name === categoryName).id, categoryName, info, description}) 
             .then(_ => {
                 if(product.id) products.fetchOneProduct(product.id)
                 onHide()  
@@ -84,10 +85,10 @@ const EditProductModal = observer(() => {
             {product && <div className="border rounded px-3 py-1 mb-3 bg-warning">ID: {product.id}</div>}
             <LabelInput label="Название" value={name} setValue={setName} isInvalid={showErr && nameErr} type="name" className="mb-3"/>
             <SelectInput 
-                isInvalid={showErr && typeErr}
+                isInvalid={showErr && categoryErr}
                 label='Категория'
-                defaultValue='Выберите категорию' value={typeName} setValue={setTypeName}
-                types={products.types} 
+                defaultValue='Выберите категорию' value={categoryName} setValue={setCategoryName}
+                categories={products.categories} 
             />
             <LabelInput 
                 value={description} setValue={setDescription} 
