@@ -1,0 +1,14 @@
+.show {
+
+}
+
+.hide {
+    position: absolute;
+    top:0;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.tree {
+    transition: .3s;
+}

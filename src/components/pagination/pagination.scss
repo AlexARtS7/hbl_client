@@ -1,5 +1,13 @@
 .page-item.active .page-link {
-    // color: #fff !important;
+    color: white !important;
     background: #adb5bd !important;
     border-color: gray !important;
-  }
+}
+
+.pagination .page-link {
+    // background: red;
+    color: gray;
+    &:hover {
+      color: black;
+    }
+}
