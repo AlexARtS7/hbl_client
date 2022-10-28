@@ -12,7 +12,7 @@ const TreeViewList = ({onHide}) => {
     <ListGroup variant="flush">
       {categories.filter(e => !e.categoryId).map((e,i) => 
       <ListGroup.Item as='ul' key={i}>
-        <TreeViewItem  e={e} categories={categories} onHide={onHide}/>
+        <TreeViewItem  e={e} categories={categories} onHide={onHide} products={products}/>
       </ListGroup.Item>)}      
     </ListGroup>
   )

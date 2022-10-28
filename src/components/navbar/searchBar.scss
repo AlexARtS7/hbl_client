@@ -1,7 +1,6 @@
-.search {
-    background: url('../../assets/images/search1.svg') no-repeat;
-    background-size: 55%;
-    background-position: center;
-    width: 30px;
+.srclink {
+    font-size: 12px;
+    &:hover {
+        text-decoration: underline;
+    }
 }
-
