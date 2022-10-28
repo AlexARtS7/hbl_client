@@ -4,7 +4,7 @@ import { ListGroup } from 'react-bootstrap'
 import './treeView.scss'
 import TreeViewItem from './TreeViewItem'
 
-const TreeViewList = () => {
+const TreeViewList = ({onHide}) => {
   const {products} = useContext(Context)
   const categories = products.categories
 
@@ -12,7 +12,7 @@ const TreeViewList = () => {
     <ListGroup variant="flush">
       {categories.filter(e => !e.categoryId).map((e,i) => 
       <ListGroup.Item as='ul' key={i}>
-        <TreeViewItem  e={e} categories={categories}/>
+        <TreeViewItem  e={e} categories={categories} onHide={onHide}/>
       </ListGroup.Item>)}      
     </ListGroup>
   )

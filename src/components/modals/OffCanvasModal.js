@@ -10,7 +10,7 @@ const OffCanvasModal = ({show, setShow}) => {
             <Offcanvas.Title>Выберите раздел</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body> <hr/>
-                <TreeViewList/>
+                <TreeViewList onHide={() => setShow(false)}/>
             </Offcanvas.Body>
         </Offcanvas>
     )

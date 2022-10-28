@@ -1,3 +1,6 @@
 .none {
     list-style-type:none;
+    &:hover {
+        background-color: rgba(228, 224, 224, 0.5);
+    }
 }
