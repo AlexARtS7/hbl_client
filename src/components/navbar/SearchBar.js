@@ -45,7 +45,7 @@ const SearchBar = observer(() => {
     },[products.selectedCategory])
     
     useEffect(() => {
-        setForwardSrc(products.categories.filter(e => !e.categoryId))
+        if(!products.selectedCategory.id)setForwardSrc(products.categories.filter(e => !e.categoryId))
     },[products.categories])
 
     return (
