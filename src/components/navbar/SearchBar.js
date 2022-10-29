@@ -44,6 +44,10 @@ const SearchBar = observer(() => {
         }
     },[products.selectedCategory])
     
+    useEffect(() => {
+        setForwardSrc(products.categories.filter(e => !e.categoryId))
+    },[products.categories])
+
     return (
     <>
         <OffCanvasModal show={show} setShow={setShow}/>

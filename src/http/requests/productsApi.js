@@ -10,8 +10,8 @@ export const productsFetchCategories = async() => {
     return data
 }
 
-export const productsFetchAll = async({categoryId, page, limit}) => {
-    const {data} = await $host.get('api/products', {params: {categoryId, page, limit}})
+export const productsFetchAll = async({categories, page, limit}) => {
+    const {data} = await $host.get('api/products', {params: {categories, page, limit}})
     return data
 }
 

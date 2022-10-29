@@ -7,6 +7,7 @@ export default class ProductStore {
     constructor() {
         this._categories = []
         this._selectedCategory = {}
+        this._categoriesSrcAfter = []
         this._list = []
         this._item = {}
         this._page = 1
@@ -28,9 +29,10 @@ export default class ProductStore {
         return
     }
 
-    async fetchProducts(categoryId = this._selectedCategory.id) {
+    async fetchProducts(categories = this._categoriesSrcAfter.map(e => e.id)) {
+        if(!categories[0]) categories = []
         this._loading = true
-        const data = await productsFetchAll({categoryId, page:this._page, limit:this._limit})
+        const data = await productsFetchAll({categories, page:this._page, limit:this._limit})
         this._list = data.rows
         this._totalCount = data.count
         this._loading = false
@@ -84,6 +86,14 @@ export default class ProductStore {
     }
 
     setSelectedCategory(category) {
+        this._categoriesSrcAfter = []
+        const structuring = (category) => {
+            this._categoriesSrcAfter.push(category)
+            const children = this._categories.filter(e => e.categoryId === category.id)
+            if(children.length > 0) children.map(e => structuring(e))
+        }
+        structuring(category)
+
         this.setPage(1)
         this._selectedCategory = category
     }
@@ -106,6 +116,10 @@ export default class ProductStore {
 
     get selectedCategory() {
         return this._selectedCategory
+    }
+
+    get categoriesSrcAfter() {
+        return this._categoriesSrcAfter
     }
 
     get page() {
