@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ArrowReturnRight, ChevronDown, ChevronRight} from 'react-bootstrap-icons'
 import './treeView.scss'
 
-const TreeViewItem = (props) => {
+export default React.memo(function TreeViewItem(props) {
   const {e, categories, vis = true, onHide, products} = props
   const [visible, setVisible] = useState(false)
   const children = categories.filter(i => i.categoryId === e.id)
@@ -34,6 +34,11 @@ const TreeViewItem = (props) => {
         <TreeViewItem key={i}  e={e} categories={categories} vis={visible} onHide={onHide} products={products}/>)}
     </ul>    
   )
-}
-
-export default TreeViewItem
+}, 
+(prev, next) => {
+  if(prev.vis !== next.vis) {
+    return false 
+  } else {
+    return true
+  }
+})

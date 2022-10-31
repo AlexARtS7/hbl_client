@@ -1,8 +1,9 @@
 import React from "react"
 import { FloatingLabel, Form } from "react-bootstrap"
 
-export const SelectInput = (props) => {
+export const SelectInput = React.memo(function SelectInput(props) {
     const {label, value, defaultValue, setValue, categories, isInvalid} = props
+    
     return (
         <FloatingLabel
             controlId="floatingInput"
@@ -26,4 +27,4 @@ export const SelectInput = (props) => {
             <Form.Control.Feedback type="invalid">{isInvalid !== 'ERROR' && isInvalid}</Form.Control.Feedback>
         </FloatingLabel>
     )
-}
+})

@@ -4,7 +4,7 @@ import { ListGroup } from 'react-bootstrap'
 import './treeView.scss'
 import TreeViewItem from './TreeViewItem'
 
-const TreeViewList = ({onHide}) => {
+export default React.memo(function TreeViewList({onHide}) {
   const {products} = useContext(Context)
   const categories = products.categories
 
@@ -16,6 +16,4 @@ const TreeViewList = ({onHide}) => {
       </ListGroup.Item>)}      
     </ListGroup>
   )
-}
-
-export default TreeViewList
+})
