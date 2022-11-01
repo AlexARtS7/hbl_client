@@ -3,7 +3,7 @@ import { Context } from "index"
 import useInput from "components/hooks/useInput"
 import { Button, Modal } from "react-bootstrap"
 import InputCategoryGroup from "components/formsComponents/InputCategoryGroup"
-import { useState } from "react"
+import TreeViewList from "components/formsComponents/treeView/TreeViewList"
 
 const EditCategoryModal = () => {
     const {modals, products, toasts} = useContext(Context)
@@ -14,8 +14,9 @@ const EditCategoryModal = () => {
     const addCategory = () => {
         products.addCategory({name: сategory})
         .then(_ => {
+            products.fetchCategories()
             toasts.addToast({text:'Добавлена новая категория.'})
-            setCategory('')
+            setCategory('')            
         })
     }
 
@@ -34,8 +35,9 @@ const EditCategoryModal = () => {
         </Modal.Header>
         <Modal.Body>
             <InputCategoryGroup 
-                label='Введите название новой категории' buttonText='Добавить категорию' 
+                label='Введите название раздела' 
                 value={сategory} setValue={setCategory} onButtonClick={addCategory}/>
+                <TreeViewList mode='edit'/>
         </Modal.Body>
         <Modal.Footer>
             <Button onClick={onHide} variant='outline-secondary'>Закрыть</Button>       
